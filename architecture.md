@@ -9,6 +9,7 @@ TerraStab is a professional, responsive website for a French startup that provid
 Preferred communication style: Simple, everyday language.
 
 ## System Architecture
+THIS IS A STATIC WEBSITE TO BE DEPLOYED ON VERCEL
 
 ### Frontend Architecture
 - **Framework**: React 18 with TypeScript
@@ -19,7 +20,8 @@ Preferred communication style: Simple, everyday language.
 - **Forms**: React Hook Form with Zod validation
 
 ### Backend Architecture
- - **SUPABASE**
+ - **SUPABASE**: Functions / secrets / database
+ - **VERCEL**: Hosting
 
 ## Key Components
 
