@@ -139,9 +139,12 @@ const RiskAssessmentSection = () => {
 
                   {assessmentState.error && (
                     <div className="bg-red-50 border border-red-200 rounded-md p-4">
-                      <div className="flex items-center">
-                        <XCircle className="w-5 h-5 text-red-500 mr-2" />
-                        <p className="text-red-700 text-sm">{assessmentState.error}</p>
+                      <div className="flex items-start">
+                        <XCircle className="w-5 h-5 text-red-500 mr-3 mt-0.5 flex-shrink-0" />
+                        <div className="flex-1">
+                          <p className="text-red-700 text-sm font-medium mb-1">Erreur</p>
+                          <p className="text-red-600 text-sm">{assessmentState.error}</p>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -181,6 +184,18 @@ const RiskAssessmentSection = () => {
                         </div>
                       </div>
                     </CardHeader>
+
+                    {/* Warning Display */}
+                    {assessmentState.result?.warning && (
+                      <div className="bg-orange-50 border-l-4 border-orange-400 p-4 mx-6 mt-4 rounded-r-md">
+                        <div className="flex items-center">
+                          <AlertTriangle className="w-5 h-5 text-orange-600 mr-3" />
+                          <p className="text-sm text-orange-700 font-medium">
+                            {assessmentState.result.warning}
+                          </p>
+                        </div>
+                      </div>
+                    )}
 
                     <CardContent className="p-8">
                       <div className="text-center space-y-6">

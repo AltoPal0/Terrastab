@@ -1,5 +1,5 @@
 import { supabase } from './supabase'
-import type { AdminAuthRequest, AdminAuthResponse, AdminStatsResponse } from '@/types/risk-assessment'
+import type { AdminAuthRequest, AdminAuthResponse, AdminStatsResponse, EvaluationsResponse } from '@/types/risk-assessment'
 
 const ADMIN_TOKEN_KEY = 'terrastab_admin_token'
 
@@ -75,5 +75,32 @@ export const adminApi = {
 
   getToken(): string | null {
     return localStorage.getItem(ADMIN_TOKEN_KEY)
+  },
+
+  async getEvaluations(): Promise<EvaluationsResponse> {
+    try {
+      const token = localStorage.getItem(ADMIN_TOKEN_KEY)
+      if (!token) {
+        return { success: false, error: 'Non authentifié' }
+      }
+
+      const { data, error } = await supabase.functions.invoke('admin-evaluations', {
+        body: { token }
+      })
+
+      if (error) {
+        console.error('Admin evaluations error:', error)
+        if (error.message?.includes('unauthorized') || error.message?.includes('401')) {
+          this.logout()
+          return { success: false, error: 'Session expirée' }
+        }
+        return { success: false, error: error.message || 'Erreur lors de la récupération des évaluations' }
+      }
+
+      return data as EvaluationsResponse
+    } catch (error) {
+      console.error('Admin evaluations exception:', error)
+      return { success: false, error: 'Erreur réseau' }
+    }
   }
 }

@@ -5,6 +5,7 @@ export interface RiskCheckRequest {
 
 export interface RiskCheckResponse {
   success: boolean
+  warning?: string
   address?: string
   coordinates?: {
     lat: number
@@ -114,4 +115,22 @@ export interface AdminStatistics {
     from: string
     to: string
   }
+}
+
+export interface EvaluationRecord {
+  id: string
+  input_address: string
+  formatted_address: string | null
+  commune: string | null
+  risk_level: RiskLevel | null
+  geocoding_success: boolean
+  georisques_success: boolean
+  error_message: string | null
+  created_at: string
+}
+
+export interface EvaluationsResponse {
+  success: boolean
+  data?: EvaluationRecord[]
+  error?: string
 }

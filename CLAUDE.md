@@ -109,3 +109,6 @@ The risk assessment feature uses a live Supabase Edge Function that:
 - **Backend**: Supabase Edge Functions (serverless)
 - **Database**: Supabase PostgreSQL
 - Build assets output to `dist/` directory
+
+### Coding preferences
+- **Fallbacks**: IMPORTANT : Never use fallbacks. if it fails, proper error needs to be displayed as we are development

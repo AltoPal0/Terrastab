@@ -11,6 +11,7 @@ export default function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
+  const [selectedCard, setSelectedCard] = useState<string | null>(null)
 
   const loadStatistics = async () => {
     setIsLoading(true)
@@ -38,6 +39,14 @@ export default function AdminDashboard() {
 
   const handleRefresh = () => {
     loadStatistics()
+  }
+
+  const handleCardClick = (cardType: string) => {
+    setSelectedCard(cardType)
+  }
+
+  const handleBackToOverview = () => {
+    setSelectedCard(null)
   }
 
   if (isLoading) {
@@ -103,10 +112,14 @@ export default function AdminDashboard() {
       </div>
 
       {/* Statistics Overview */}
-      <StatisticsCards statistics={statistics} />
+      <StatisticsCards statistics={statistics} onCardClick={handleCardClick} />
 
       {/* Charts and Detailed Analytics */}
-      <ChartsSection statistics={statistics} />
+      <ChartsSection
+        statistics={statistics}
+        selectedCard={selectedCard}
+        onBackToOverview={handleBackToOverview}
+      />
     </div>
   )
 }
