@@ -66,3 +66,52 @@ export interface RiskAssessmentRecord {
   ip_address: string | null
   user_agent: string | null
 }
+
+// Admin types
+export interface AdminAuthRequest {
+  password: string
+}
+
+export interface AdminAuthResponse {
+  success: boolean
+  token?: string
+  error?: string
+}
+
+export interface AdminStatsResponse {
+  success: boolean
+  data?: AdminStatistics
+  error?: string
+}
+
+export interface AdminStatistics {
+  totalAssessments: number
+  riskDistribution: {
+    [key in RiskLevel]: number
+  }
+  successRates: {
+    geocodingSuccess: number
+    georisquesSuccess: number
+    overallSuccess: number
+  }
+  dailyTrends: Array<{
+    date: string
+    assessments: number
+    successRate: number
+  }>
+  topCommunes: Array<{
+    commune: string
+    count: number
+  }>
+  errorAnalysis: {
+    totalErrors: number
+    errorTypes: Array<{
+      error: string
+      count: number
+    }>
+  }
+  timeRange: {
+    from: string
+    to: string
+  }
+}

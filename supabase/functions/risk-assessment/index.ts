@@ -98,7 +98,7 @@ serve(async (req: Request) => {
 
     console.log('Fetching risk data from Georisques:', georisquesUrl)
 
-    let georisquesData: any = null
+    let georisquesData: unknown = null
     try {
       const georisquesResponse = await fetch(georisquesUrl)
 
@@ -149,12 +149,14 @@ serve(async (req: Request) => {
     let commune = ''
     let originalExposition = 'Données non disponibles'
 
-    if (georisquesData && georisquesData.data && georisquesData.data.length > 0) {
-      const riskData = georisquesData.data[0]
-      originalExposition = riskData.exposition || 'Non spécifié'
-      commune = riskData.libelle_commune || ''
+    if (georisquesData && typeof georisquesData === 'object' && georisquesData !== null && 'data' in georisquesData) {
+      const data = georisquesData.data as Array<{ exposition?: string; libelle_commune?: string }>
+      if (Array.isArray(data) && data.length > 0) {
+        const riskData = data[0]
+        originalExposition = riskData.exposition || 'Non spécifié'
+        commune = riskData.libelle_commune || ''
 
-      switch (riskData.exposition) {
+        switch (riskData.exposition) {
         case 'Faible':
         case 'Nul':
           riskLevel = 'Faible'
@@ -178,9 +180,10 @@ serve(async (req: Request) => {
           riskDescription = 'Votre zone présente un risque élevé de retrait-gonflement des argiles. Une protection est fortement recommandée.'
           break
 
-        default:
-          console.warn('Unknown risk level from Georisques:', riskData.exposition)
-          break
+          default:
+            console.warn('Unknown risk level from Georisques:', riskData.exposition)
+            break
+        }
       }
     }
 
