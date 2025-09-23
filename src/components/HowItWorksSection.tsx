@@ -91,28 +91,23 @@ const HowItWorksSection = () => {
           })}
         </div>
 
-        {/* Support Images */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div className="rounded-lg overflow-hidden shadow-md">
-            <img
-              src="/support_visual_1.jpg"
-              alt="Support visuel 1"
-              className="w-full h-48 object-cover"
-            />
-          </div>
-          <div className="rounded-lg overflow-hidden shadow-md">
-            <img
-              src="/support_visual_2.jpg"
-              alt="Support visuel 2"
-              className="w-full h-48 object-cover"
-            />
-          </div>
-          <div className="rounded-lg overflow-hidden shadow-md">
-            <img
-              src="/support_visual_3.jpg"
-              alt="Support visuel 3"
-              className="w-full h-48 object-cover"
-            />
+        {/* Process Flow Diagram */}
+        <div className="flex items-center justify-center mb-16 overflow-x-auto px-4">
+          <div className="flex items-center space-x-3 md:space-x-4 min-w-max">
+            {/* Step 1 Line */}
+            <div className="h-2 w-16 md:w-24 bg-red-500 rounded-full"></div>
+            {/* Arrow 1 */}
+            <div className="text-red-500 text-xl md:text-2xl font-bold">→</div>
+            {/* Step 2 Line */}
+            <div className="h-2 w-16 md:w-24 bg-blue-500 rounded-full"></div>
+            {/* Arrow 2 */}
+            <div className="text-blue-500 text-xl md:text-2xl font-bold">→</div>
+            {/* Step 3 Line */}
+            <div className="h-2 w-16 md:w-24 bg-orange-500 rounded-full"></div>
+            {/* Arrow 3 */}
+            <div className="text-orange-500 text-xl md:text-2xl font-bold">→</div>
+            {/* Step 4 Line */}
+            <div className="h-2 w-16 md:w-24 bg-green-500 rounded-full"></div>
           </div>
         </div>
 
