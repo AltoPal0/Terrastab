@@ -15,6 +15,7 @@ const ProductCardsSection = () => {
     {
       ...PRODUCT_CONFIG['survey-light'],
       badge: 'Recommandé pour les risques faibles',
+      specialBadge: undefined,
       description: 'Surveillance en continu grâce à 1 à 2 sondes propriétaires installées sur votre terrain. Analyse de la dessiccation jusqu\'à 1m20 et suivi de la vulnérabilité de votre maison face aux événements climatiques. Possibilité d\'ajouter des sondes pour des zones spécifiques (ex. végétation).',
       features: [
         'Surveillance en continu',
@@ -27,6 +28,7 @@ const ProductCardsSection = () => {
     {
       ...PRODUCT_CONFIG['survey-plus'],
       badge: 'Recommandé pour les risques modérés',
+      specialBadge: undefined,
       description: 'Un réseau de sondes propriétaires installé en périphérie du bâtiment pour une vision complète de la vulnérabilité de votre maison. Analyse en continu de la dessiccation jusqu\'à 1m20 et suivi de l\'ensemble du bâtiment face aux événements météo et climatiques.',
       features: [
         'Réseau de sondes autour du bâtiment',
