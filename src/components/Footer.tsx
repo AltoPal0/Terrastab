@@ -111,7 +111,7 @@ const Footer = () => {
               <img
                 src="/logo_main_terrastab.png"
                 alt="Terrastab Logo"
-                className="h-8 w-auto mb-4 filter brightness-0 invert"
+                className="h-12 w-auto mb-4"
               />
               <p className="text-gray-300 text-sm">
                 Solution innovante de stabilisation des sols pour protéger votre maison.
