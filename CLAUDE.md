@@ -112,3 +112,4 @@ The risk assessment feature uses a live Supabase Edge Function that:
 
 ### Coding preferences
 - **Fallbacks**: IMPORTANT : Never use fallbacks. if it fails, proper error needs to be displayed as we are development
+- **Git Push Policy**: CRITICAL - ALWAYS ask user permission before pushing to remote repository. Never run `git push` without explicit user approval.
