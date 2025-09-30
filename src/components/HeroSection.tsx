@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { motion } from 'framer-motion'
 
 const HeroSection = () => {
   const scrollToSection = (sectionId: string) => {
@@ -11,43 +12,66 @@ const HeroSection = () => {
   return (
     <section
       id="top"
-      className="relative min-h-[600px] bg-cover bg-center bg-no-repeat flex items-center"
+      className="relative min-h-[90vh] bg-cover bg-center bg-no-repeat flex items-center"
       style={{
-        backgroundImage: "url('/support_visual_1.jpg')"
+        backgroundImage: "url('/maison_fissuree.jpg')"
       }}
     >
       {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/50"></div>
+      <div className="absolute inset-0 bg-black/60"></div>
 
       {/* Content */}
-      <div className="relative z-10 w-full py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+      <div className="relative z-10 w-full py-32 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight"
+            >
               N'attendez pas que les fissures apparaissent ou s'agrandissent.
-            </h1>
+            </motion.h1>
 
-            <p className="text-lg md:text-xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Terrastab surveille et stabilise vos sols en continu pour protéger votre maison contre le retrait-gonflement des argiles. Évitez des réparations coûteuses et préservez la valeur de votre patrimoine.
-            </p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              className="mb-12"
+            >
+              <p className="text-xl md:text-2xl text-white/95 mb-6 max-w-4xl mx-auto leading-relaxed font-medium">
+                TerraStab surveille et stabilise vos sols en continu pour protéger votre maison contre le retrait-gonflement des argiles.
+              </p>
+              <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto font-semibold">
+                <strong>Évitez des réparations coûteuses</strong> et <strong>préservez la valeur de votre patrimoine.</strong>
+              </p>
+            </motion.div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              className="mb-10"
+            >
               <Button
                 onClick={() => scrollToSection('risque')}
                 size="lg"
-                className="text-lg px-8 py-4 bg-green-600 hover:bg-green-700 text-white border-0"
+                className="text-lg px-10 py-6 bg-blue-600 hover:bg-blue-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
               >
-                Connaître mon risque
+                🔍 Vérifiez votre risque gratuitement
               </Button>
-              <Button
-                onClick={() => scrollToSection('devis')}
-                variant="outline"
-                size="lg"
-                className="text-lg px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white border-blue-600"
-              >
-                Obtenir un devis
-              </Button>
-            </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="text-sm text-white/80 max-w-2xl mx-auto"
+            >
+              <p className="font-medium">
+                Basé sur les <strong>données satellites</strong>, la <strong>base de données nationale RGA</strong>, et l'<strong>expertise géotechnique française</strong>.
+              </p>
+            </motion.div>
           </div>
         </div>
       </div>
