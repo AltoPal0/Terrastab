@@ -1,33 +1,18 @@
 import { motion } from 'framer-motion'
-import { Award, MapPin, Zap, Building } from 'lucide-react'
 
 const TrustLogos = () => {
-  const supporters = [
-    {
-      name: "Région Nouvelle-Aquitaine",
-      type: "Collectivité territoriale",
-      icon: MapPin,
-      color: "text-blue-600 bg-blue-100"
-    },
-    {
-      name: "Bpifrance",
-      type: "Banque publique d'investissement",
-      icon: Building,
-      color: "text-green-600 bg-green-100"
-    },
-    {
-      name: "La French Tech",
-      type: "Label innovation nationale",
-      icon: Zap,
-      color: "text-purple-600 bg-purple-100"
-    },
-    {
-      name: "Le Village by CA",
-      type: "Accompagnement",
-      icon: Award,
-      color: "text-orange-600 bg-orange-100"
-    }
+  const basePartners = [
+    { name: 'BPI France', logo: '/partner_logo_bpi_france.svg' },
+    { name: 'Grand Nancy Innovation', logo: '/partner_logo_grand_nancy.png' },
+    { name: 'ADEME', logo: '/partner_logo_ademe.svg' },
+    { name: 'French Tech', logo: '/partner_logo_french_tech.svg' },
+    { name: 'France Assureurs', logo: '/partner_logo_france_assureurs2.png' },
+    { name: 'CCI', logo: '/partner_logo_cci.svg' },
+    { name: 'Needhelp', logo: '/partner_logo_needhelp.png' }
   ]
+
+  // Create exactly 2 copies for seamless scrolling (original + duplicate)
+  const partners = [...basePartners, ...basePartners]
 
   return (
     <section className="py-20 bg-white">
@@ -51,54 +36,27 @@ const TrustLogos = () => {
           </div>
         </motion.div>
 
-        {/* Horizontal scrolling logos for mobile, grid for desktop */}
+        {/* Carousel Container - Full Width with Auto-Scroll & Touch Enabled */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="relative"
+          className="relative overflow-hidden w-full touch-scroll scrollbar-hide"
         >
-          {/* Desktop grid */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {supporters.map((supporter, index) => (
-              <motion.div
-                key={supporter.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 * index, ease: "easeOut" }}
-                viewport={{ once: true }}
-                className="group text-center p-6 rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all duration-300"
+          <div className="flex animate-scroll space-x-8">
+            {partners.map((partner, index) => (
+              <div
+                key={`${partner.name}-${index}`}
+                className="flex-shrink-0 bg-white p-8 rounded-lg shadow-md border hover:shadow-lg transition-shadow duration-300 w-48 h-32 flex items-center justify-center scroll-snap-align-start"
               >
-                <div className={`w-16 h-16 rounded-full ${supporter.color} flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                  <supporter.icon className="w-8 h-8" />
-                </div>
-                <h3 className="font-semibold text-gray-900 text-sm mb-2">{supporter.name}</h3>
-                <p className="text-xs text-gray-600">{supporter.type}</p>
-              </motion.div>
+                <img
+                  src={partner.logo}
+                  alt={partner.name}
+                  className="max-h-20 max-w-full object-contain"
+                />
+              </div>
             ))}
-          </div>
-
-          {/* Mobile horizontal scroll */}
-          <div className="md:hidden">
-            <div className="flex space-x-6 overflow-x-auto pb-6 scrollbar-hide">
-              {supporters.map((supporter, index) => (
-                <motion.div
-                  key={supporter.name}
-                  initial={{ opacity: 0, x: 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1 * index, ease: "easeOut" }}
-                  viewport={{ once: true }}
-                  className="flex-shrink-0 text-center p-6 rounded-lg border border-gray-200 w-48"
-                >
-                  <div className={`w-12 h-12 rounded-full ${supporter.color} flex items-center justify-center mx-auto mb-3`}>
-                    <supporter.icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="font-semibold text-gray-900 text-sm mb-1">{supporter.name}</h3>
-                  <p className="text-xs text-gray-600">{supporter.type}</p>
-                </motion.div>
-              ))}
-            </div>
           </div>
         </motion.div>
 
