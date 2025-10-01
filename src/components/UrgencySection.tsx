@@ -53,71 +53,146 @@ const UrgencySection = () => {
           </div>
         </motion.div>
 
-        {/* Statistics */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
-        >
+        {/* Statistics - Staggered Animation */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {facts.map((fact, index) => (
             <motion.div
               key={fact.stat}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 * index, ease: "easeOut" }}
-              viewport={{ once: true }}
-              className="text-center p-8 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors duration-300"
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{
+                duration: 0.7,
+                delay: 0.15 * (index + 1),
+                ease: [0.25, 0.46, 0.45, 0.94]
+              }}
+              viewport={{ once: true, amount: 0.3 }}
+              whileHover={{ scale: 1.05, y: -8 }}
+              className="text-center p-8 bg-gray-800/50 rounded-lg border border-gray-700 hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-300"
             >
-              <div className="flex justify-center mb-6">
+              <motion.div
+                className="flex justify-center mb-6"
+                initial={{ scale: 0, rotate: -180 }}
+                whileInView={{ scale: 1, rotate: 0 }}
+                transition={{
+                  duration: 0.6,
+                  delay: 0.15 * (index + 1) + 0.2,
+                  type: "spring",
+                  stiffness: 200
+                }}
+                viewport={{ once: true }}
+              >
                 <div className="p-4 bg-orange-500/20 rounded-full">
                   <fact.icon className="w-8 h-8 text-orange-400" />
                 </div>
-              </div>
-              <h3 className="text-2xl md:text-3xl font-bold text-orange-400 mb-3">
+              </motion.div>
+              <motion.h3
+                className="text-2xl md:text-3xl font-bold text-orange-400 mb-3"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.15 * (index + 1) + 0.3
+                }}
+                viewport={{ once: true }}
+              >
                 {fact.stat}
-              </h3>
-              <p className="text-gray-300">
+              </motion.h3>
+              <motion.p
+                className="text-gray-300"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.15 * (index + 1) + 0.4
+                }}
+                viewport={{ once: true }}
+              >
                 {fact.description}
-              </p>
+              </motion.p>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Expert Quote */}
+        {/* Expert Quote - Fourth Dynamic Box */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-          viewport={{ once: true }}
-          className="bg-red-900/30 border border-red-800/50 rounded-lg p-8 mb-12 text-center"
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{
+            duration: 0.8,
+            delay: 0.6,
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
+          viewport={{ once: true, amount: 0.5 }}
+          whileHover={{ scale: 1.02 }}
+          className="bg-red-900/30 border border-red-800/50 rounded-lg p-8 mb-12 text-center hover:border-red-700/70 hover:shadow-xl hover:shadow-red-500/10 transition-all duration-300"
         >
-          <AlertTriangle className="w-12 h-12 text-red-400 mx-auto mb-4" />
-          <blockquote className="text-lg md:text-xl italic text-red-200 mb-4">
+          <motion.div
+            initial={{ scale: 0, rotate: 180 }}
+            whileInView={{ scale: 1, rotate: 0 }}
+            transition={{
+              duration: 0.6,
+              delay: 0.8,
+              type: "spring",
+              stiffness: 200
+            }}
+            viewport={{ once: true }}
+          >
+            <AlertTriangle className="w-12 h-12 text-red-400 mx-auto mb-4" />
+          </motion.div>
+          <motion.blockquote
+            className="text-lg md:text-xl italic text-red-200 mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            viewport={{ once: true }}
+          >
             "Un RGA non traité peut coûter jusqu'à 30 % de la valeur du bien"
-          </blockquote>
-          <cite className="text-sm text-red-300">— Expert en évaluation immobilière</cite>
+          </motion.blockquote>
+          <motion.cite
+            className="text-sm text-red-300"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1.0 }}
+            viewport={{ once: true }}
+          >
+            — Expert en évaluation immobilière
+          </motion.cite>
         </motion.div>
 
-        {/* CTA */}
+        {/* CTA - Final Dynamic Element */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 40, scale: 0.9 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{
+            duration: 0.8,
+            delay: 0.8,
+            ease: [0.25, 0.46, 0.45, 0.94]
+          }}
+          viewport={{ once: true, amount: 0.8 }}
           className="text-center"
         >
-          <Button
-            onClick={() => actions.setStep('address-entry')}
-            size="lg"
-            className="text-lg px-10 py-6 bg-orange-600 hover:bg-orange-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            🚨 Vérifiez votre risque maintenant
-          </Button>
-          <p className="text-sm text-gray-400 mt-4">
+            <Button
+              onClick={() => actions.setStep('address-entry')}
+              size="lg"
+              className="text-lg px-8 py-6 bg-orange-600 hover:bg-orange-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300"
+            >
+              <AlertTriangle className="w-5 h-5 mr-2" />
+              Vérifiez votre risque maintenant
+            </Button>
+          </motion.div>
+          <motion.p
+            className="text-sm text-gray-400 mt-4"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1.0 }}
+            viewport={{ once: true }}
+          >
             Évaluation gratuite en 2 minutes
-          </p>
+          </motion.p>
         </motion.div>
       </div>
     </section>

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 
 const TrustLogos = () => {
-  const basePartners = [
+  const allPartners = [
     { name: 'BPI France', logo: '/partner_logo_bpi_france.svg' },
     { name: 'Grand Nancy Innovation', logo: '/partner_logo_grand_nancy.png' },
     { name: 'ADEME', logo: '/partner_logo_ademe.svg' },
@@ -11,8 +11,13 @@ const TrustLogos = () => {
     { name: 'Needhelp', logo: '/partner_logo_needhelp.png' }
   ]
 
+  // Split partners into 2 rows
+  const row1Partners = [allPartners[0], allPartners[1], allPartners[2], allPartners[6]]
+  const row2Partners = [allPartners[3], allPartners[4], allPartners[5]]
+
   // Create exactly 2 copies for seamless scrolling (original + duplicate)
-  const partners = [...basePartners, ...basePartners]
+  const row1 = [...row1Partners, ...row1Partners]
+  const row2 = [...row2Partners, ...row2Partners]
 
   return (
     <section className="py-20 bg-white">
@@ -36,19 +41,19 @@ const TrustLogos = () => {
           </div>
         </motion.div>
 
-        {/* Carousel Container - Full Width with Auto-Scroll & Touch Enabled */}
+        {/* Desktop: Single row carousel */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="relative overflow-hidden w-full touch-scroll scrollbar-hide"
+          className="hidden md:block relative overflow-hidden w-full"
         >
           <div className="flex animate-scroll space-x-8">
-            {partners.map((partner, index) => (
+            {[...allPartners, ...allPartners].map((partner, index) => (
               <div
                 key={`${partner.name}-${index}`}
-                className="flex-shrink-0 bg-white p-8 rounded-lg shadow-md border hover:shadow-lg transition-shadow duration-300 w-48 h-32 flex items-center justify-center scroll-snap-align-start"
+                className="flex-shrink-0 bg-white p-8 rounded-lg shadow-md border hover:shadow-lg transition-shadow duration-300 w-48 h-32 flex items-center justify-center"
               >
                 <img
                   src={partner.logo}
@@ -59,6 +64,57 @@ const TrustLogos = () => {
             ))}
           </div>
         </motion.div>
+
+        {/* Mobile: Two rows scrolling in opposite directions */}
+        <div className="md:hidden space-y-6">
+          {/* Row 1 - Scrolling Right to Left */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="relative overflow-hidden w-full"
+          >
+            <div className="flex animate-scroll space-x-6">
+              {row1.map((partner, index) => (
+                <div
+                  key={`row1-${partner.name}-${index}`}
+                  className="flex-shrink-0 bg-white p-6 rounded-lg shadow-md border w-40 h-28 flex items-center justify-center"
+                >
+                  <img
+                    src={partner.logo}
+                    alt={partner.name}
+                    className="max-h-16 max-w-full object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Row 2 - Scrolling Left to Right */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="relative overflow-hidden w-full"
+          >
+            <div className="flex animate-scroll-reverse space-x-6">
+              {row2.map((partner, index) => (
+                <div
+                  key={`row2-${partner.name}-${index}`}
+                  className="flex-shrink-0 bg-white p-6 rounded-lg shadow-md border w-40 h-28 flex items-center justify-center"
+                >
+                  <img
+                    src={partner.logo}
+                    alt={partner.name}
+                    className="max-h-16 max-w-full object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

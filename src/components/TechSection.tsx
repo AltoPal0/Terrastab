@@ -1,8 +1,15 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
-import { Satellite, Settings, Droplets, Shield } from 'lucide-react'
+import { Satellite, Settings, Droplets, Shield, ChevronDown, CheckCircle } from 'lucide-react'
 
 const TechSection = () => {
+  const [expandedStep, setExpandedStep] = useState<number | null>(null)
+
+  const toggleStep = (index: number) => {
+    setExpandedStep(expandedStep === index ? null : index)
+  }
+
   const steps = [
     {
       icon: Satellite,
@@ -58,14 +65,21 @@ const TechSection = () => {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <Card className="bg-blue-50 border-blue-200 max-w-4xl mx-auto">
+          <Card className="border-[#43708a] max-w-4xl mx-auto" style={{ backgroundColor: '#43708a' }}>
             <CardContent className="p-8">
               <div className="text-center">
-                <h3 className="text-xl font-bold text-blue-900 mb-4">
+                <div className="flex justify-center mb-6">
+                  <img
+                    src="/logo_france_brgm.svg"
+                    alt="BRGM - Bureau de Recherches Géologiques et Minières"
+                    className="h-16 md:h-20 object-contain"
+                  />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-4">
                   Une solution issue de la recherche publique française
                 </h3>
-                <p className="text-blue-800 leading-relaxed">
-                  TerraStab est née d'une étude menée par le <strong>BRGM</strong> (Bureau de Recherches Géologiques et Minières),
+                <p className="text-gray-100 leading-relaxed">
+                  TerraStab est née d'une étude menée par le <strong className="text-white">BRGM</strong> (Bureau de Recherches Géologiques et Minières),
                   autorité nationale sur le comportement des sols argileux.
                   Nous poursuivons cette approche scientifique en la rendant accessible à grande échelle.
                 </p>
@@ -86,7 +100,8 @@ const TechSection = () => {
             Comment ça fonctionne
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Desktop: Grid with all content visible */}
+          <div className="hidden md:grid md:grid-cols-3 gap-8">
             {steps.map((step, index) => (
               <motion.div
                 key={step.number}
@@ -121,6 +136,69 @@ const TechSection = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* Mobile: Expandable steps */}
+          <div className="md:hidden space-y-4">
+            {steps.map((step, index) => {
+              const isExpanded = expandedStep === index
+
+              return (
+                <motion.div
+                  key={step.number}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.1 * index, ease: "easeOut" }}
+                  viewport={{ once: true }}
+                >
+                  <Card
+                    className={`transition-all duration-300 ${isExpanded ? 'shadow-lg' : 'shadow'}`}
+                    onClick={() => toggleStep(index)}
+                  >
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-4 flex-1">
+                          <div className="relative flex-shrink-0">
+                            <div className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center">
+                              <step.icon className="w-7 h-7 text-white" />
+                            </div>
+                            <div className="absolute -top-1 -right-1 w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center">
+                              <span className="text-white font-bold text-xs">{step.number}</span>
+                            </div>
+                          </div>
+                          <h4 className="text-base font-bold text-gray-900 flex-1">
+                            {step.title}
+                          </h4>
+                        </div>
+                        <motion.div
+                          animate={{ rotate: isExpanded ? 180 : 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="flex-shrink-0 ml-2"
+                        >
+                          <ChevronDown className="w-5 h-5 text-gray-400" />
+                        </motion.div>
+                      </div>
+
+                      <AnimatePresence>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                          >
+                            <p className="text-gray-600 leading-relaxed mt-4 pt-4 border-t border-gray-100 text-sm">
+                              {step.description}
+                            </p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )
+            })}
+          </div>
         </motion.div>
 
         {/* Benefits */}
@@ -144,9 +222,12 @@ const TechSection = () => {
                 <benefit.icon className="w-6 h-6 text-green-600" />
               </div>
               <div>
-                <h4 className="text-lg font-bold text-gray-900 mb-2">
-                  ✅ {benefit.text}
-                </h4>
+                <div className="flex items-center mb-2">
+                  <CheckCircle className="w-5 h-5 text-green-600 mr-2 flex-shrink-0" />
+                  <h4 className="text-lg font-bold text-gray-900">
+                    {benefit.text}
+                  </h4>
+                </div>
                 <p className="text-gray-600 text-sm">
                   {benefit.desc}
                 </p>

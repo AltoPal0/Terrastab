@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { PRODUCT_CONFIG } from '@/lib/productConfig'
+import { CheckCircle } from 'lucide-react'
 
 const QuoteSection = () => {
   const [selectedSolution, setSelectedSolution] = useState<string>('')
@@ -135,7 +136,11 @@ const QuoteSection = () => {
               </p>
             </div>
             <div className="text-center">
-              <div className="text-3xl mb-3">✅</div>
+              <div className="flex justify-center mb-3">
+                <div className="p-3 bg-green-100 rounded-full">
+                  <CheckCircle className="w-8 h-8 text-green-600" />
+                </div>
+              </div>
               <h4 className="font-bold text-gray-900 mb-2">Satisfait ou remboursé</h4>
               <p className="text-sm text-gray-600">
                 Installation garantie avec assurance AXA

@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
+import { MapPin } from 'lucide-react'
 
 const HeroSection = () => {
   const { actions } = useCustomerJourney()
@@ -52,9 +53,10 @@ const HeroSection = () => {
               <Button
                 onClick={() => actions.setStep('address-entry')}
                 size="lg"
-                className="text-lg px-10 py-6 bg-blue-600 hover:bg-blue-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                className="text-lg px-8 py-6 bg-blue-600 hover:bg-blue-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
               >
-                🔍 Vérifiez votre risque gratuitement
+                <MapPin className="w-5 h-5 mr-2" />
+                Vérifiez votre risque gratuitement
               </Button>
             </motion.div>
 

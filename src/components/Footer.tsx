@@ -1,3 +1,5 @@
+import { Mail, Phone, MapPin } from 'lucide-react'
+
 const Footer = () => {
   return (
     <footer id="contact" className="bg-gray-900 text-white">
@@ -8,7 +10,7 @@ const Footer = () => {
             {/* Company Info */}
             <div>
               <img
-                src="/logo_main_terrastab.png"
+                src="/logo_terrastab.svg"
                 alt="Terrastab Logo"
                 className="h-12 w-auto mb-4"
               />
@@ -22,19 +24,19 @@ const Footer = () => {
               <h3 className="text-lg font-bold mb-4">Contact</h3>
               <div className="space-y-3 text-sm">
                 <div className="flex items-center">
-                  <span className="mr-3">📧</span>
+                  <Mail className="w-4 h-4 mr-3 flex-shrink-0 text-blue-400" />
                   <a href="mailto:contact@terrastab.fr" className="text-gray-300 hover:text-white">
                     contact@terrastab.fr
                   </a>
                 </div>
                 <div className="flex items-center">
-                  <span className="mr-3">📞</span>
+                  <Phone className="w-4 h-4 mr-3 flex-shrink-0 text-blue-400" />
                   <a href="tel:+33123456789" className="text-gray-300 hover:text-white">
                     01 23 45 67 89
                   </a>
                 </div>
                 <div className="flex items-start">
-                  <span className="mr-3 mt-1">📍</span>
+                  <MapPin className="w-4 h-4 mr-3 mt-1 flex-shrink-0 text-blue-400" />
                   <div className="text-gray-300">
                     <div>123 Avenue de la Innovation</div>
                     <div>75001 Paris</div>

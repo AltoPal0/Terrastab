@@ -28,7 +28,7 @@ const Header = () => {
               className="flex items-center"
             >
               <img
-                src="/logo_main_terrastab.png"
+                src="/logo_terrastab.svg"
                 alt="Terrastab Logo"
                 className="h-12 w-auto"
               />

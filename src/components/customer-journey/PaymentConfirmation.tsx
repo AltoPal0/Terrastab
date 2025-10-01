@@ -8,7 +8,8 @@ import {
   Calendar,
   Download,
   Home,
-  ArrowRight
+  ArrowRight,
+  Lock
 } from 'lucide-react'
 import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 
@@ -242,9 +243,20 @@ const PaymentConfirmation = () => {
           </Button>
         </div>
 
-        <p className="text-sm text-gray-500">
-          🔒 Paiement sécurisé • ✉️ Confirmation envoyée • 📞 Support disponible 7j/7
-        </p>
+        <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
+          <div className="flex items-center">
+            <Lock className="w-4 h-4 mr-1 flex-shrink-0" />
+            <span>Paiement sécurisé</span>
+          </div>
+          <div className="flex items-center">
+            <Mail className="w-4 h-4 mr-1 flex-shrink-0" />
+            <span>Confirmation envoyée</span>
+          </div>
+          <div className="flex items-center">
+            <Phone className="w-4 h-4 mr-1 flex-shrink-0" />
+            <span>Support disponible 7j/7</span>
+          </div>
+        </div>
       </motion.div>
     </div>
   )
