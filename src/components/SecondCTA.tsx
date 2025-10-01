@@ -1,14 +1,10 @@
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { CheckCircle, Zap, Target } from 'lucide-react'
+import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 
 const SecondCTA = () => {
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+  const { actions } = useCustomerJourney()
 
   const benefits = [
     { icon: Zap, text: "Rapide" },
@@ -82,7 +78,7 @@ const SecondCTA = () => {
           className="mb-8"
         >
           <Button
-            onClick={() => scrollToSection('risque')}
+            onClick={() => actions.setStep('address-entry')}
             size="lg"
             className="text-xl px-12 py-8 bg-blue-600 hover:bg-blue-700 text-white border-0 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 group"
           >

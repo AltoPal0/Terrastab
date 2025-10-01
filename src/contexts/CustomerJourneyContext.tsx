@@ -3,7 +3,7 @@ import React, { createContext, useContext, useReducer, ReactNode } from 'react'
 // Temporary inline types to resolve import issue
 type CustomerJourneyStep =
   | 'idle'
-  | 'risk-assessment'
+  | 'address-entry'
   | 'recommendation'
   | 'configuration'
   | 'quote'
@@ -79,7 +79,7 @@ const initialState: CustomerJourneyState = {
 }
 
 const stepOrder: CustomerJourneyStep[] = [
-  'risk-assessment',
+  'address-entry',
   'recommendation',
   'configuration',
   'quote',

@@ -1,13 +1,9 @@
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
+import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 
 const HeroSection = () => {
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
+  const { actions } = useCustomerJourney()
 
   return (
     <section
@@ -54,7 +50,7 @@ const HeroSection = () => {
               className="mb-10"
             >
               <Button
-                onClick={() => scrollToSection('risque')}
+                onClick={() => actions.setStep('address-entry')}
                 size="lg"
                 className="text-lg px-10 py-6 bg-blue-600 hover:bg-blue-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
               >

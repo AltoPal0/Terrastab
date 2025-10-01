@@ -1,4 +1,5 @@
 import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
+import AddressEntry from './AddressEntry'
 import RecommendationDisplay from './RecommendationDisplay'
 import Configurator from './Configurator'
 import QuoteDisplay from './QuoteDisplay'
@@ -9,6 +10,8 @@ const CustomerJourney = () => {
   const { state } = useCustomerJourney()
 
   switch (state.currentStep) {
+    case 'address-entry':
+      return <AddressEntry />
     case 'recommendation':
       return <RecommendationDisplay />
     case 'configuration':
