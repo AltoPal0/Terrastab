@@ -11,8 +11,24 @@ import FAQSection from '@/components/FAQSection'
 import SecondCTA from '@/components/SecondCTA'
 import Footer from '@/components/Footer'
 import AdminApp from '@/components/admin/AdminApp'
+import { CustomerJourneyProvider, useCustomerJourney } from '@/contexts/CustomerJourneyContext'
+import CustomerJourney from '@/components/customer-journey/CustomerJourney'
 
-function HomePage() {
+function HomePageContent() {
+  const { state } = useCustomerJourney()
+
+  // If customer journey is started, show only the customer journey
+  if (state.currentStep !== 'idle') {
+    return (
+      <div className="min-h-screen bg-white">
+        <Header />
+        <CustomerJourney />
+        <Footer />
+      </div>
+    )
+  }
+
+  // Otherwise show the full landing page
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -46,6 +62,14 @@ function HomePage() {
       </main>
       <Footer />
     </div>
+  )
+}
+
+function HomePage() {
+  return (
+    <CustomerJourneyProvider>
+      <HomePageContent />
+    </CustomerJourneyProvider>
   )
 }
 

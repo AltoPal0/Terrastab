@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CheckCircle, AlertTriangle, XCircle, Loader2, MapPin } from 'lucide-react'
 import { riskAssessmentApi } from '@/lib/supabase'
+import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 import type { RiskAssessmentState } from '@/types/risk-assessment'
 
 const RiskAssessmentSection = () => {
@@ -15,6 +16,7 @@ const RiskAssessmentSection = () => {
     result: null,
     hasAssessed: false
   })
+  const { actions } = useCustomerJourney()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -235,10 +237,9 @@ const RiskAssessmentSection = () => {
                         <div className="flex flex-col sm:flex-row gap-4 pt-4">
                           <Button
                             onClick={() => {
-                              const element = document.getElementById('offres')
-                              if (element) {
-                                element.scrollIntoView({ behavior: 'smooth' })
-                              }
+                              // Start customer journey with risk assessment result
+                              actions.setRiskResult(assessmentState.result)
+                              actions.setStep('recommendation')
                             }}
                             size="lg"
                             className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
