@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Home, Calendar, AlertCircle, Camera, Phone, Mail, ArrowRight, ArrowLeft } from 'lucide-react'
+import { Home, AlertCircle, Camera, Phone, ArrowRight, ArrowLeft } from 'lucide-react'
 import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 // Using inline types temporarily
 type HouseType = 'maison-individuelle' | 'pavillon' | 'villa' | 'autre'

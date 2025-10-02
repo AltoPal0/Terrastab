@@ -147,7 +147,7 @@ const DepositPayment = () => {
                   <Checkbox
                     id="callback"
                     checked={wantsCallBack}
-                    onCheckedChange={setWantsCallBack}
+                    onCheckedChange={(checked) => setWantsCallBack(checked === true)}
                   />
                   <Label htmlFor="callback" className="text-sm">
                     Je souhaite être rappelé(e) pour finaliser les détails techniques
@@ -171,7 +171,7 @@ const DepositPayment = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod}>
+                <RadioGroup value={paymentMethod} onValueChange={(value) => setPaymentMethod(value as 'stripe' | 'paypal' | 'virement')}>
                   {paymentMethods.map((method) => (
                     <div
                       key={method.value}
@@ -232,7 +232,7 @@ const DepositPayment = () => {
                   <Checkbox
                     id="terms"
                     checked={acceptedTerms}
-                    onCheckedChange={setAcceptedTerms}
+                    onCheckedChange={(checked) => setAcceptedTerms(checked === true)}
                     className="mt-1"
                   />
                   <div className="flex-1 text-sm">
