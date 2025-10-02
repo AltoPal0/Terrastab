@@ -1,4 +1,5 @@
 import { Router, Route } from 'wouter'
+import { Analytics } from '@vercel/analytics/react'
 import Header from '@/components/Header'
 import HeroSection from '@/components/HeroSection'
 import MiniPromise from '@/components/MiniPromise'
@@ -94,10 +95,13 @@ function HomePage() {
 
 function App() {
   return (
-    <Router>
-      <Route path="/" component={HomePage} />
-      <Route path="/admin" component={AdminApp} />
-    </Router>
+    <>
+      <Router>
+        <Route path="/" component={HomePage} />
+        <Route path="/admin" component={AdminApp} />
+      </Router>
+      <Analytics />
+    </>
   )
 }
 
