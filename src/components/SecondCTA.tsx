@@ -8,7 +8,7 @@ const SecondCTA = () => {
 
   const benefits = [
     { icon: Zap, text: "Rapide" },
-    { icon: Target, text: "Scientifique" },
+    { icon: Target, text: "Prouvé" },
     { icon: CheckCircle, text: "Sur mesure" }
   ]
 
