@@ -97,7 +97,7 @@ const Configurator = () => {
             <div>
               <Label className="text-lg font-semibold mb-4 block">Type d'habitation</Label>
               <RadioGroup
-                value={formData.houseType}
+                value={formData.houseType || ''}
                 onValueChange={(value) => handleInputChange('houseType', value as HouseType)}
               >
                 {houseTypes.map((type) => (
@@ -141,7 +141,7 @@ const Configurator = () => {
               Observez-vous des problèmes sur votre habitation ?
             </Label>
             <RadioGroup
-              value={formData.visibleProblems}
+              value={formData.visibleProblems || ''}
               onValueChange={(value) => handleInputChange('visibleProblems', value as VisibleProblems)}
             >
               {problemOptions.map((option) => (
@@ -185,7 +185,7 @@ const Configurator = () => {
               <Checkbox
                 id="needsAdvice"
                 checked={formData.needsAdvice || false}
-                onCheckedChange={(checked) => handleInputChange('needsAdvice', checked)}
+                onCheckedChange={(checked) => handleInputChange('needsAdvice', checked === true)}
               />
               <Label htmlFor="needsAdvice" className="text-lg font-medium">
                 Je souhaite être rappelé(e) par un conseiller
@@ -202,7 +202,7 @@ const Configurator = () => {
                 <div>
                   <Label className="text-base font-medium mb-2 block">Préférence de contact</Label>
                   <RadioGroup
-                    value={formData.contactPreference}
+                    value={formData.contactPreference || ''}
                     onValueChange={(value) => handleInputChange('contactPreference', value)}
                   >
                     <div className="flex items-center space-x-2">

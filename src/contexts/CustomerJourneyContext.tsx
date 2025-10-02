@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react'
+import React, { createContext, useContext, useReducer, useMemo } from 'react'
 import type { ReactNode } from 'react'
 
 // Temporary inline types to resolve import issue
@@ -180,7 +180,7 @@ const CustomerJourneyContext = createContext<CustomerJourneyContextType | undefi
 export function CustomerJourneyProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(customerJourneyReducer, initialState)
 
-  const actions = {
+  const actions = useMemo(() => ({
     setStep: (step: CustomerJourneyStep) => dispatch({ type: 'SET_STEP', payload: step }),
     setRiskResult: (result: any) => dispatch({ type: 'SET_RISK_RESULT', payload: result }),
     updateConfiguration: (config: Partial<CustomerConfiguration>) => dispatch({ type: 'UPDATE_CONFIGURATION', payload: config }),
@@ -189,10 +189,12 @@ export function CustomerJourneyProvider({ children }: { children: ReactNode }) {
     nextStep: () => dispatch({ type: 'NEXT_STEP' }),
     previousStep: () => dispatch({ type: 'PREVIOUS_STEP' }),
     resetJourney: () => dispatch({ type: 'RESET_JOURNEY' })
-  }
+  }), [dispatch])
+
+  const value = useMemo(() => ({ state, dispatch, actions }), [state, dispatch, actions])
 
   return (
-    <CustomerJourneyContext.Provider value={{ state, dispatch, actions }}>
+    <CustomerJourneyContext.Provider value={value}>
       {children}
     </CustomerJourneyContext.Provider>
   )
