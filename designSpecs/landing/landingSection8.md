@@ -34,7 +34,7 @@ Découvrez si votre sol présente un risque, recevez des recommandations personn
 - Possibilité d’avoir un **rappel rapide des bénéfices** (3 icônes + 3 mots-clés juste au-dessus du bouton)
   - Exemple :
     - ✅ Rapide
-    - ✅ Scientifique
+    - ✅ Prouvé
     - ✅ Sur mesure
 
 ---
