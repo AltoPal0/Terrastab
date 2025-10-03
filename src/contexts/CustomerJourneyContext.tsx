@@ -37,11 +37,33 @@ interface CustomerConfiguration {
 
 interface QuoteDetails {
   riskLevel: 'Faible' | 'Moyen' | 'Élevé'
-  recommendedSolution: string
-  depositAmount: number
-  estimatedDelivery: string
+  recommendedSolution?: string
+  depositAmount?: number
+  estimatedDelivery?: string
   totalEstimate?: number
-  features: string[]
+  features?: string[]
+  // Nouvelles propriétés pour l'algo
+  quote_id?: string
+  rule_set_version?: string
+  contributions?: Array<{
+    bloc: string
+    rule_applied: string
+    nbr_sonde: number
+    nbr_sonde_double: number
+    note: string
+  }>
+  quantities?: {
+    nbr_sonde: number
+    nbr_sonde_double: number
+    nbr_piquet_irrigation: number
+    nbr_controller: number
+  }
+  pricing?: {
+    sonde: number
+    sonde_double: number
+    piquet_irrigation: number
+    controller: number
+  }
 }
 
 interface PaymentDetails {
