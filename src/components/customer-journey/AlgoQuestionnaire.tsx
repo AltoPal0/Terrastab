@@ -8,7 +8,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Info, ArrowRight, ArrowLeft, AlertCircle } from 'lucide-react'
 import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 import { calculateQuote } from '@/lib/algo-api'
-import type { RisqueFaibleAnswers, RiskLevel, HousingType } from '@/types/algo'
+import type { RisqueFaibleAnswers, RiskLevel } from '@/types/algo'
 
 interface QuestionBlock {
   bloc: string
@@ -155,9 +155,10 @@ const AlgoQuestionnaire = () => {
     return currentBlock.questions.every((q) => {
       const value = answers[q.field]
       if (q.type === 'number') {
-        return value !== undefined && value !== null && value >= 0
+        return typeof value === 'number' && value >= 0
       }
-      return value !== undefined && value !== null && value !== ''
+      // Pour radio et boolean
+      return value !== undefined && value !== null
     })
   }
 
@@ -287,7 +288,7 @@ const AlgoQuestionnaire = () => {
             id={question.field}
             type="number"
             min="0"
-            value={value !== undefined ? value : ''}
+            value={typeof value === 'number' ? value : ''}
             onChange={(e) => handleInputChange(question.field, parseInt(e.target.value) || 0)}
             className="text-lg"
           />

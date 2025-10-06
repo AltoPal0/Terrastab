@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { CheckCircle, ArrowRight, ArrowLeft, Euro, Package, FileText } from 'lucide-react'
+import { CheckCircle, ArrowLeft, Euro, Package, FileText } from 'lucide-react'
 import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 
 const QuoteDisplay = () => {
