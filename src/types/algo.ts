@@ -76,6 +76,7 @@ export interface QuoteCalculationResult {
   devis_total: number
   is_blocked: boolean
   blocked_reason?: string
+  positive_message?: string
 }
 
 // =====================================================
@@ -108,6 +109,7 @@ export interface AlgoRule {
   nbr_sonde: string
   nbr_sonde_double: string
   note: string
+  positive_message?: string
   created_at: string
 }
 
@@ -146,4 +148,24 @@ export interface User {
   created_at: string
   last_login?: string
   metadata?: Record<string, any>
+}
+
+export type InputType = 'boolean' | 'numeric' | 'select'
+
+export interface QuestionOption {
+  value: any
+  label: string
+}
+
+export interface Question {
+  id: string
+  bloc: number
+  rule_set_version: string
+  question_text: string
+  info_text: string
+  input_type: InputType
+  options_json?: QuestionOption[]
+  order_index: number
+  field_name: string
+  created_at: string
 }

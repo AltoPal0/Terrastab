@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -7,126 +7,15 @@ import { Input } from '@/components/ui/input'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Info, ArrowRight, ArrowLeft, AlertCircle } from 'lucide-react'
 import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
-import { calculateQuote } from '@/lib/algo-api'
-import type { RisqueFaibleAnswers, RiskLevel } from '@/types/algo'
+import { calculateQuote, getQuestions, getBlockingRules } from '@/lib/algo-api'
+import type { RisqueFaibleAnswers, RiskLevel, Question, AlgoRule } from '@/types/algo'
 
 interface QuestionBlock {
-  bloc: string
+  bloc: number
   title: string
-  questions: Array<{
-    label: string
-    field: keyof RisqueFaibleAnswers
-    type: 'radio' | 'number' | 'boolean'
-    options?: Array<{ value: any; label: string }>
-  }>
+  questions: Question[]
   info: string
 }
-
-// Définition des blocs de questions pour Risque Faible v1
-const questionBlocks: QuestionBlock[] = [
-  {
-    bloc: '00',
-    title: 'Type de logement',
-    questions: [
-      {
-        label: 'Quel est le type de logement ?',
-        field: 'bloc00_housing_type',
-        type: 'radio',
-        options: [
-          { value: 'Pavillon', label: 'Pavillon' },
-          { value: 'Maison mitoyenne', label: 'Maison mitoyenne' },
-          { value: 'Bâtiment industriel', label: 'Bâtiment industriel' },
-        ],
-      },
-    ],
-    info: 'Le type de bâtiment aide à mieux qualifier la situation du logement et à personnaliser le diagnostic.',
-  },
-  {
-    bloc: '10',
-    title: 'Sous-sol',
-    questions: [
-      {
-        label: 'Le logement possède-t-il un sous-sol ?',
-        field: 'bloc10_has_basement',
-        type: 'radio',
-        options: [
-          { value: true, label: 'Oui' },
-          { value: false, label: 'Non' },
-        ],
-      },
-    ],
-    info: 'La présence d\'un sous-sol influence fortement la manière dont le sol interagit avec la structure du bâtiment.',
-  },
-  {
-    bloc: '20',
-    title: 'Année de construction',
-    questions: [
-      {
-        label: 'Quelle est l\'année de construction du logement ?',
-        field: 'bloc20_construction_year',
-        type: 'number',
-      },
-    ],
-    info: 'L\'année de construction permet d\'évaluer les normes techniques appliquées et la robustesse des fondations.',
-  },
-  {
-    bloc: '30',
-    title: 'Surface',
-    questions: [
-      {
-        label: 'Quelle est la surface totale du logement (en m²) ?',
-        field: 'bloc30_surface_m2',
-        type: 'number',
-      },
-    ],
-    info: 'La surface conditionne l\'ampleur de l\'étude nécessaire pour couvrir correctement le bâtiment.',
-  },
-  {
-    bloc: '40',
-    title: 'Murs sans terrasse',
-    questions: [
-      {
-        label: 'Combien de murs sans terrasse le logement comporte-t-il ?',
-        field: 'bloc40_walls_without_terrace',
-        type: 'number',
-      },
-    ],
-    info: 'Les murs sans appui (terrasse ou autre structure attenante) sont plus exposés aux mouvements de sol.',
-  },
-  {
-    bloc: '50',
-    title: 'Zones vertes et surveillance',
-    questions: [
-      {
-        label: 'Combien de zones vertes sont présentes autour du logement ?',
-        field: 'bloc50_green_zones',
-        type: 'number',
-      },
-      {
-        label: 'Souhaitez-vous mettre ces zones vertes sous surveillance ?',
-        field: 'bloc50_green_zones_monitored',
-        type: 'radio',
-        options: [
-          { value: true, label: 'Oui' },
-          { value: false, label: 'Non' },
-        ],
-      },
-    ],
-    info: 'La végétation proche influence directement le sol. Connaître les zones vertes et leur surveillance permet d\'adapter la protection.',
-  },
-  {
-    bloc: '70',
-    title: 'Extensions',
-    questions: [
-      {
-        label: 'Combien d\'extensions sont présentes autour du logement (garages, annexes, vérandas, etc.) ?',
-        field: 'bloc70_extensions',
-        type: 'number',
-      },
-    ],
-    info: 'Les extensions peuvent fragiliser la structure si elles reposent sur des sols sensibles, il est important de les prendre en compte.',
-  },
-]
 
 const AlgoQuestionnaire = () => {
   const { state, actions } = useCustomerJourney()
@@ -135,7 +24,10 @@ const AlgoQuestionnaire = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isBlocked, setIsBlocked] = useState(false)
-  const [blockedReason, setBlockedReason] = useState<string | null>(null)
+  const [positiveMessage, setPositiveMessage] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [questionBlocks, setQuestionBlocks] = useState<QuestionBlock[]>([])
+  const [blockingRules, setBlockingRules] = useState<AlgoRule[]>([])
 
   // Initialiser les réponses
   const [answers, setAnswers] = useState<Partial<RisqueFaibleAnswers>>({})
@@ -143,53 +35,145 @@ const AlgoQuestionnaire = () => {
   // Déterminer le niveau de risque depuis riskAssessmentResult
   const riskLevel: RiskLevel = state.riskAssessmentResult?.riskLevel?.toLowerCase() || 'faible'
 
+  // Charger les questions et les règles bloquantes depuis la base de données
+  useEffect(() => {
+    const loadQuestions = async () => {
+      setIsLoading(true)
+      setError(null)
+
+      try {
+        const [questionsResponse, blockingResponse] = await Promise.all([
+          getQuestions('v1.0'),
+          getBlockingRules('v1.0')
+        ])
+
+        if (!questionsResponse.success || !questionsResponse.data) {
+          throw new Error(questionsResponse.error || 'Erreur lors du chargement des questions')
+        }
+
+        if (!blockingResponse.success || !blockingResponse.data) {
+          throw new Error(blockingResponse.error || 'Erreur lors du chargement des règles')
+        }
+
+        // Stocker les règles bloquantes
+        setBlockingRules(blockingResponse.data)
+
+        // Grouper les questions par bloc
+        const blocksMap = new Map<number, Question[]>()
+        questionsResponse.data.forEach((question) => {
+          if (!blocksMap.has(question.bloc)) {
+            blocksMap.set(question.bloc, [])
+          }
+          blocksMap.get(question.bloc)!.push(question)
+        })
+
+        // Créer les blocs de questions avec leurs titres
+        const blocks: QuestionBlock[] = []
+        blocksMap.forEach((questions, blocNumber) => {
+          const firstQuestion = questions[0]
+          blocks.push({
+            bloc: blocNumber,
+            title: getTitleForBloc(blocNumber),
+            questions,
+            info: firstQuestion.info_text,
+          })
+        })
+
+        // Trier par numéro de bloc
+        blocks.sort((a, b) => a.bloc - b.bloc)
+        setQuestionBlocks(blocks)
+      } catch (err) {
+        console.error('Error loading questions:', err)
+        setError(err instanceof Error ? err.message : 'Erreur inconnue')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadQuestions()
+  }, [])
+
+  // Helper pour générer les titres de bloc
+  const getTitleForBloc = (bloc: number): string => {
+    const titles: Record<number, string> = {
+      0: 'Type de logement',
+      10: 'Sous-sol',
+      20: 'Année de construction',
+      30: 'Surface',
+      40: 'Murs sans terrasse',
+      50: 'Zones vertes et surveillance',
+      70: 'Extensions',
+    }
+    return titles[bloc] || `Bloc ${bloc}`
+  }
+
   const currentBlock = questionBlocks[currentBlockIndex]
 
-  const handleInputChange = (field: keyof RisqueFaibleAnswers, value: any) => {
-    setAnswers({ ...answers, [field]: value })
-    setError(null)
-  }
+  // Vérifier si une règle bloquante est déclenchée
+  const checkBlockingCondition = (newAnswers: Partial<RisqueFaibleAnswers>) => {
+    for (const rule of blockingRules) {
+      const bloc = rule.bloc
+      const condition = rule.condition
 
-  const canProceed = () => {
-    // Vérifier que toutes les questions du bloc actuel sont répondues
-    return currentBlock.questions.every((q) => {
-      const value = answers[q.field]
-      if (q.type === 'number') {
-        return typeof value === 'number' && value >= 0
+      let isBlocked = false
+
+      switch (bloc) {
+        case '10':
+          if (condition === 'Oui' && newAnswers.bloc10_has_basement === true) {
+            isBlocked = true
+          }
+          break
+        case '20':
+          if (condition.includes('≥') && newAnswers.bloc20_construction_year) {
+            const year = parseInt(condition.replace('≥', ''))
+            if (newAnswers.bloc20_construction_year >= year) {
+              isBlocked = true
+            }
+          }
+          break
+        case '40':
+          if (condition === '=0' && newAnswers.bloc40_walls_without_terrace === 0) {
+            isBlocked = true
+          }
+          break
       }
-      // Pour radio et boolean
-      return value !== undefined && value !== null
-    })
-  }
 
-  const checkBlockingConditions = () => {
-    // Bloc 10: Sous-sol = Oui
-    if (answers.bloc10_has_basement === true) {
-      setIsBlocked(true)
-      setBlockedReason('Pas de facturation pour les logements avec sous-sol')
-      return true
-    }
-
-    // Bloc 20: Année >= 2000
-    if (answers.bloc20_construction_year && answers.bloc20_construction_year >= 2000) {
-      setIsBlocked(true)
-      setBlockedReason('Pas de facturation pour les maisons construites après 2000')
-      return true
-    }
-
-    // Bloc 40: Murs sans terrasse = 0
-    if (answers.bloc40_walls_without_terrace === 0) {
-      setIsBlocked(true)
-      setBlockedReason('Pas de facturation si aucun mur sans terrasse')
-      return true
+      if (isBlocked) {
+        setIsBlocked(true)
+        setPositiveMessage(rule.positive_message || null)
+        return true
+      }
     }
 
     return false
   }
 
+  const handleInputChange = (field: keyof RisqueFaibleAnswers, value: any) => {
+    const newAnswers = { ...answers, [field]: value }
+    setAnswers(newAnswers)
+    setError(null)
+
+    // Vérifier immédiatement si cette réponse déclenche une condition bloquante
+    checkBlockingCondition(newAnswers)
+  }
+
+  const canProceed = () => {
+    if (!currentBlock) return false
+
+    // Vérifier que toutes les questions du bloc actuel sont répondues
+    return currentBlock.questions.every((q) => {
+      const value = answers[q.field_name as keyof RisqueFaibleAnswers]
+      if (q.input_type === 'numeric') {
+        return typeof value === 'number' && value >= 0
+      }
+      // Pour select et boolean
+      return value !== undefined && value !== null
+    })
+  }
+
   const handleNext = async () => {
-    // Vérifier les conditions bloquantes après chaque bloc
-    if (checkBlockingConditions()) {
+    // Ne pas permettre de continuer si bloqué
+    if (isBlocked) {
       return
     }
 
@@ -207,7 +191,7 @@ const AlgoQuestionnaire = () => {
       setCurrentBlockIndex(currentBlockIndex - 1)
       setShowInfo(false)
       setIsBlocked(false)
-      setBlockedReason(null)
+      setPositiveMessage(null)
     } else {
       actions.setStep('recommendation')
     }
@@ -226,7 +210,7 @@ const AlgoQuestionnaire = () => {
 
       if (response.data?.is_blocked) {
         setIsBlocked(true)
-        setBlockedReason(response.data.blocked_reason || 'Pas de facturation possible')
+        setPositiveMessage(response.data.positive_message || null)
         return
       }
 
@@ -251,24 +235,24 @@ const AlgoQuestionnaire = () => {
     }
   }
 
-  const renderQuestion = (question: QuestionBlock['questions'][0]) => {
-    const value = answers[question.field]
+  const renderQuestion = (question: Question) => {
+    const value = answers[question.field_name as keyof RisqueFaibleAnswers]
 
-    if (question.type === 'radio') {
+    if (question.input_type === 'select' || question.input_type === 'boolean') {
       return (
-        <div>
-          <Label className="text-lg font-semibold mb-4 block">{question.label}</Label>
+        <div key={question.id}>
+          <Label className="text-lg font-semibold mb-4 block">{question.question_text}</Label>
           <RadioGroup
             value={value !== undefined ? String(value) : ''}
             onValueChange={(val) => {
               const parsedValue = val === 'true' ? true : val === 'false' ? false : val
-              handleInputChange(question.field, parsedValue)
+              handleInputChange(question.field_name as keyof RisqueFaibleAnswers, parsedValue)
             }}
           >
-            {question.options?.map((option) => (
+            {question.options_json?.map((option) => (
               <div key={String(option.value)} className="flex items-center space-x-2 p-3 rounded-lg border hover:bg-gray-50">
-                <RadioGroupItem value={String(option.value)} id={`${question.field}-${option.value}`} />
-                <Label htmlFor={`${question.field}-${option.value}`} className="flex-1 cursor-pointer">
+                <RadioGroupItem value={String(option.value)} id={`${question.field_name}-${option.value}`} />
+                <Label htmlFor={`${question.field_name}-${option.value}`} className="flex-1 cursor-pointer">
                   {option.label}
                 </Label>
               </div>
@@ -278,18 +262,18 @@ const AlgoQuestionnaire = () => {
       )
     }
 
-    if (question.type === 'number') {
+    if (question.input_type === 'numeric') {
       return (
-        <div>
-          <Label htmlFor={question.field} className="text-lg font-semibold mb-2 block">
-            {question.label}
+        <div key={question.id}>
+          <Label htmlFor={question.field_name} className="text-lg font-semibold mb-2 block">
+            {question.question_text}
           </Label>
           <Input
-            id={question.field}
+            id={question.field_name}
             type="number"
             min="0"
             value={typeof value === 'number' ? value : ''}
-            onChange={(e) => handleInputChange(question.field, parseInt(e.target.value) || 0)}
+            onChange={(e) => handleInputChange(question.field_name as keyof RisqueFaibleAnswers, parseInt(e.target.value) || 0)}
             className="text-lg"
           />
         </div>
@@ -299,25 +283,102 @@ const AlgoQuestionnaire = () => {
     return null
   }
 
-  if (isBlocked) {
+  // État de chargement
+  if (isLoading) {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Card className="border-orange-200 bg-orange-50">
+        <Card>
+          <CardContent className="p-8 text-center">
+            <p className="text-lg text-gray-600">Chargement du questionnaire...</p>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  // Erreur de chargement
+  if (error && questionBlocks.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <Card className="border-red-200 bg-red-50">
           <CardHeader>
-            <CardTitle className="flex items-center space-x-2 text-orange-800">
+            <CardTitle className="flex items-center space-x-2 text-red-800">
               <AlertCircle className="w-6 h-6" />
-              <span>Pas de facturation possible</span>
+              <span>Erreur</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-orange-700 mb-6">{blockedReason}</p>
-            <Button variant="outline" onClick={() => actions.setStep('recommendation')}>
-              Retour à l'évaluation
+            <p className="text-red-700 mb-6">{error}</p>
+            <Button variant="outline" onClick={() => window.location.reload()}>
+              Réessayer
             </Button>
           </CardContent>
         </Card>
       </div>
     )
+  }
+
+  if (isBlocked) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          <Card className="border-green-200 bg-gradient-to-br from-green-50 to-blue-50">
+            <CardContent className="p-8">
+              <div className="text-center mb-6">
+                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-4">
+                  <svg
+                    className="w-8 h-8 text-green-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  Votre logement est déjà protégé !
+                </h2>
+              </div>
+
+              {positiveMessage && (
+                <div className="mb-6 p-6 bg-white rounded-lg border border-green-200 shadow-sm">
+                  <p className="text-lg text-gray-700 leading-relaxed">{positiveMessage}</p>
+                </div>
+              )}
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                <p className="text-sm text-blue-800">
+                  <strong>Notre recommandation :</strong> TerraStab n'est pas nécessaire dans votre cas. Votre logement bénéficie déjà d'une configuration qui le protège naturellement contre les risques de retrait-gonflement des argiles.
+                </p>
+              </div>
+
+              <div className="flex justify-center">
+                <Button
+                  onClick={() => actions.setStep('recommendation')}
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
+                  Retour à l'accueil
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </div>
+    )
+  }
+
+  // Pas de bloc actuel (ne devrait pas arriver)
+  if (!currentBlock) {
+    return null
   }
 
   return (
@@ -350,20 +411,19 @@ const AlgoQuestionnaire = () => {
       </motion.div>
 
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <span>{currentBlock.title}</span>
+        <CardContent className="p-6 relative">
+          {/* Bouton info en haut à droite */}
+          <div className="absolute top-4 right-4">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setShowInfo(!showInfo)}
-              className="text-blue-600"
+              className="text-blue-600 hover:bg-blue-50"
             >
               <Info className="w-5 h-5" />
             </Button>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="p-6">
+          </div>
+
           <AnimatePresence>
             {showInfo && (
               <motion.div
@@ -379,9 +439,7 @@ const AlgoQuestionnaire = () => {
           </AnimatePresence>
 
           <div className="space-y-6">
-            {currentBlock.questions.map((question) => (
-              <div key={question.field}>{renderQuestion(question)}</div>
-            ))}
+            {currentBlock.questions.map((question) => renderQuestion(question))}
           </div>
 
           {error && (

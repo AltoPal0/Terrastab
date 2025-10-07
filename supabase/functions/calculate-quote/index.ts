@@ -35,6 +35,88 @@ interface CalculateQuoteRequest {
   user_id?: string
 }
 
+/**
+ * Évalue si une condition est remplie pour un bloc donné
+ */
+function evaluateCondition(bloc: string, condition: string, answers: RisqueFaibleAnswers): boolean {
+  switch (bloc) {
+    case '00':
+      return condition === answers.bloc00_housing_type
+
+    case '10':
+      if (condition === 'Oui') return answers.bloc10_has_basement === true
+      if (condition === 'Non') return answers.bloc10_has_basement === false
+      return false
+
+    case '20':
+      if (condition.includes('≥')) {
+        const year = parseInt(condition.replace('≥', ''))
+        return answers.bloc20_construction_year >= year
+      }
+      return false
+
+    case '30':
+      // Les règles du bloc 30 s'appliquent toujours
+      return true
+
+    case '40':
+      if (condition === '=0') return answers.bloc40_walls_without_terrace === 0
+      if (condition === '>0') return answers.bloc40_walls_without_terrace > 0
+      return false
+
+    case '50':
+      if (condition === 'Surveillance = Oui') return answers.bloc50_green_zones_monitored === true
+      if (condition === 'Surveillance = Non') return answers.bloc50_green_zones_monitored === false
+      return false
+
+    case '70':
+      // Les règles du bloc 70 s'appliquent toujours
+      return true
+
+    default:
+      return false
+  }
+}
+
+/**
+ * Parse une opération et retourne le nombre à ajouter
+ * Exemples: '0', '+2', '+1 par tranche', '+1 par mur', etc.
+ */
+function parseOperation(operation: string, answers: RisqueFaibleAnswers, bloc: string): number {
+  if (operation === '0' || operation === 'x0') {
+    return 0
+  }
+
+  // +N fixe
+  if (operation.match(/^\+\d+$/)) {
+    return parseInt(operation.replace('+', ''))
+  }
+
+  // +N par X
+  if (operation.includes('par tranche')) {
+    const mult = parseInt(operation.replace('+', '').split(' ')[0])
+    const tranches = Math.floor(answers.bloc30_surface_m2 / 200)
+    return mult * tranches
+  }
+
+  if (operation.includes('par mur')) {
+    const mult = parseInt(operation.replace('+', '').split(' ')[0])
+    return mult * answers.bloc40_walls_without_terrace
+  }
+
+  if (operation.includes('par zone')) {
+    const mult = parseInt(operation.replace('+', '').split(' ')[0])
+    return mult * answers.bloc50_green_zones
+  }
+
+  if (operation.includes('par extension')) {
+    const mult = parseInt(operation.replace('+', '').split(' ')[0])
+    return mult * answers.bloc70_extensions
+  }
+
+  return 0
+}
+
 serve(async (req) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
@@ -55,137 +137,72 @@ serve(async (req) => {
     console.log('Answers:', answers)
 
     // =====================================================
-    // 1. Vérifier les conditions bloquantes (STOP)
+    // 1. Charger les règles depuis algo_table
     // =====================================================
 
-    // Bloc 10: Sous-sol = Oui → STOP
-    if (answers.bloc10_has_basement) {
-      return new Response(
-        JSON.stringify({
-          success: true,
-          data: {
-            is_blocked: true,
-            blocked_reason: 'Pas de facturation pour les logements avec sous-sol',
-            risk_level,
-            rule_set_version,
-          },
-        }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
+    const { data: algoRules, error: algoError } = await supabaseClient
+      .from('algo_table')
+      .select('*')
+      .eq('rule_set_version', rule_set_version)
+      .order('bloc', { ascending: true })
 
-    // Bloc 20: Année ≥ 2000 → STOP
-    if (answers.bloc20_construction_year >= 2000) {
-      return new Response(
-        JSON.stringify({
-          success: true,
-          data: {
-            is_blocked: true,
-            blocked_reason: 'Pas de facturation pour les maisons construites après 2000',
-            risk_level,
-            rule_set_version,
-          },
-        }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
-
-    // Bloc 40: Murs sans terrasse = 0 → STOP
-    if (answers.bloc40_walls_without_terrace === 0) {
-      return new Response(
-        JSON.stringify({
-          success: true,
-          data: {
-            is_blocked: true,
-            blocked_reason: 'Pas de facturation si aucun mur sans terrasse',
-            risk_level,
-            rule_set_version,
-          },
-        }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
+    if (algoError) {
+      throw new Error(`Error fetching algo rules: ${algoError.message}`)
     }
 
     // =====================================================
-    // 2. Appliquer l'algorithme de calcul
+    // 2. Évaluer les règles et appliquer l'algorithme
     // =====================================================
 
     let nbr_sonde = 0
     let nbr_sonde_double = 0
     const contributions: BlockContribution[] = []
 
-    // Bloc 00: Type de logement
-    if (answers.bloc00_housing_type === 'Maison mitoyenne') {
-      nbr_sonde_double += 2
+    for (const rule of algoRules) {
+      const bloc = rule.bloc
+      const condition = rule.condition
+      const nbr_sonde_rule = rule.nbr_sonde
+      const nbr_sonde_double_rule = rule.nbr_sonde_double
+
+      // Évaluer la condition pour ce bloc
+      const conditionMet = evaluateCondition(bloc, condition, answers)
+
+      if (!conditionMet) {
+        continue
+      }
+
+      // Si la règle contient x0, c'est une condition bloquante
+      if (nbr_sonde_rule === 'x0' && nbr_sonde_double_rule === 'x0') {
+        return new Response(
+          JSON.stringify({
+            success: true,
+            data: {
+              is_blocked: true,
+              blocked_reason: rule.note || 'Pas de facturation possible',
+              positive_message: rule.positive_message || null,
+              risk_level,
+              rule_set_version,
+            },
+          }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      // Appliquer les opérations de calcul
+      const sondeToAdd = parseOperation(nbr_sonde_rule, answers, bloc)
+      const sondeDoubleToAdd = parseOperation(nbr_sonde_double_rule, answers, bloc)
+
+      nbr_sonde += sondeToAdd
+      nbr_sonde_double += sondeDoubleToAdd
+
       contributions.push({
-        bloc: '00',
-        rule_applied: 'Maison mitoyenne',
-        nbr_sonde: 0,
-        nbr_sonde_double: 2,
-        note: 'Ajoute 2 sondes doubles forfaitaires',
+        bloc,
+        rule_applied: `${rule.question}: ${condition}`,
+        nbr_sonde: sondeToAdd,
+        nbr_sonde_double: sondeDoubleToAdd,
+        note: rule.note || '',
       })
     }
-
-    // Bloc 30: Surface (tranches de 200 m²)
-    const tranches = Math.floor(answers.bloc30_surface_m2 / 200)
-    nbr_sonde += tranches
-    contributions.push({
-      bloc: '30',
-      rule_applied: `Surface ${answers.bloc30_surface_m2} m² = ${tranches} tranches`,
-      nbr_sonde: tranches,
-      nbr_sonde_double: 0,
-      note: 'Chaque tranche de 200 m² ajoute 1 sonde',
-    })
-
-    // Bloc 30: Toujours +1 sonde double
-    nbr_sonde_double += 1
-    contributions.push({
-      bloc: '30',
-      rule_applied: 'Toujours',
-      nbr_sonde: 0,
-      nbr_sonde_double: 1,
-      note: 'Ajoute une sonde double fixe',
-    })
-
-    // Bloc 40: Murs sans terrasse
-    nbr_sonde += answers.bloc40_walls_without_terrace
-    contributions.push({
-      bloc: '40',
-      rule_applied: `${answers.bloc40_walls_without_terrace} murs`,
-      nbr_sonde: answers.bloc40_walls_without_terrace,
-      nbr_sonde_double: 0,
-      note: 'Chaque mur sans terrasse ajoute 1 sonde',
-    })
-
-    // Bloc 50: Zones vertes surveillées
-    if (answers.bloc50_green_zones_monitored) {
-      nbr_sonde += answers.bloc50_green_zones
-      contributions.push({
-        bloc: '50',
-        rule_applied: `${answers.bloc50_green_zones} zones vertes surveillées`,
-        nbr_sonde: answers.bloc50_green_zones,
-        nbr_sonde_double: 0,
-        note: 'Chaque zone verte surveillée ajoute 1 sonde',
-      })
-    } else if (answers.bloc50_green_zones > 0) {
-      contributions.push({
-        bloc: '50',
-        rule_applied: 'Zones vertes non surveillées',
-        nbr_sonde: 0,
-        nbr_sonde_double: 0,
-        note: 'Pas de sonde si zones non surveillées',
-      })
-    }
-
-    // Bloc 70: Extensions
-    nbr_sonde += answers.bloc70_extensions
-    contributions.push({
-      bloc: '70',
-      rule_applied: `${answers.bloc70_extensions} extensions`,
-      nbr_sonde: answers.bloc70_extensions,
-      nbr_sonde_double: 0,
-      note: 'Chaque extension ajoute 1 sonde',
-    })
 
     // =====================================================
     // 3. Récupérer les prix unitaires

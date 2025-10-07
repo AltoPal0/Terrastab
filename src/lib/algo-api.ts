@@ -144,3 +144,55 @@ export async function getPriceBook(ruleSetVersion: string) {
     }
   }
 }
+
+/**
+ * Récupère les questions pour une version donnée
+ */
+export async function getQuestions(ruleSetVersion: string) {
+  try {
+    const { data, error } = await supabase
+      .from('questions')
+      .select('*')
+      .eq('rule_set_version', ruleSetVersion)
+      .order('bloc', { ascending: true })
+      .order('order_index', { ascending: true })
+
+    if (error) {
+      throw new Error(error.message)
+    }
+
+    return { success: true, data }
+  } catch (error) {
+    console.error('Error fetching questions:', error)
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Erreur inconnue',
+    }
+  }
+}
+
+/**
+ * Récupère les règles bloquantes pour une version donnée
+ */
+export async function getBlockingRules(ruleSetVersion: string) {
+  try {
+    const { data, error } = await supabase
+      .from('algo_table')
+      .select('*')
+      .eq('rule_set_version', ruleSetVersion)
+      .eq('nbr_sonde', 'x0')
+      .eq('nbr_sonde_double', 'x0')
+
+    if (error) {
+      throw new Error(error.message)
+    }
+
+    return { success: true, data }
+  } catch (error) {
+    console.error('Error fetching blocking rules:', error)
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Erreur inconnue',
+    }
+  }
+}
