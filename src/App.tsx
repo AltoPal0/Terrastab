@@ -60,7 +60,7 @@ function HomePageContent() {
           />
 
           {/* Modal Content */}
-          <div className="relative min-h-screen flex items-center justify-center p-4">
+          <div className="relative min-h-screen flex items-center justify-center p-px md:p-4">
             <div className="relative bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
               {/* Close Button */}
               <button
@@ -74,7 +74,7 @@ function HomePageContent() {
               </button>
 
               {/* Customer Journey Content */}
-              <div className="p-6 md:p-8">
+              <div className="p-2 md:p-8">
                 <CustomerJourney />
               </div>
             </div>
