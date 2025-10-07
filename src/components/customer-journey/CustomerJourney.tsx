@@ -3,6 +3,7 @@ import AddressEntry from './AddressEntry'
 import RecommendationDisplay from './RecommendationDisplay'
 import AlgoQuestionnaire from './AlgoQuestionnaire'
 import QuoteDisplay from './QuoteDisplay'
+import ContactCapture from './ContactCapture'
 import DepositPayment from './DepositPayment'
 import PaymentConfirmation from './PaymentConfirmation'
 
@@ -18,6 +19,8 @@ const CustomerJourney = () => {
       return <AlgoQuestionnaire />
     case 'quote':
       return <QuoteDisplay />
+    case 'contact-capture':
+      return <ContactCapture />
     case 'payment':
       return <DepositPayment />
     case 'confirmation':

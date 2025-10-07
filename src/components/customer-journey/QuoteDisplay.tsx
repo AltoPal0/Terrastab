@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { CheckCircle, ArrowLeft, Euro, Package, FileText } from 'lucide-react'
+import { CheckCircle, ArrowLeft, Euro, Package, FileText, Save } from 'lucide-react'
 import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 
 const QuoteDisplay = () => {
@@ -11,6 +11,10 @@ const QuoteDisplay = () => {
 
   const handleGoBack = () => {
     actions.setStep('configuration')
+  }
+
+  const handleSaveAnswers = () => {
+    actions.nextStep() // Va à contact-capture
   }
 
   return (
@@ -167,19 +171,44 @@ const QuoteDisplay = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.8 }}
-        className="mt-8 flex justify-between items-center"
+        className="mt-8"
       >
-        <Button
-          variant="outline"
-          onClick={handleGoBack}
-          className="flex items-center space-x-2"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Modifier mes réponses</span>
-        </Button>
+        {/* Message d'incitation */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+          <div className="flex items-start gap-4">
+            <Save className="w-6 h-6 text-blue-600 mt-1 flex-shrink-0" />
+            <div className="flex-1">
+              <h3 className="font-semibold text-gray-900 mb-1">
+                Ne perdez pas vos réponses !
+              </h3>
+              <p className="text-sm text-gray-600">
+                Enregistrez votre devis et recevez-le par email pour ne rien perdre.
+              </p>
+            </div>
+            <Button
+              onClick={handleSaveAnswers}
+              className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2 flex-shrink-0"
+            >
+              <Save className="w-4 h-4" />
+              Enregistrer mes réponses
+            </Button>
+          </div>
+        </div>
 
-        <div className="text-sm text-gray-500">
-          Algorithme version {quote.rule_set_version}
+        {/* Navigation */}
+        <div className="flex justify-between items-center">
+          <Button
+            variant="outline"
+            onClick={handleGoBack}
+            className="flex items-center space-x-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Modifier mes réponses</span>
+          </Button>
+
+          <div className="text-sm text-gray-500">
+            Algorithme version {quote.rule_set_version}
+          </div>
         </div>
       </motion.div>
     </div>

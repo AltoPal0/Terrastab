@@ -8,6 +8,7 @@ type CustomerJourneyStep =
   | 'recommendation'
   | 'configuration'
   | 'quote'
+  | 'contact-capture'
   | 'payment'
   | 'confirmation'
 
@@ -106,6 +107,7 @@ const stepOrder: CustomerJourneyStep[] = [
   'recommendation',
   'configuration',
   'quote',
+  'contact-capture',
   'payment',
   'confirmation'
 ]
