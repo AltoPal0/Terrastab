@@ -33,6 +33,7 @@ interface CalculateQuoteRequest {
   rule_set_version: string
   answers: RisqueFaibleAnswers
   user_id?: string
+  address?: string
 }
 
 /**
@@ -131,10 +132,11 @@ serve(async (req) => {
     )
 
     // Parse request body
-    const { risk_level, rule_set_version, answers, user_id }: CalculateQuoteRequest = await req.json()
+    const { risk_level, rule_set_version, answers, user_id, address }: CalculateQuoteRequest = await req.json()
 
     console.log('Calculating quote for risk level:', risk_level)
     console.log('Answers:', answers)
+    console.log('Address:', address)
 
     // =====================================================
     // 1. Charger les règles depuis algo_table
@@ -254,6 +256,7 @@ serve(async (req) => {
         nbr_controller: 0,
         devis_total,
         quote_id,
+        address: address || null,
       })
       .select()
       .single()

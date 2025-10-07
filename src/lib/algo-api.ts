@@ -14,7 +14,8 @@ import type {
 export async function calculateQuote(
   riskLevel: RiskLevel,
   answers: AlgoAnswers,
-  userId?: string
+  userId?: string,
+  address?: string
 ): Promise<CalculateQuoteResponse> {
   try {
     const request: CalculateQuoteRequest = {
@@ -22,6 +23,7 @@ export async function calculateQuote(
       rule_set_version: 'v1.0',
       answers,
       user_id: userId,
+      address,
     }
 
     const { data, error } = await supabase.functions.invoke('calculate-quote', {

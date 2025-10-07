@@ -109,9 +109,12 @@ const AlgoQuestionnaire = () => {
 
   const currentBlock = questionBlocks[currentBlockIndex]
 
-  // Vérifier si une règle bloquante est déclenchée
-  const checkBlockingCondition = (newAnswers: Partial<RisqueFaibleAnswers>) => {
-    for (const rule of blockingRules) {
+  // Vérifier si une règle bloquante est déclenchée pour le bloc actuel
+  const checkBlockingCondition = (currentAnswers: Partial<RisqueFaibleAnswers>, blocNumber: number) => {
+    // Filtrer les règles pour ne vérifier que le bloc actuel
+    const relevantRules = blockingRules.filter(rule => parseInt(rule.bloc) === blocNumber)
+
+    for (const rule of relevantRules) {
       const bloc = rule.bloc
       const condition = rule.condition
 
@@ -119,20 +122,20 @@ const AlgoQuestionnaire = () => {
 
       switch (bloc) {
         case '10':
-          if (condition === 'Oui' && newAnswers.bloc10_has_basement === true) {
+          if (condition === 'Oui' && currentAnswers.bloc10_has_basement === true) {
             isBlocked = true
           }
           break
         case '20':
-          if (condition.includes('≥') && newAnswers.bloc20_construction_year) {
+          if (condition.includes('≥') && currentAnswers.bloc20_construction_year) {
             const year = parseInt(condition.replace('≥', ''))
-            if (newAnswers.bloc20_construction_year >= year) {
+            if (currentAnswers.bloc20_construction_year >= year) {
               isBlocked = true
             }
           }
           break
         case '40':
-          if (condition === '=0' && newAnswers.bloc40_walls_without_terrace === 0) {
+          if (condition === '=0' && currentAnswers.bloc40_walls_without_terrace === 0) {
             isBlocked = true
           }
           break
@@ -152,9 +155,6 @@ const AlgoQuestionnaire = () => {
     const newAnswers = { ...answers, [field]: value }
     setAnswers(newAnswers)
     setError(null)
-
-    // Vérifier immédiatement si cette réponse déclenche une condition bloquante
-    checkBlockingCondition(newAnswers)
   }
 
   const canProceed = () => {
@@ -172,9 +172,17 @@ const AlgoQuestionnaire = () => {
   }
 
   const handleNext = async () => {
-    // Ne pas permettre de continuer si bloqué
+    // Ne pas permettre de continuer si déjà bloqué
     if (isBlocked) {
       return
+    }
+
+    // Vérifier les conditions bloquantes du bloc actuel AVANT d'avancer
+    if (currentBlock) {
+      const blocked = checkBlockingCondition(answers, currentBlock.bloc)
+      if (blocked) {
+        return
+      }
     }
 
     if (currentBlockIndex < questionBlocks.length - 1) {
@@ -202,7 +210,10 @@ const AlgoQuestionnaire = () => {
     setError(null)
 
     try {
-      const response = await calculateQuote(riskLevel, answers as RisqueFaibleAnswers)
+      // Récupérer l'adresse depuis le contexte
+      const address = state.riskAssessmentResult?.address
+
+      const response = await calculateQuote(riskLevel, answers as RisqueFaibleAnswers, undefined, address)
 
       if (!response.success) {
         throw new Error(response.error || 'Erreur lors du calcul du devis')
@@ -361,7 +372,21 @@ const AlgoQuestionnaire = () => {
                 </p>
               </div>
 
-              <div className="flex justify-center">
+              <div className="flex justify-center gap-4">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setIsBlocked(false)
+                    setPositiveMessage(null)
+                    if (currentBlockIndex > 0) {
+                      setCurrentBlockIndex(currentBlockIndex - 1)
+                    }
+                  }}
+                  className="border-gray-300 hover:bg-gray-100"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Modifier mes réponses
+                </Button>
                 <Button
                   onClick={() => actions.setStep('recommendation')}
                   className="bg-blue-600 hover:bg-blue-700"

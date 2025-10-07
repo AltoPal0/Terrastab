@@ -88,6 +88,7 @@ export interface CalculateQuoteRequest {
   rule_set_version: string
   answers: AlgoAnswers
   user_id?: string
+  address?: string
 }
 
 export interface CalculateQuoteResponse {
@@ -136,6 +137,7 @@ export interface Result {
   nbr_controller: number
   devis_total: number
   quote_id: string
+  address?: string
   created_at: string
 }
 
