@@ -11,6 +11,7 @@ const corsHeaders = {
 
 interface RisqueFaibleAnswers {
   bloc00_housing_type: string
+  bloc02_is_ground_floor: boolean
   bloc10_has_basement: boolean
   bloc20_construction_year: number
   bloc30_surface_m2: number
@@ -43,6 +44,11 @@ function evaluateCondition(bloc: string, condition: string, answers: RisqueFaibl
   switch (bloc) {
     case '00':
       return condition === answers.bloc00_housing_type
+
+    case '02':
+      if (condition === 'Oui') return answers.bloc02_is_ground_floor === true
+      if (condition === 'Non') return answers.bloc02_is_ground_floor === false
+      return false
 
     case '10':
       if (condition === 'Oui') return answers.bloc10_has_basement === true
@@ -142,15 +148,21 @@ serve(async (req) => {
     // 1. Charger les règles depuis algo_table
     // =====================================================
 
+    // Convertir le niveau de risque en nombre pour le filtre
+    const riskLevelNumber = risk_level === 'faible' ? 1 : risk_level === 'moyen' ? 2 : 3
+
     const { data: algoRules, error: algoError } = await supabaseClient
       .from('algo_table')
       .select('*')
       .eq('rule_set_version', rule_set_version)
+      .contains('risk_levels', [riskLevelNumber])
       .order('bloc', { ascending: true })
 
     if (algoError) {
       throw new Error(`Error fetching algo rules: ${algoError.message}`)
     }
+
+    console.log(`Loaded ${algoRules?.length || 0} rules for risk level ${risk_level} (${riskLevelNumber})`)
 
     // =====================================================
     // 2. Évaluer les règles et appliquer l'algorithme

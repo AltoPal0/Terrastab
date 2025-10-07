@@ -12,6 +12,7 @@ export type ContactMode = 'phone' | 'email' | 'gmail' | 'google' | 'linkedin' | 
 
 export interface RisqueFaibleAnswers {
   bloc00_housing_type: HousingType
+  bloc02_is_ground_floor: boolean
   bloc10_has_basement: boolean
   bloc20_construction_year: number
   bloc30_surface_m2: number

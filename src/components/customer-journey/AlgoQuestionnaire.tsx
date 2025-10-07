@@ -43,8 +43,8 @@ const AlgoQuestionnaire = () => {
 
       try {
         const [questionsResponse, blockingResponse] = await Promise.all([
-          getQuestions('v1.0'),
-          getBlockingRules('v1.0')
+          getQuestions('v1.0', riskLevel),
+          getBlockingRules('v1.0', riskLevel)
         ])
 
         if (!questionsResponse.success || !questionsResponse.data) {
@@ -91,12 +91,13 @@ const AlgoQuestionnaire = () => {
     }
 
     loadQuestions()
-  }, [])
+  }, [riskLevel])
 
   // Helper pour générer les titres de bloc
   const getTitleForBloc = (bloc: number): string => {
     const titles: Record<number, string> = {
       0: 'Type de logement',
+      2: 'Bâtiment de plein pied',
       10: 'Sous-sol',
       20: 'Année de construction',
       30: 'Surface',
@@ -121,6 +122,11 @@ const AlgoQuestionnaire = () => {
       let isBlocked = false
 
       switch (bloc) {
+        case '02':
+          if (condition === 'Non' && currentAnswers.bloc02_is_ground_floor === false) {
+            isBlocked = true
+          }
+          break
         case '10':
           if (condition === 'Oui' && currentAnswers.bloc10_has_basement === true) {
             isBlocked = true
@@ -365,12 +371,6 @@ const AlgoQuestionnaire = () => {
                   <p className="text-lg text-gray-700 leading-relaxed">{positiveMessage}</p>
                 </div>
               )}
-
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                <p className="text-sm text-blue-800">
-                  <strong>Notre recommandation :</strong> TerraStab n'est pas nécessaire dans votre cas. Votre logement bénéficie déjà d'une configuration qui le protège naturellement contre les risques de retrait-gonflement des argiles.
-                </p>
-              </div>
 
               <div className="flex justify-center gap-4">
                 <Button

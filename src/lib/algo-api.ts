@@ -148,14 +148,22 @@ export async function getPriceBook(ruleSetVersion: string) {
 }
 
 /**
- * Récupère les questions pour une version donnée
+ * Récupère les questions pour une version donnée et un niveau de risque
  */
-export async function getQuestions(ruleSetVersion: string) {
+export async function getQuestions(ruleSetVersion: string, riskLevel?: RiskLevel) {
   try {
-    const { data, error } = await supabase
+    let query = supabase
       .from('questions')
       .select('*')
       .eq('rule_set_version', ruleSetVersion)
+
+    // Filtrer par niveau de risque si spécifié
+    if (riskLevel) {
+      const riskLevelNumber = riskLevel === 'faible' ? 1 : riskLevel === 'moyen' ? 2 : 3
+      query = query.contains('risk_levels', [riskLevelNumber])
+    }
+
+    const { data, error } = await query
       .order('bloc', { ascending: true })
       .order('order_index', { ascending: true })
 
@@ -174,16 +182,24 @@ export async function getQuestions(ruleSetVersion: string) {
 }
 
 /**
- * Récupère les règles bloquantes pour une version donnée
+ * Récupère les règles bloquantes pour une version donnée et un niveau de risque
  */
-export async function getBlockingRules(ruleSetVersion: string) {
+export async function getBlockingRules(ruleSetVersion: string, riskLevel?: RiskLevel) {
   try {
-    const { data, error } = await supabase
+    let query = supabase
       .from('algo_table')
       .select('*')
       .eq('rule_set_version', ruleSetVersion)
       .eq('nbr_sonde', 'x0')
       .eq('nbr_sonde_double', 'x0')
+
+    // Filtrer par niveau de risque si spécifié
+    if (riskLevel) {
+      const riskLevelNumber = riskLevel === 'faible' ? 1 : riskLevel === 'moyen' ? 2 : 3
+      query = query.contains('risk_levels', [riskLevelNumber])
+    }
+
+    const { data, error } = await query
 
     if (error) {
       throw new Error(error.message)
