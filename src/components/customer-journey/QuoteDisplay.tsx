@@ -2,9 +2,12 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { CheckCircle, ArrowLeft, Euro, Package, FileText, Save, Mail, Phone, Shield, CheckCircle2 } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { CheckCircle, ArrowLeft, Euro, Package, FileText, Save, Mail, Shield, CheckCircle2 } from 'lucide-react'
 import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 import { supabase } from '@/lib/supabase'
+import { quoteApi } from '@/lib/quote-api'
 
 const QuoteDisplay = () => {
   const { state, actions } = useCustomerJourney()
@@ -14,6 +17,8 @@ const QuoteDisplay = () => {
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
   const [showSaveModal, setShowSaveModal] = useState(false)
+  const [showEmailForm, setShowEmailForm] = useState(false)
+  const [email, setEmail] = useState('')
 
   const handleGoBack = () => {
     actions.setStep('configuration')
@@ -24,7 +29,7 @@ const QuoteDisplay = () => {
   }
 
   const handleGoogleSignIn = async () => {
-    if (!quote.quote_id) {
+    if (!quote.resultId) {
       setError('Aucun devis à sauvegarder')
       return
     }
@@ -33,16 +38,21 @@ const QuoteDisplay = () => {
     setError(null)
 
     try {
-      // Stocker le quote_id dans le localStorage pour le récupérer après redirection
+      // Stocker le result_id dans le localStorage pour le récupérer après redirection
       localStorage.setItem('pending_quote_save', JSON.stringify({
-        quote_id: state.quote.quote_id,
-        quote_data: state.quote
+        result_id: state.quote.resultId,
+        quote_data: {
+          montant_total: state.quote.totalCost || 0,
+          nombre_sensors: (state.quote.quantities?.nbr_sonde || 0) + (state.quote.quantities?.nbr_sonde_double || 0),
+          nombre_controleurs: state.quote.quantities?.nbr_controller || 0,
+          nombre_piquets: state.quote.quantities?.nbr_piquet_irrigation || 0,
+        }
       }))
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}?quote_saved=true`,
+          redirectTo: `${window.location.origin}`,
         },
       })
 
@@ -53,6 +63,59 @@ const QuoteDisplay = () => {
     } catch (err) {
       console.error('Error with Google sign-in:', err)
       setError(err instanceof Error ? err.message : 'Erreur avec Google')
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!email || !quote.resultId || !quote.quote_id) {
+      setError('Email ou devis manquant')
+      return
+    }
+
+    // Validation email simple
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      setError('Email invalide')
+      return
+    }
+
+    setIsSubmitting(true)
+    setError(null)
+
+    try {
+      // Envoyer l'email directement via la fonction send-quote-email
+      const { data, error: emailError } = await supabase.functions.invoke('send-quote-email', {
+        body: {
+          to: email,
+          quote_id: quote.quote_id,
+          quote_data: {
+            montant_total: state.quote.totalCost || 0,
+            nombre_sensors: (state.quote.quantities?.nbr_sonde || 0) + (state.quote.quantities?.nbr_sonde_double || 0),
+            nombre_controleurs: state.quote.quantities?.nbr_controller || 0,
+            nombre_piquets: state.quote.quantities?.nbr_piquet_irrigation || 0,
+          }
+        }
+      })
+
+      if (emailError) {
+        throw emailError
+      }
+
+      if (!data.success) {
+        throw new Error(data.error || 'Erreur lors de l\'envoi de l\'email')
+      }
+
+      // Succès
+      setSuccess(true)
+      setEmail('')
+      setShowEmailForm(false)
+    } catch (err) {
+      console.error('Error sending email:', err)
+      setError(err instanceof Error ? err.message : 'Erreur lors de l\'envoi de l\'email')
+    } finally {
       setIsSubmitting(false)
     }
   }
@@ -227,6 +290,7 @@ const QuoteDisplay = () => {
             </div>
             <Button
               onClick={handleSaveAnswers}
+              data-save-quote-button
               className="bg-blue-600 hover:bg-blue-700 flex items-center gap-2 flex-shrink-0"
             >
               <Save className="w-4 h-4" />
@@ -281,19 +345,22 @@ const QuoteDisplay = () => {
                 <div className="text-center py-4">
                   <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
                   <p className="text-lg font-semibold text-gray-900 mb-2">
-                    ✅ Votre devis a été enregistré
+                    ✅ Votre devis a été envoyé
                   </p>
                   <p className="text-gray-600">
-                    Nous vous l'avons envoyé par e-mail.
+                    Consultez votre boîte email.
                   </p>
                   <Button
-                    onClick={() => setShowSaveModal(false)}
+                    onClick={() => {
+                      setShowSaveModal(false)
+                      setSuccess(false)
+                    }}
                     className="mt-4 bg-blue-600 hover:bg-blue-700"
                   >
                     Fermer
                   </Button>
                 </div>
-              ) : (
+              ) : !showEmailForm ? (
                 <div className="space-y-4">
                   <Button
                     onClick={handleGoogleSignIn}
@@ -321,22 +388,22 @@ const QuoteDisplay = () => {
                     {isSubmitting ? 'Connexion...' : 'Continuer avec Google'}
                   </Button>
 
-                  <Button
-                    variant="outline"
-                    disabled
-                    className="w-full h-12 opacity-50 cursor-not-allowed"
-                  >
-                    <Mail className="w-5 h-5 mr-2" />
-                    Par email (bientôt disponible)
-                  </Button>
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-4 bg-white text-gray-500">Ou</span>
+                    </div>
+                  </div>
 
                   <Button
                     variant="outline"
-                    disabled
-                    className="w-full h-12 opacity-50 cursor-not-allowed"
+                    onClick={() => setShowEmailForm(true)}
+                    className="w-full h-12"
                   >
-                    <Phone className="w-5 h-5 mr-2" />
-                    Par SMS (bientôt disponible)
+                    <Mail className="w-5 h-5 mr-2" />
+                    Recevoir par email
                   </Button>
 
                   {error && (
@@ -353,6 +420,52 @@ const QuoteDisplay = () => {
                     Annuler
                   </Button>
                 </div>
+              ) : (
+                <form onSubmit={handleEmailSubmit} className="space-y-4">
+                  <div>
+                    <Label htmlFor="email" className="text-base font-semibold mb-2 block">
+                      Votre adresse email
+                    </Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="exemple@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="text-base"
+                      required
+                      autoFocus
+                    />
+                  </div>
+
+                  {error && (
+                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                      <p className="text-red-800 text-sm">{error}</p>
+                    </div>
+                  )}
+
+                  <div className="flex gap-3">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        setShowEmailForm(false)
+                        setEmail('')
+                        setError(null)
+                      }}
+                      className="flex-1"
+                    >
+                      Retour
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting || !email}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700"
+                    >
+                      {isSubmitting ? 'Envoi...' : 'Envoyer mon devis'}
+                    </Button>
+                  </div>
+                </form>
               )}
 
               <p className="text-xs text-gray-500 text-center mt-4">

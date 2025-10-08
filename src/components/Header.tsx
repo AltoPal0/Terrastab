@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Menu, X, TestTube } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
+import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isTestingAuth, setIsTestingAuth] = useState(false)
+  const { actions } = useCustomerJourney()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -44,7 +46,7 @@ const Header = () => {
       const { data: insertedQuote, error: insertError } = await supabase
         .from('results')
         .insert(fakeQuoteData)
-        .select('id, quote_id')
+        .select('id, quote_id, devis_total, nbr_sonde, nbr_sonde_double, nbr_controller, nbr_piquet_irrigation')
         .single()
 
       if (insertError) {
@@ -54,32 +56,49 @@ const Header = () => {
         return
       }
 
-      // Sauvegarder les données dans localStorage pour le callback OAuth
-      const pendingQuoteData = {
-        result_id: insertedQuote.id,
-        quote_data: {
-          montant_total: fakeQuoteData.devis_total,
-          nombre_sensors: fakeQuoteData.nbr_sonde + fakeQuoteData.nbr_sonde_double,
-          nombre_controleurs: fakeQuoteData.nbr_controller,
-          nombre_piquets: fakeQuoteData.nbr_piquet_irrigation,
-        }
-      }
-
-      localStorage.setItem('pending_quote_save', JSON.stringify(pendingQuoteData))
       console.log('Devis test créé:', insertedQuote.quote_id)
 
-      // Lancer l'authentification Google
-      const { error: authError } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}`,
-        },
+      // Mettre à jour le contexte avec le devis fake
+      actions.setRiskResult({
+        risk_level: 'Moyen',
+        address: '1 Rue de Test, 75001 Paris',
+        formatted_address: '1 Rue de Test, 75001 Paris'
       })
 
-      if (authError) {
-        console.error('Erreur OAuth:', authError)
-        alert('Erreur lors de la connexion Google')
-      }
+      actions.setQuote({
+        quote_id: insertedQuote.quote_id,
+        resultId: insertedQuote.id,
+        riskLevel: 'Moyen',
+        rule_set_version: 'v1.0',
+        totalCost: insertedQuote.devis_total,
+        numberOfSensors: insertedQuote.nbr_sonde + insertedQuote.nbr_sonde_double,
+        numberOfControllers: insertedQuote.nbr_controller,
+        numberOfIrrigationStakes: insertedQuote.nbr_piquet_irrigation,
+        quantities: {
+          nbr_sonde: insertedQuote.nbr_sonde,
+          nbr_sonde_double: insertedQuote.nbr_sonde_double,
+          nbr_controller: insertedQuote.nbr_controller,
+          nbr_piquet_irrigation: insertedQuote.nbr_piquet_irrigation
+        },
+        pricing: {
+          sonde: 250,
+          sonde_double: 350,
+          piquet_irrigation: 50,
+          controller: 499
+        }
+      })
+
+      // Aller directement à l'étape quote (affichage du devis)
+      actions.setStep('quote')
+
+      // Déclencher l'ouverture du modal après un court délai
+      setTimeout(() => {
+        const saveButton = document.querySelector('[data-save-quote-button]') as HTMLButtonElement
+        if (saveButton) {
+          saveButton.click()
+        }
+      }, 500)
+
     } catch (error) {
       console.error('Erreur inattendue:', error)
       alert('Erreur inattendue')
@@ -148,7 +167,7 @@ const Header = () => {
               className="flex items-center gap-2 border-orange-300 text-orange-600 hover:bg-orange-50 hover:text-orange-700"
             >
               <TestTube className="w-4 h-4" />
-              {isTestingAuth ? 'Test...' : 'Test Auth'}
+              {isTestingAuth ? 'Test...' : 'Test Devis'}
             </Button>
           </nav>
 
@@ -205,7 +224,7 @@ const Header = () => {
                   className="w-full flex items-center justify-center gap-2 border-orange-300 text-orange-600 hover:bg-orange-50 hover:text-orange-700"
                 >
                   <TestTube className="w-4 h-4" />
-                  {isTestingAuth ? 'Test...' : 'Test Auth'}
+                  {isTestingAuth ? 'Test...' : 'Test Devis'}
                 </Button>
               </div>
             </div>
