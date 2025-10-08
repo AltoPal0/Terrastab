@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, TestTube } from 'lucide-react'
+import { supabase } from '@/lib/supabase'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isTestingAuth, setIsTestingAuth] = useState(false)
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -15,6 +17,75 @@ const Header = () => {
       element.scrollIntoView({ behavior: 'smooth' })
     }
     setIsMenuOpen(false)
+  }
+
+  const handleTestAuth = async () => {
+    setIsTestingAuth(true)
+
+    try {
+      // Créer un devis fake dans la base de données
+      const fakeQuoteData = {
+        risk_level: 'moyen',
+        rule_set_version: 'v1.0',
+        answers_json: {
+          bloc00_housing_type: 'maison',
+          bloc10_foundation_depth: '80cm',
+        },
+        nbr_sonde: 4,
+        nbr_sonde_double: 2,
+        nbr_controller: 1,
+        nbr_piquet_irrigation: 8,
+        devis_total: 2499.99,
+        quote_id: `TEST-${Date.now()}`,
+        address: '1 Rue de Test, 75001 Paris'
+      }
+
+      // Insérer le devis de test
+      const { data: insertedQuote, error: insertError } = await supabase
+        .from('results')
+        .insert(fakeQuoteData)
+        .select('id, quote_id')
+        .single()
+
+      if (insertError) {
+        console.error('Erreur lors de la création du devis test:', insertError)
+        alert('Erreur lors de la création du devis test')
+        setIsTestingAuth(false)
+        return
+      }
+
+      // Sauvegarder les données dans localStorage pour le callback OAuth
+      const pendingQuoteData = {
+        result_id: insertedQuote.id,
+        quote_data: {
+          montant_total: fakeQuoteData.devis_total,
+          nombre_sensors: fakeQuoteData.nbr_sonde + fakeQuoteData.nbr_sonde_double,
+          nombre_controleurs: fakeQuoteData.nbr_controller,
+          nombre_piquets: fakeQuoteData.nbr_piquet_irrigation,
+        }
+      }
+
+      localStorage.setItem('pending_quote_save', JSON.stringify(pendingQuoteData))
+      console.log('Devis test créé:', insertedQuote.quote_id)
+
+      // Lancer l'authentification Google
+      const { error: authError } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}`,
+        },
+      })
+
+      if (authError) {
+        console.error('Erreur OAuth:', authError)
+        alert('Erreur lors de la connexion Google')
+      }
+    } catch (error) {
+      console.error('Erreur inattendue:', error)
+      alert('Erreur inattendue')
+    } finally {
+      setIsTestingAuth(false)
+    }
   }
 
   return (
@@ -36,7 +107,7 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-10">
+          <nav className="hidden md:flex items-center space-x-10">
             <button
               onClick={() => scrollToSection('top')}
               className="text-gray-700 hover:text-blue-600 px-1 py-2 text-base font-medium transition-colors"
@@ -67,6 +138,18 @@ const Header = () => {
             >
               Contact
             </button>
+
+            {/* Test Button */}
+            <Button
+              onClick={handleTestAuth}
+              disabled={isTestingAuth}
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2 border-orange-300 text-orange-600 hover:bg-orange-50 hover:text-orange-700"
+            >
+              <TestTube className="w-4 h-4" />
+              {isTestingAuth ? 'Test...' : 'Test Auth'}
+            </Button>
           </nav>
 
           {/* Mobile menu button */}
@@ -111,6 +194,20 @@ const Header = () => {
               >
                 Contact
               </button>
+
+              {/* Test Button Mobile */}
+              <div className="px-3 py-2">
+                <Button
+                  onClick={handleTestAuth}
+                  disabled={isTestingAuth}
+                  variant="outline"
+                  size="sm"
+                  className="w-full flex items-center justify-center gap-2 border-orange-300 text-orange-600 hover:bg-orange-50 hover:text-orange-700"
+                >
+                  <TestTube className="w-4 h-4" />
+                  {isTestingAuth ? 'Test...' : 'Test Auth'}
+                </Button>
+              </div>
             </div>
           </div>
         )}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -26,7 +26,24 @@ const ContactCapture = () => {
   const { state, actions } = useCustomerJourney()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const [contactMode, setContactMode] = useState<'email' | 'phone' | null>(null)
+
+  // Vérifier si un message de succès est disponible après l'authentification
+  useEffect(() => {
+    const savedMessage = localStorage.getItem('quote_save_message')
+    const savedError = localStorage.getItem('quote_save_error')
+
+    if (savedMessage) {
+      setSuccessMessage(savedMessage)
+      localStorage.removeItem('quote_save_message')
+    }
+
+    if (savedError) {
+      setError(savedError)
+      localStorage.removeItem('quote_save_error')
+    }
+  }, [])
 
   const {
     register,
@@ -84,10 +101,24 @@ const ContactCapture = () => {
     setError(null)
 
     try {
+      // Sauvegarder les données du devis en attente dans localStorage
+      // pour les récupérer après l'authentification
+      const pendingQuoteData = {
+        result_id: state.quote.resultId, // ID du résultat du devis
+        quote_data: {
+          montant_total: state.quote.totalCost || 0,
+          nombre_sensors: state.quote.numberOfSensors || 0,
+          nombre_controleurs: state.quote.numberOfControllers || 0,
+          nombre_piquets: state.quote.numberOfIrrigationStakes || 0,
+        }
+      }
+
+      localStorage.setItem('pending_quote_save', JSON.stringify(pendingQuoteData))
+
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}?step=payment`,
+          redirectTo: `${window.location.origin}?step=contact`,
         },
       })
 
@@ -146,6 +177,17 @@ const ContactCapture = () => {
           </CardHeader>
 
           <CardContent className="space-y-6">
+            {/* Message de succès après sauvegarde */}
+            {successMessage && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-4 bg-green-50 border border-green-200 rounded-lg"
+              >
+                <p className="text-green-800 font-medium">{successMessage}</p>
+              </motion.div>
+            )}
+
             {/* Bénéfices */}
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 space-y-3">
               <div className="flex items-start gap-3">

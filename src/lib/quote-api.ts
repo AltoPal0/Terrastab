@@ -2,7 +2,7 @@ import { supabase } from './supabase'
 
 export interface SaveQuoteRequest {
   auth_user_id: string
-  quote_id: string
+  result_id: string
   user_email?: string
 }
 

@@ -142,12 +142,60 @@ serve(async (req) => {
       throw new Error('Erreur lors de la sauvegarde du devis')
     }
 
-    // 4. Retourner la confirmation
+    // 4. Récupérer les détails du devis pour l'email
+    const { data: resultDetails, error: resultDetailsError } = await supabaseAdmin
+      .from('results')
+      .select('quote_id, nbr_sonde, nbr_sonde_double, nbr_controller, nbr_piquet_irrigation, devis_total')
+      .eq('id', result_id)
+      .single()
+
+    if (resultDetailsError) {
+      console.error('Error fetching result details:', resultDetailsError)
+    }
+
+    // 5. Envoyer l'email avec le devis (ne pas bloquer si ça échoue)
+    let emailSent = false
+    if (user_email && resultDetails) {
+      try {
+        const emailResponse = await fetch(`${supabaseUrl}/functions/v1/send-quote-email`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${supabaseServiceKey}`,
+          },
+          body: JSON.stringify({
+            to: user_email,
+            quote_id: resultDetails.quote_id,
+            quote_data: {
+              montant_total: resultDetails.devis_total || 0,
+              nombre_sensors: (resultDetails.nbr_sonde || 0) + (resultDetails.nbr_sonde_double || 0),
+              nombre_controleurs: resultDetails.nbr_controller || 0,
+              nombre_piquets: resultDetails.nbr_piquet_irrigation || 0,
+              details: {}
+            }
+          })
+        })
+
+        const emailResult = await emailResponse.json()
+        if (emailResult.success) {
+          emailSent = true
+          console.log('Email sent successfully:', emailResult.email_id)
+        } else {
+          console.error('Email sending failed:', emailResult.error)
+        }
+      } catch (emailError) {
+        console.error('Error calling send-quote-email function:', emailError)
+      }
+    }
+
+    // 6. Retourner la confirmation
     return new Response(
       JSON.stringify({
         success: true,
         quote_id: updatedResult.quote_id,
-        message: '✅ Votre devis a été enregistré. Nous vous l\'avons envoyé par e-mail.'
+        message: emailSent
+          ? '✅ Votre devis a été enregistré. Nous vous l\'avons envoyé par e-mail.'
+          : '✅ Votre devis a été enregistré.'
       } as SaveQuoteResponse),
       {
         status: 200,

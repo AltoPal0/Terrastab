@@ -32,12 +32,12 @@ function HomePageContent() {
 
         if (pendingQuoteData) {
           try {
-            const { quote_id, quote_data } = JSON.parse(pendingQuoteData)
+            const { result_id, quote_data } = JSON.parse(pendingQuoteData)
 
             // Appeler l'Edge Function pour sauvegarder le devis
             const response = await quoteApi.saveQuote({
               auth_user_id: session.user.id,
-              quote_id: quote_id,
+              result_id: result_id,
               user_email: session.user.email
             })
 
@@ -46,11 +46,12 @@ function HomePageContent() {
               // Nettoyer le localStorage
               localStorage.removeItem('pending_quote_save')
 
-              // Afficher un message de succès
-              // L'état de succès sera géré dans QuoteDisplay
+              // Stocker le message de succès pour l'afficher
+              localStorage.setItem('quote_save_message', response.message || '✅ Votre devis a été enregistré.')
             }
           } catch (error) {
             console.error('Error saving quote after auth:', error)
+            localStorage.setItem('quote_save_error', 'Erreur lors de la sauvegarde du devis.')
           }
         }
       }
