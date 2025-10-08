@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Router, Route } from 'wouter'
 import { Analytics } from '@vercel/analytics/react'
 import Header from '@/components/Header'
@@ -13,9 +14,61 @@ import Footer from '@/components/Footer'
 import AdminApp from '@/components/admin/AdminApp'
 import { CustomerJourneyProvider, useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 import CustomerJourney from '@/components/customer-journey/CustomerJourney'
+import { supabase } from '@/lib/supabase'
+import { quoteApi } from '@/lib/quote-api'
 
 function HomePageContent() {
   const { state, actions } = useCustomerJourney()
+
+  // Gérer le callback après authentification Google
+  useEffect(() => {
+    const handleAuthCallback = async () => {
+      // Vérifier si l'utilisateur vient de se connecter
+      const { data: { session } } = await supabase.auth.getSession()
+
+      if (session?.user) {
+        // Récupérer les données du devis en attente
+        const pendingQuoteData = localStorage.getItem('pending_quote_save')
+
+        if (pendingQuoteData) {
+          try {
+            const { quote_id, quote_data } = JSON.parse(pendingQuoteData)
+
+            // Appeler l'Edge Function pour sauvegarder le devis
+            const response = await quoteApi.saveQuote({
+              auth_user_id: session.user.id,
+              quote_id: quote_id,
+              user_email: session.user.email
+            })
+
+            if (response.success) {
+              console.log('Quote saved successfully:', response.quote_id)
+              // Nettoyer le localStorage
+              localStorage.removeItem('pending_quote_save')
+
+              // Afficher un message de succès
+              // L'état de succès sera géré dans QuoteDisplay
+            }
+          } catch (error) {
+            console.error('Error saving quote after auth:', error)
+          }
+        }
+      }
+    }
+
+    handleAuthCallback()
+
+    // Écouter les changements d'état d'authentification
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        handleAuthCallback()
+      }
+    })
+
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [])
 
   return (
     <>
