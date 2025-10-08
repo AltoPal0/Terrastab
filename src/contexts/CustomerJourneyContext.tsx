@@ -42,8 +42,10 @@ interface QuoteDetails {
   depositAmount?: number
   estimatedDelivery?: string
   totalEstimate?: number
+  totalCost?: number
   features?: string[]
   // Nouvelles propriétés pour l'algo
+  resultId?: string
   quote_id?: string
   rule_set_version?: string
   contributions?: Array<{

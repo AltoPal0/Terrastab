@@ -284,6 +284,7 @@ serve(async (req) => {
     const response = {
       success: true,
       data: {
+        result_id: resultData.id,
         quote_id,
         risk_level,
         rule_set_version,

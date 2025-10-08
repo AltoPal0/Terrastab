@@ -1,4 +1,5 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -8,6 +9,7 @@ const corsHeaders = {
 interface SendQuoteEmailRequest {
   to: string // Email du destinataire
   quote_id: string // ID du devis
+  result_id?: string // ID du résultat pour mettre à jour l'email
   quote_data: {
     montant_total: number
     nombre_sensors: number
@@ -32,12 +34,20 @@ serve(async (req) => {
 
   try {
     const resendApiKey = Deno.env.get('RESEND_API_KEY')
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
 
     if (!resendApiKey) {
       throw new Error('Missing RESEND_API_KEY environment variable')
     }
 
-    const { to, quote_id, quote_data, user_name }: SendQuoteEmailRequest = await req.json()
+    if (!supabaseUrl || !supabaseServiceKey) {
+      throw new Error('Missing Supabase environment variables')
+    }
+
+    const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
+
+    const { to, quote_id, result_id, quote_data, user_name }: SendQuoteEmailRequest = await req.json()
 
     if (!to || !quote_id || !quote_data) {
       return new Response(
@@ -332,6 +342,26 @@ serve(async (req) => {
     if (!resendResponse.ok) {
       console.error('Resend API error:', resendData)
       throw new Error(`Erreur lors de l'envoi de l'email: ${resendData.message || 'Unknown error'}`)
+    }
+
+    // Mettre à jour l'email dans la table results si result_id est fourni
+    if (result_id) {
+      try {
+        const { error: updateError } = await supabaseAdmin
+          .from('results')
+          .update({ email: to })
+          .eq('quote_id', quote_id)
+
+        if (updateError) {
+          console.error('Error updating email in results:', updateError)
+          // Ne pas bloquer l'envoi d'email si la mise à jour échoue
+        } else {
+          console.log('Email saved in results table for quote:', quote_id)
+        }
+      } catch (err) {
+        console.error('Error saving email to database:', err)
+        // Ne pas bloquer l'envoi d'email si la mise à jour échoue
+      }
     }
 
     return new Response(

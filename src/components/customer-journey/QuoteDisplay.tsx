@@ -91,6 +91,7 @@ const QuoteDisplay = () => {
         body: {
           to: email,
           quote_id: quote.quote_id,
+          result_id: quote.resultId,
           quote_data: {
             montant_total: state.quote.totalCost || 0,
             nombre_sensors: (state.quote.quantities?.nbr_sonde || 0) + (state.quote.quantities?.nbr_sonde_double || 0),
@@ -354,10 +355,15 @@ const QuoteDisplay = () => {
                     onClick={() => {
                       setShowSaveModal(false)
                       setSuccess(false)
+                      setShowEmailForm(false)
+                      setEmail('')
+                      setError(null)
+                      // Réinitialiser complètement le journey pour retourner à l'accueil
+                      actions.resetJourney()
                     }}
                     className="mt-4 bg-blue-600 hover:bg-blue-700"
                   >
-                    Fermer
+                    OK
                   </Button>
                 </div>
               ) : !showEmailForm ? (

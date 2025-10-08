@@ -166,6 +166,7 @@ serve(async (req) => {
           body: JSON.stringify({
             to: user_email,
             quote_id: resultDetails.quote_id,
+            result_id: result_id,
             quote_data: {
               montant_total: resultDetails.devis_total || 0,
               nombre_sensors: (resultDetails.nbr_sonde || 0) + (resultDetails.nbr_sonde_double || 0),

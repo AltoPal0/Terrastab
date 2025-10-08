@@ -159,7 +159,7 @@ const Header = () => {
             </button>
 
             {/* Test Button */}
-            <Button
+            {/* <Button
               onClick={handleTestAuth}
               disabled={isTestingAuth}
               variant="outline"
@@ -168,7 +168,7 @@ const Header = () => {
             >
               <TestTube className="w-4 h-4" />
               {isTestingAuth ? 'Test...' : 'Test Devis'}
-            </Button>
+            </Button> */}
           </nav>
 
           {/* Mobile menu button */}
@@ -215,7 +215,7 @@ const Header = () => {
               </button>
 
               {/* Test Button Mobile */}
-              <div className="px-3 py-2">
+              {/* <div className="px-3 py-2">
                 <Button
                   onClick={handleTestAuth}
                   disabled={isTestingAuth}
@@ -226,7 +226,7 @@ const Header = () => {
                   <TestTube className="w-4 h-4" />
                   {isTestingAuth ? 'Test...' : 'Test Devis'}
                 </Button>
-              </div>
+              </div> */}
             </div>
           </div>
         )}

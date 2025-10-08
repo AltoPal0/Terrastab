@@ -235,6 +235,8 @@ const AlgoQuestionnaire = () => {
       actions.setQuote({
         riskLevel: riskLevel.charAt(0).toUpperCase() + riskLevel.slice(1) as 'Faible' | 'Moyen' | 'Élevé',
         totalEstimate: response.data?.devis_total,
+        totalCost: response.data?.devis_total,
+        resultId: response.data?.result_id,
         quote_id: response.data?.quote_id,
         rule_set_version: response.data?.rule_set_version,
         contributions: response.data?.contributions,
