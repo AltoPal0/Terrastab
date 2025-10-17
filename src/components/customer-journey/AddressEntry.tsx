@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { CheckCircle, AlertTriangle, XCircle, Loader2, MapPin } from 'lucide-react'
+import { CheckCircle, AlertTriangle, XCircle, Loader2, MapPin, Database, Satellite, Brain, ArrowRight } from 'lucide-react'
 import { riskAssessmentApi } from '@/lib/supabase'
 import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 import type { RiskAssessmentState } from '@/types/risk-assessment'
@@ -16,7 +16,38 @@ const AddressEntry = () => {
     result: null,
     hasAssessed: false
   })
+  const [loadingStep, setLoadingStep] = useState(0)
+  const [apiCompleted, setApiCompleted] = useState(false)
+  const [showContinueButton, setShowContinueButton] = useState(false)
   const { actions } = useCustomerJourney()
+
+  // Animation des étapes de chargement (affichage forcé même si l'API est rapide)
+  useEffect(() => {
+    if (assessmentState.isLoading) {
+      setLoadingStep(0)
+      setApiCompleted(false)
+      setShowContinueButton(false)
+
+      const timer1 = setTimeout(() => setLoadingStep(1), 500)
+      const timer2 = setTimeout(() => setLoadingStep(2), 1000)
+      const timer3 = setTimeout(() => setLoadingStep(3), 1500)
+      const timer4 = setTimeout(() => setLoadingStep(4), 2000)
+
+      return () => {
+        clearTimeout(timer1)
+        clearTimeout(timer2)
+        clearTimeout(timer3)
+        clearTimeout(timer4)
+      }
+    }
+  }, [assessmentState.isLoading])
+
+  // Quand l'API répond ET que toutes les étapes sont affichées, montrer le bouton
+  useEffect(() => {
+    if (apiCompleted && loadingStep >= 4) {
+      setShowContinueButton(true)
+    }
+  }, [apiCompleted, loadingStep])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -41,18 +72,17 @@ const AddressEntry = () => {
       const result = await riskAssessmentApi.checkRisk(address.trim())
 
       if (result.success) {
-        setAssessmentState({
-          isLoading: false,
-          error: null,
-          result,
-          hasAssessed: true
-        })
+        // Marquer l'API comme terminée et sauvegarder le résultat
+        // mais rester en mode isLoading pour afficher l'écran
+        setApiCompleted(true)
+        actions.setRiskResult(result)
 
-        // Auto-advance to recommendation after showing results briefly
-        setTimeout(() => {
-          actions.setRiskResult(result)
-          actions.setStep('recommendation')
-        }, 2000)
+        // On ne change PAS hasAssessed ici, on reste en isLoading
+        // L'utilisateur devra cliquer sur "Continuer" pour avancer
+        setAssessmentState(prev => ({
+          ...prev,
+          result
+        }))
       } else {
         setAssessmentState({
           isLoading: false,
@@ -98,9 +128,156 @@ const AddressEntry = () => {
     }
   }
 
+  const loadingSteps = [
+    {
+      icon: MapPin,
+      message: "Géolocalisation de votre adresse...",
+      description: "Extraction des coordonnées GPS précises"
+    },
+    {
+      icon: Database,
+      message: "Consultation des bases de données Géorisques...",
+      description: "Analyse des cartes RGA officielles du BRGM"
+    },
+    {
+      icon: Satellite,
+      message: "Analyse des données géologiques satellitaires...",
+      description: "Croisement avec les données topographiques"
+    },
+    {
+      icon: Brain,
+      message: "Calcul du niveau de risque par algorithme propriétaire...",
+      description: "Traitement des données par IA et machine learning"
+    }
+  ]
+
+  const handleContinueToResults = () => {
+    console.log('🎯 Bouton Continuer cliqué - Passage à recommendation')
+    actions.setStep('recommendation')
+  }
+
+  // Debug: Logger les changements d'état
+  useEffect(() => {
+    console.log('📊 État actuel:', {
+      isLoading: assessmentState.isLoading,
+      hasAssessed: assessmentState.hasAssessed,
+      loadingStep,
+      apiCompleted,
+      showContinueButton,
+      hasResult: !!assessmentState.result
+    })
+  }, [assessmentState, loadingStep, apiCompleted, showContinueButton])
+
   return (
     <div className="max-w-2xl mx-auto">
-      {!assessmentState.hasAssessed ? (
+      {assessmentState.isLoading ? (
+        // Écran de chargement intelligent
+        <div className="space-y-6">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              {showContinueButton ? 'Analyse terminée' : 'Analyse en cours'}
+            </h2>
+            <p className="text-lg text-gray-600">
+              {showContinueButton
+                ? 'Votre évaluation de risque est prête'
+                : 'Nous analysons votre adresse en temps réel'
+              }
+            </p>
+          </div>
+
+          <Card className="overflow-hidden">
+            <CardContent className="p-8">
+              <div className="space-y-6">
+                {loadingSteps.map((step, index) => {
+                  const IconComponent = step.icon
+                  const isActive = loadingStep >= index
+                  const isCompleted = showContinueButton || loadingStep > index
+
+                  return (
+                    <div
+                      key={index}
+                      className={`flex items-start space-x-4 transition-all duration-500 ${
+                        isActive ? 'opacity-100' : 'opacity-30'
+                      }`}
+                    >
+                      <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 ${
+                        isCompleted
+                          ? 'bg-green-100 text-green-600'
+                          : isActive
+                          ? 'bg-blue-100 text-blue-600'
+                          : 'bg-gray-100 text-gray-400'
+                      }`}>
+                        {isCompleted ? (
+                          <CheckCircle className="w-6 h-6" />
+                        ) : (
+                          <IconComponent className={`w-6 h-6 ${isActive ? 'animate-pulse' : ''}`} />
+                        )}
+                      </div>
+
+                      <div className="flex-1 pt-1">
+                        <p className={`font-semibold transition-colors duration-500 ${
+                          isActive ? 'text-gray-900' : 'text-gray-500'
+                        }`}>
+                          {step.message}
+                        </p>
+                        <p className={`text-sm transition-colors duration-500 ${
+                          isActive ? 'text-gray-600' : 'text-gray-400'
+                        }`}>
+                          {step.description}
+                        </p>
+                      </div>
+
+                      {isActive && !isCompleted && (
+                        <Loader2 className="w-5 h-5 text-blue-600 animate-spin flex-shrink-0 mt-2" />
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+
+              {/* Barre de progression globale */}
+              <div className="mt-8">
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div
+                    className={`h-2 rounded-full bg-gradient-to-r transition-all duration-500 ease-out ${
+                      showContinueButton
+                        ? 'from-green-500 to-green-600'
+                        : 'from-blue-500 to-blue-600'
+                    }`}
+                    style={{ width: showContinueButton ? '100%' : `${(loadingStep / loadingSteps.length) * 100}%` }}
+                  ></div>
+                </div>
+                <p className="text-center text-sm text-gray-500 mt-3">
+                  {showContinueButton
+                    ? '✓ Analyse complète'
+                    : `Étape ${Math.min(loadingStep, loadingSteps.length)} sur ${loadingSteps.length}`
+                  }
+                </p>
+              </div>
+
+              {/* Bouton Continuer (visible seulement quand l'analyse est terminée) */}
+              {showContinueButton && (
+                <div className="mt-6 text-center animate-in fade-in duration-500">
+                  <Button
+                    onClick={handleContinueToResults}
+                    size="lg"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-shadow"
+                  >
+                    Voir mes résultats
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          <div className="text-center">
+            <p className="text-sm text-gray-500">
+              ⏱ Analyse en temps réel • Données certifiées BRGM
+            </p>
+          </div>
+        </div>
+      ) : (
         <>
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -165,81 +342,6 @@ const AddressEntry = () => {
             </div>
           </form>
         </>
-      ) : (
-        // Risk Assessment Results - Brief display before auto-advancing
-        <div className="space-y-6 animate-in fade-in duration-500">
-          {assessmentState.result?.riskData && (
-            <Card className="overflow-hidden">
-              <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 border-b">
-                <div className="flex items-center space-x-3">
-                  <MapPin className="w-6 h-6 text-blue-600" />
-                  <div>
-                    <CardTitle className="text-xl text-gray-900">
-                      Résultat de l'évaluation
-                    </CardTitle>
-                    <p className="text-sm text-gray-600 mt-1">
-                      {assessmentState.result.address}
-                    </p>
-                  </div>
-                </div>
-              </CardHeader>
-
-              {/* Warning Display */}
-              {assessmentState.result?.warning && (
-                <div className="bg-orange-50 border-l-4 border-orange-400 p-4 mx-6 mt-4 rounded-r-md">
-                  <div className="flex items-center">
-                    <AlertTriangle className="w-5 h-5 text-orange-600 mr-3" />
-                    <p className="text-sm text-orange-700 font-medium">
-                      {assessmentState.result.warning}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              <CardContent className="p-8">
-                <div className="text-center space-y-6">
-                  {/* Risk Level Icon */}
-                  <div className="flex justify-center">
-                    {getRiskIcon(assessmentState.result.riskData.level)}
-                  </div>
-
-                  {/* Risk Level */}
-                  <div>
-                    <h3 className="text-3xl font-bold text-gray-900 mb-4">
-                      Risque {assessmentState.result.riskData.level}
-                    </h3>
-
-                    {/* Risk Bar */}
-                    <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
-                      <div
-                        className={`h-4 rounded-full bg-gradient-to-r ${getRiskGradient(assessmentState.result.riskData.color)} transition-all duration-500 ease-out`}
-                        style={{ width: assessmentState.result.riskData.width }}
-                      ></div>
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <div className="bg-gray-50 rounded-lg p-6">
-                    <p className="text-gray-700 leading-relaxed">
-                      {assessmentState.result.riskData.description}
-                    </p>
-                    {assessmentState.result.riskData.commune && (
-                      <p className="text-sm text-gray-500 mt-3">
-                        Commune : {assessmentState.result.riskData.commune}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Auto-advancing message */}
-                  <div className="flex items-center justify-center text-blue-600">
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    <p className="text-sm">Chargement de vos recommandations...</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
       )}
     </div>
   )

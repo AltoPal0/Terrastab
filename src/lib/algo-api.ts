@@ -15,12 +15,13 @@ export async function calculateQuote(
   riskLevel: RiskLevel,
   answers: AlgoAnswers,
   userId?: string,
-  address?: string
+  address?: string,
+  ruleSetVersion?: string
 ): Promise<CalculateQuoteResponse> {
   try {
     const request: CalculateQuoteRequest = {
       risk_level: riskLevel,
-      rule_set_version: 'v1.0',
+      rule_set_version: ruleSetVersion || 'v1.0-survey-light',
       answers,
       user_id: userId,
       address,

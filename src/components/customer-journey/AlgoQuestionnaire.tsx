@@ -35,6 +35,22 @@ const AlgoQuestionnaire = () => {
   // Déterminer le niveau de risque depuis riskAssessmentResult
   const riskLevel: RiskLevel = state.riskAssessmentResult?.riskLevel?.toLowerCase() || 'faible'
 
+  // Déterminer la version de l'algorithme selon le produit sélectionné
+  const getAlgoVersion = (productId: string | null): string => {
+    switch (productId) {
+      case 'survey-light':
+        return 'v1.0-survey-light'
+      case 'survey-plus':
+        return 'v1.0-survey-plus'
+      case 'shield':
+        return 'v1.0-shield'
+      default:
+        return 'v1.0-survey-light' // Fallback par défaut
+    }
+  }
+
+  const algoVersion = getAlgoVersion(state.selectedProduct)
+
   // Charger les questions et les règles bloquantes depuis la base de données
   useEffect(() => {
     const loadQuestions = async () => {
@@ -43,8 +59,8 @@ const AlgoQuestionnaire = () => {
 
       try {
         const [questionsResponse, blockingResponse] = await Promise.all([
-          getQuestions('v1.0', riskLevel),
-          getBlockingRules('v1.0', riskLevel)
+          getQuestions(algoVersion, riskLevel),
+          getBlockingRules(algoVersion, riskLevel)
         ])
 
         if (!questionsResponse.success || !questionsResponse.data) {
@@ -91,7 +107,7 @@ const AlgoQuestionnaire = () => {
     }
 
     loadQuestions()
-  }, [riskLevel])
+  }, [riskLevel, algoVersion])
 
   // Helper pour générer les titres de bloc
   const getTitleForBloc = (bloc: number): string => {
@@ -219,7 +235,7 @@ const AlgoQuestionnaire = () => {
       // Récupérer l'adresse depuis le contexte
       const address = state.riskAssessmentResult?.address
 
-      const response = await calculateQuote(riskLevel, answers as RisqueFaibleAnswers, undefined, address)
+      const response = await calculateQuote(riskLevel, answers as RisqueFaibleAnswers, undefined, address, algoVersion)
 
       if (!response.success) {
         throw new Error(response.error || 'Erreur lors du calcul du devis')
@@ -236,7 +252,7 @@ const AlgoQuestionnaire = () => {
         riskLevel: riskLevel.charAt(0).toUpperCase() + riskLevel.slice(1) as 'Faible' | 'Moyen' | 'Élevé',
         totalEstimate: response.data?.devis_total,
         totalCost: response.data?.devis_total,
-        resultId: response.data?.result_id,
+        resultId: response.data?.quote_id,
         quote_id: response.data?.quote_id,
         rule_set_version: response.data?.rule_set_version,
         contributions: response.data?.contributions,

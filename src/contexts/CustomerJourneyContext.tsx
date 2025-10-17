@@ -6,11 +6,14 @@ type CustomerJourneyStep =
   | 'idle'
   | 'address-entry'
   | 'recommendation'
+  | 'product-selection'
   | 'configuration'
   | 'quote'
   | 'contact-capture'
   | 'payment'
   | 'confirmation'
+
+type ProductType = 'survey-light' | 'survey-plus' | 'shield'
 
 type HouseType =
   | 'maison-individuelle'
@@ -79,6 +82,7 @@ interface PaymentDetails {
 interface CustomerJourneyState {
   currentStep: CustomerJourneyStep
   riskAssessmentResult: any | null
+  selectedProduct: ProductType | null
   configuration: Partial<CustomerConfiguration>
   quote: Partial<QuoteDetails>
   payment: Partial<PaymentDetails>
@@ -88,6 +92,7 @@ interface CustomerJourneyState {
 type CustomerJourneyAction =
   | { type: 'SET_STEP'; payload: CustomerJourneyStep }
   | { type: 'SET_RISK_RESULT'; payload: any }
+  | { type: 'SET_PRODUCT'; payload: ProductType }
   | { type: 'UPDATE_CONFIGURATION'; payload: Partial<CustomerConfiguration> }
   | { type: 'SET_QUOTE'; payload: Partial<QuoteDetails> }
   | { type: 'UPDATE_PAYMENT'; payload: Partial<PaymentDetails> }
@@ -98,6 +103,7 @@ type CustomerJourneyAction =
 const initialState: CustomerJourneyState = {
   currentStep: 'idle',
   riskAssessmentResult: null,
+  selectedProduct: null,
   configuration: {},
   quote: {},
   payment: {},
@@ -131,9 +137,15 @@ function customerJourneyReducer(state: CustomerJourneyState, action: CustomerJou
     case 'SET_RISK_RESULT':
       return {
         ...state,
-        riskAssessmentResult: action.payload,
-        currentStep: 'recommendation',
-        progress: calculateProgress('recommendation')
+        riskAssessmentResult: action.payload
+        // Ne pas changer currentStep automatiquement
+        // L'utilisateur devra cliquer sur "Continuer" pour avancer
+      }
+
+    case 'SET_PRODUCT':
+      return {
+        ...state,
+        selectedProduct: action.payload
       }
 
     case 'UPDATE_CONFIGURATION':
@@ -192,6 +204,7 @@ interface CustomerJourneyContextType {
   actions: {
     setStep: (step: CustomerJourneyStep) => void
     setRiskResult: (result: any) => void
+    setProduct: (product: ProductType) => void
     updateConfiguration: (config: Partial<CustomerConfiguration>) => void
     setQuote: (quote: Partial<QuoteDetails>) => void
     updatePayment: (payment: Partial<PaymentDetails>) => void
@@ -209,6 +222,7 @@ export function CustomerJourneyProvider({ children }: { children: ReactNode }) {
   const actions = useMemo(() => ({
     setStep: (step: CustomerJourneyStep) => dispatch({ type: 'SET_STEP', payload: step }),
     setRiskResult: (result: any) => dispatch({ type: 'SET_RISK_RESULT', payload: result }),
+    setProduct: (product: ProductType) => dispatch({ type: 'SET_PRODUCT', payload: product }),
     updateConfiguration: (config: Partial<CustomerConfiguration>) => dispatch({ type: 'UPDATE_CONFIGURATION', payload: config }),
     setQuote: (quote: Partial<QuoteDetails>) => dispatch({ type: 'SET_QUOTE', payload: quote }),
     updatePayment: (payment: Partial<PaymentDetails>) => dispatch({ type: 'UPDATE_PAYMENT', payload: payment }),
