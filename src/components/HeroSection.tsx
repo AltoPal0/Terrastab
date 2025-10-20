@@ -3,11 +3,8 @@ import { motion } from 'framer-motion'
 import { MapPin } from 'lucide-react'
 
 const HeroSection = () => {
-  const scrollToRisk = () => {
-    const riskSection = document.getElementById('risque')
-    if (riskSection) {
-      riskSection.scrollIntoView({ behavior: 'smooth' })
-    }
+  const openRiskModal = () => {
+    window.dispatchEvent(new Event('openRiskModal'))
   }
 
   return (
@@ -55,7 +52,7 @@ const HeroSection = () => {
               className="mb-10"
             >
               <Button
-                onClick={scrollToRisk}
+                onClick={openRiskModal}
                 size="lg"
                 className="text-lg px-8 py-6 bg-blue-600 hover:bg-blue-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
               >

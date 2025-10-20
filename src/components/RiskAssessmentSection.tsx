@@ -18,28 +18,16 @@ const RiskAssessmentSection = () => {
   })
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  // Écouter le scroll vers la section risque
+  // Écouter les événements pour ouvrir le modal depuis les CTAs
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-            setIsModalOpen(true)
-          }
-        })
-      },
-      { threshold: 0.5 }
-    )
-
-    const riskSection = document.getElementById('risque')
-    if (riskSection) {
-      observer.observe(riskSection)
+    const handleOpenModal = () => {
+      setIsModalOpen(true)
     }
 
+    window.addEventListener('openRiskModal', handleOpenModal)
+
     return () => {
-      if (riskSection) {
-        observer.unobserve(riskSection)
-      }
+      window.removeEventListener('openRiskModal', handleOpenModal)
     }
   }, [])
 
@@ -134,9 +122,6 @@ const RiskAssessmentSection = () => {
 
   return (
     <>
-      {/* Invisible anchor section */}
-      <section id="risque" className="h-1"></section>
-
       {/* Modal Overlay */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto">

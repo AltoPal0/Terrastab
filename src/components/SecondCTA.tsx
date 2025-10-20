@@ -3,11 +3,8 @@ import { Button } from '@/components/ui/button'
 import { CheckCircle, Zap, Target, MapPin, ArrowRight } from 'lucide-react'
 
 const SecondCTA = () => {
-  const scrollToRisk = () => {
-    const riskSection = document.getElementById('risque')
-    if (riskSection) {
-      riskSection.scrollIntoView({ behavior: 'smooth' })
-    }
+  const openRiskModal = () => {
+    window.dispatchEvent(new Event('openRiskModal'))
   }
 
   const benefits = [
@@ -85,7 +82,7 @@ const SecondCTA = () => {
           className="mb-8"
         >
           <Button
-            onClick={scrollToRisk}
+            onClick={openRiskModal}
             size="lg"
             className="text-base md:text-xl px-8 md:px-12 py-6 md:py-8 bg-blue-600 hover:bg-blue-700 text-white border-0 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 group"
           >
