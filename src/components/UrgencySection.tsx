@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { TrendingUp, Home, Clock, AlertTriangle } from 'lucide-react'
-import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 
 const UrgencySection = () => {
-  const { actions } = useCustomerJourney()
+  const openRiskModal = () => {
+    window.dispatchEvent(new Event('openRiskModal'))
+  }
 
   const facts = [
     {
@@ -176,7 +177,7 @@ const UrgencySection = () => {
             whileTap={{ scale: 0.95 }}
           >
             <Button
-              onClick={() => actions.setStep('address-entry')}
+              onClick={openRiskModal}
               size="lg"
               className="text-lg px-8 py-6 bg-orange-600 hover:bg-orange-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300"
             >
