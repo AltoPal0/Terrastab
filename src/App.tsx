@@ -87,7 +87,7 @@ function HomePageContent() {
           <RiskAssessmentSection />
 
           {/* Section 4: Avis d'experts */}
-          <ExpertQuotes />
+          {/* <ExpertQuotes /> */}
 
           {/* Section 4: Technologie */}
           <TechSection />
