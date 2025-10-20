@@ -13,22 +13,24 @@ serve(async (req) => {
   }
 
   try {
-    // Create Supabase client
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+    // Parse request body to get token
+    const { token } = await req.json()
 
-    // Verify admin authentication
-    const authHeader = req.headers.get('Authorization')
-    if (!authHeader) {
+    // Basic token validation (check if token exists)
+    if (!token || !token.startsWith('admin_')) {
       return new Response(
-        JSON.stringify({ error: 'Missing authorization header' }),
+        JSON.stringify({ error: 'Invalid or missing admin token' }),
         {
           status: 401,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
         }
       )
     }
+
+    // Create Supabase client
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
     // Get all leads, ordered by most recent first
     const { data: leads, error } = await supabase

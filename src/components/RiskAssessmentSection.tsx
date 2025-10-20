@@ -1,12 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { CheckCircle, AlertTriangle, XCircle, Loader2, MapPin } from 'lucide-react'
+import { CheckCircle, AlertTriangle, XCircle, Loader2, MapPin, X } from 'lucide-react'
 import { riskAssessmentApi } from '@/lib/supabase'
-import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 import type { RiskAssessmentState } from '@/types/risk-assessment'
+import LeadCaptureForm from '@/components/LeadCaptureForm'
 
 const RiskAssessmentSection = () => {
   const [address, setAddress] = useState('')
@@ -16,7 +16,32 @@ const RiskAssessmentSection = () => {
     result: null,
     hasAssessed: false
   })
-  const { actions } = useCustomerJourney()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // Écouter le scroll vers la section risque
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+            setIsModalOpen(true)
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+
+    const riskSection = document.getElementById('risque')
+    if (riskSection) {
+      observer.observe(riskSection)
+    }
+
+    return () => {
+      if (riskSection) {
+        observer.unobserve(riskSection)
+      }
+    }
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -76,6 +101,11 @@ const RiskAssessmentSection = () => {
     setAddress('')
   }
 
+  const closeModal = () => {
+    setIsModalOpen(false)
+    resetAssessment()
+  }
+
   const getRiskIcon = (riskLevel: string) => {
     switch (riskLevel) {
       case 'Faible':
@@ -103,19 +133,44 @@ const RiskAssessmentSection = () => {
   }
 
   return (
-    <section id="risque" className="py-24 bg-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-            Connaître mon niveau de risque
-          </h2>
+    <>
+      {/* Invisible anchor section */}
+      <section id="risque" className="h-1"></section>
 
-          <p className="text-lg text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Terrastab utilise les données officielles de la plateforme Georisques et les données du BRGM
-            pour estimer le risque RGA (retrait-gonflement des argiles) à votre adresse.
-          </p>
+      {/* Modal Overlay */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 overflow-y-auto">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={closeModal}
+          />
 
-          <div className="max-w-2xl mx-auto">
+          {/* Modal Content */}
+          <div className="relative min-h-screen flex items-center justify-center p-4">
+            <div className="relative bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              {/* Close Button */}
+              <button
+                onClick={closeModal}
+                className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                aria-label="Fermer"
+              >
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
+
+              {/* Modal Body */}
+              <div className="p-8">
+                <div className="text-center">
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+                    Connaître mon niveau de risque
+                  </h2>
+
+                  <p className="text-lg text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+                    Terrastab utilise les données officielles de la plateforme Georisques et les données du BRGM
+                    pour estimer le risque RGA (retrait-gonflement des argiles) à votre adresse.
+                  </p>
+
+                  <div className="max-w-2xl mx-auto">
             {!assessmentState.hasAssessed ? (
               <form onSubmit={handleSubmit} className="bg-gray-50 p-8 rounded-lg shadow-sm">
                 <div className="space-y-6">
@@ -172,6 +227,7 @@ const RiskAssessmentSection = () => {
               // Risk Assessment Results
               <div className="space-y-6">
                 {assessmentState.result?.riskData && (
+                  <>
                   <Card className="overflow-hidden">
                     <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 border-b">
                       <div className="flex items-center space-x-3">
@@ -232,39 +288,32 @@ const RiskAssessmentSection = () => {
                             </p>
                           )}
                         </div>
-
-                        {/* Action Buttons */}
-                        <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                          <Button
-                            onClick={() => {
-                              // Start customer journey with risk assessment result
-                              actions.setRiskResult(assessmentState.result)
-                              actions.setStep('recommendation')
-                            }}
-                            size="lg"
-                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
-                          >
-                            Voir nos solutions
-                          </Button>
-                          <Button
-                            onClick={resetAssessment}
-                            variant="outline"
-                            size="lg"
-                            className="flex-1"
-                          >
-                            Nouvelle évaluation
-                          </Button>
-                        </div>
                       </div>
                     </CardContent>
                   </Card>
+
+                  {/* Lead Capture Form - shown directly after risk assessment */}
+                  <div className="mt-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                      Être contacté par un expert
+                    </h3>
+                    <LeadCaptureForm
+                      address={assessmentState.result.address}
+                      riskLevel={assessmentState.result.riskData?.level}
+                    />
+                  </div>
+                </>
                 )}
               </div>
             )}
           </div>
         </div>
-      </div>
-    </section>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 

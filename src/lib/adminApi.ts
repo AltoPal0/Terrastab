@@ -102,5 +102,32 @@ export const adminApi = {
       console.error('Admin evaluations exception:', error)
       return { success: false, error: 'Erreur réseau' }
     }
+  },
+
+  async getLeads(): Promise<{ success: boolean; leads?: any[]; error?: string }> {
+    try {
+      const token = localStorage.getItem(ADMIN_TOKEN_KEY)
+      if (!token) {
+        return { success: false, error: 'Non authentifié' }
+      }
+
+      const { data, error } = await supabase.functions.invoke('admin-leads', {
+        body: { token }
+      })
+
+      if (error) {
+        console.error('Admin leads error:', error)
+        if (error.message?.includes('unauthorized') || error.message?.includes('401')) {
+          this.logout()
+          return { success: false, error: 'Session expirée' }
+        }
+        return { success: false, error: error.message || 'Erreur lors de la récupération des leads' }
+      }
+
+      return { success: true, leads: data.leads }
+    } catch (error) {
+      console.error('Admin leads exception:', error)
+      return { success: false, error: 'Erreur réseau' }
+    }
   }
 }

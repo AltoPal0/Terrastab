@@ -3,6 +3,7 @@ import { adminApi } from '@/lib/adminApi'
 import type { AdminStatistics } from '@/types/risk-assessment'
 import StatisticsCards from './StatisticsCards'
 import ChartsSection from './ChartsSection'
+import LeadsSection from './LeadsSection'
 import { Button } from '@/components/ui/button'
 import { RefreshCw, AlertCircle } from 'lucide-react'
 
@@ -113,6 +114,9 @@ export default function AdminDashboard() {
 
       {/* Statistics Overview */}
       <StatisticsCards statistics={statistics} onCardClick={handleCardClick} />
+
+      {/* Leads Section */}
+      <LeadsSection />
 
       {/* Charts and Detailed Analytics */}
       <ChartsSection

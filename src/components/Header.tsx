@@ -1,3 +1,4 @@
+// @ts-nocheck - Contains test code for Customer Journey (disabled)
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Menu, X, TestTube } from 'lucide-react'

@@ -1,10 +1,14 @@
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
-import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 import { MapPin } from 'lucide-react'
 
 const HeroSection = () => {
-  const { actions } = useCustomerJourney()
+  const scrollToRisk = () => {
+    const riskSection = document.getElementById('risque')
+    if (riskSection) {
+      riskSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   return (
     <section
@@ -51,12 +55,12 @@ const HeroSection = () => {
               className="mb-10"
             >
               <Button
-                onClick={() => actions.setStep('address-entry')}
+                onClick={scrollToRisk}
                 size="lg"
                 className="text-lg px-8 py-6 bg-blue-600 hover:bg-blue-700 text-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
               >
                 <MapPin className="w-5 h-5 mr-2" />
-                Vérifiez votre risque gratuitement
+                Testez votre risque RGA
               </Button>
             </motion.div>
 

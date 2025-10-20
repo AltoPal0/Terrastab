@@ -295,7 +295,7 @@ serve(async (req: Request) => {
     let riskLevel = 'Moyen' // Default fallback
     let riskColor = 'orange'
     let riskWidth = '60%'
-    let riskDescription = 'Votre zone présente un risque moyen de retrait-gonflement des argiles. Une protection préventive est recommandée.'
+    let riskDescription = 'Votre sol réagit davantage aux changements d\'humidité, notamment en période de sécheresse ou en présence d\'arbres proches. Cela peut provoquer des fissures visibles sur les murs, des portes qui coincent ou des sols légèrement déformés. Le bâtiment reste sûr, mais il est important d\'agir avant que la situation ne s\'aggrave : amélioration du drainage, régulation de la végétation, ou mise en place de capteurs et d\'un suivi régulier peuvent stabiliser durablement la maison.'
     let commune = ''
     let originalExposition = 'Données non disponibles'
 
@@ -312,21 +312,21 @@ serve(async (req: Request) => {
           riskLevel = 'Faible'
           riskColor = 'green'
           riskWidth = '30%'
-          riskDescription = 'Votre zone présente un risque faible de retrait-gonflement des argiles. Une surveillance est recommandée.'
+          riskDescription = 'Le sol de votre terrain présente peu d\'argile ou une argile stable. Les variations d\'humidité n\'ont qu\'un effet limité : il peut apparaître de petites fissures superficielles sur les enduits ou les joints, sans conséquence structurelle. Dans ce cas, il n\'est pas nécessaire d\'entreprendre de travaux, une surveillance légère suffira.'
           break
 
         case 'Exposition moyenne':
           riskLevel = 'Moyen'
           riskColor = 'orange'
           riskWidth = '60%'
-          riskDescription = 'Votre zone présente un risque moyen de retrait-gonflement des argiles. Une protection préventive est recommandée.'
+          riskDescription = 'Votre sol réagit davantage aux changements d\'humidité, notamment en période de sécheresse ou en présence d\'arbres proches. Cela peut provoquer des fissures visibles sur les murs, des portes qui coincent ou des sols légèrement déformés. Le bâtiment reste sûr, mais il est important d\'agir avant que la situation ne s\'aggrave : amélioration du drainage, régulation de la végétation, ou mise en place de capteurs et d\'un suivi régulier peuvent stabiliser durablement la maison.'
           break
 
         case 'Exposition forte':
           riskLevel = 'Élevé'
           riskColor = 'red'
           riskWidth = '85%'
-          riskDescription = 'Votre zone présente un risque élevé de retrait-gonflement des argiles. Une protection est fortement recommandée.'
+          riskDescription = 'Attention votre sol contient beaucoup d\'argile sensible aux variations d\'eau. Lors des épisodes de sécheresse ou de forte pluie, il peut se contracter ou se dilater de manière importante, provoquant des fissures profondes, des affaissements ou des soulèvements du bâtiment. Des travaux de stabilisation deviennent souvent indispensables. L\'intervention rapide d\'un expert TerraStab permet de limiter les dégâts, d\'assurer la sécurité de l\'habitation et de préserver la valeur du bien.'
           break
 
         default:

@@ -1,10 +1,14 @@
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { CheckCircle, Zap, Target, MapPin, ArrowRight } from 'lucide-react'
-import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 
 const SecondCTA = () => {
-  const { actions } = useCustomerJourney()
+  const scrollToRisk = () => {
+    const riskSection = document.getElementById('risque')
+    if (riskSection) {
+      riskSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   const benefits = [
     { icon: Zap, text: "Rapide" },
@@ -81,12 +85,12 @@ const SecondCTA = () => {
           className="mb-8"
         >
           <Button
-            onClick={() => actions.setStep('address-entry')}
+            onClick={scrollToRisk}
             size="lg"
             className="text-base md:text-xl px-8 md:px-12 py-6 md:py-8 bg-blue-600 hover:bg-blue-700 text-white border-0 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 group"
           >
             <MapPin className="w-5 h-5 mr-2 flex-shrink-0" />
-            <span>Vérifiez votre risque gratuitement</span>
+            <span>Testez votre risque RGA</span>
             <ArrowRight className="w-5 h-5 ml-2 flex-shrink-0 group-hover:translate-x-1 transition-transform duration-300" />
           </Button>
         </motion.div>

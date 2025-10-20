@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react'
 import Header from '@/components/Header'
 import HeroSection from '@/components/HeroSection'
 import MiniPromise from '@/components/MiniPromise'
+import RiskAssessmentSection from '@/components/RiskAssessmentSection'
 import ExpertQuotes from '@/components/ExpertQuotes'
 import TechSection from '@/components/TechSection'
 import TrustLogos from '@/components/TrustLogos'
@@ -12,13 +13,12 @@ import FAQSection from '@/components/FAQSection'
 import SecondCTA from '@/components/SecondCTA'
 import Footer from '@/components/Footer'
 import AdminApp from '@/components/admin/AdminApp'
-import { CustomerJourneyProvider, useCustomerJourney } from '@/contexts/CustomerJourneyContext'
-import CustomerJourney from '@/components/customer-journey/CustomerJourney'
+import { CustomerJourneyProvider } from '@/contexts/CustomerJourneyContext'
 import { supabase } from '@/lib/supabase'
 import { quoteApi } from '@/lib/quote-api'
 
 function HomePageContent() {
-  const { state, actions } = useCustomerJourney()
+  // Customer Journey is disabled in this version - using LeadCaptureForm instead
 
   // Gérer le callback après authentification Google
   useEffect(() => {
@@ -32,7 +32,7 @@ function HomePageContent() {
 
         if (pendingQuoteData) {
           try {
-            const { result_id, quote_data } = JSON.parse(pendingQuoteData)
+            const { result_id } = JSON.parse(pendingQuoteData)
 
             // Appeler l'Edge Function pour sauvegarder le devis
             const response = await quoteApi.saveQuote({
@@ -83,7 +83,10 @@ function HomePageContent() {
           {/* Section 2: Mini-promesse TerraStab */}
           <MiniPromise />
 
-          {/* Section 3: Avis d'experts */}
+          {/* Section 3: Vérification du risque avec formulaire de leads */}
+          <RiskAssessmentSection />
+
+          {/* Section 4: Avis d'experts */}
           <ExpertQuotes />
 
           {/* Section 4: Technologie */}
@@ -104,19 +107,15 @@ function HomePageContent() {
         <Footer />
       </div>
 
-      {/* Customer Journey Overlay */}
-      {state.currentStep !== 'idle' && (
+      {/* Customer Journey Overlay - DISABLED: Replaced by LeadCaptureForm */}
+      {/* {state.currentStep !== 'idle' && (
         <div className="fixed inset-0 z-50 overflow-y-auto">
-          {/* Backdrop */}
           <div
             className="fixed inset-0 bg-black/50 backdrop-blur-sm"
             onClick={() => actions.resetJourney()}
           />
-
-          {/* Modal Content */}
           <div className="relative min-h-screen flex items-center justify-center p-px md:p-4">
             <div className="relative bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-              {/* Close Button */}
               <button
                 onClick={() => actions.resetJourney()}
                 className="absolute top-4 right-4 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
@@ -126,15 +125,13 @@ function HomePageContent() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
-
-              {/* Customer Journey Content */}
               <div className="p-2 md:p-8">
                 <CustomerJourney />
               </div>
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </>
   )
 }
