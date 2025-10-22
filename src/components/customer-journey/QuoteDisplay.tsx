@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { CheckCircle, ArrowLeft, Euro, Package, FileText, Save, Mail, Shield, CheckCircle2 } from 'lucide-react'
+import { CheckCircle, ArrowLeft, Euro, Package, FileText, Save, Mail, Shield, CheckCircle2, Phone, PuzzleIcon, Settings, Handshake, Info } from 'lucide-react'
 import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 import { supabase } from '@/lib/supabase'
 import { quoteApi } from '@/lib/quote-api'
@@ -18,7 +19,9 @@ const QuoteDisplay = () => {
   const [success, setSuccess] = useState(false)
   const [showSaveModal, setShowSaveModal] = useState(false)
   const [showEmailForm, setShowEmailForm] = useState(false)
+  const [showPhoneForm, setShowPhoneForm] = useState(false)
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
 
   const handleGoBack = () => {
     actions.setStep('configuration')
@@ -121,6 +124,63 @@ const QuoteDisplay = () => {
     }
   }
 
+  const handlePhoneSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!phone || !quote.resultId || !quote.quote_id) {
+      setError('Numéro de téléphone ou devis manquant')
+      return
+    }
+
+    // Validation téléphone simple (format français)
+    const phoneRegex = /^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}$/
+    if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
+      setError('Numéro de téléphone invalide')
+      return
+    }
+
+    setIsSubmitting(true)
+    setError(null)
+
+    try {
+      // Créer un lead avec le numéro de téléphone dans la table users
+      const { data: userData, error: userError } = await supabase
+        .from('users')
+        .insert({
+          contact_mode: 'phone',
+          phone: phone,
+          metadata: {
+            quote_id: quote.quote_id,
+            result_id: quote.resultId,
+          }
+        })
+        .select()
+        .single()
+
+      if (userError) {
+        throw userError
+      }
+
+      // Lier l'utilisateur au résultat
+      if (userData && quote.resultId) {
+        await supabase
+          .from('results')
+          .update({ user_id: userData.id })
+          .eq('id', quote.resultId)
+      }
+
+      // Succès
+      setSuccess(true)
+      setPhone('')
+      setShowPhoneForm(false)
+    } catch (err) {
+      console.error('Error saving phone:', err)
+      setError(err instanceof Error ? err.message : 'Erreur lors de l\'enregistrement du numéro')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <motion.div
@@ -135,6 +195,11 @@ const QuoteDisplay = () => {
         <p className="text-lg text-gray-600">
           Évaluation {riskLevel} - Devis #{quote.quote_id}
         </p>
+        <div className="mt-4 max-w-3xl mx-auto bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <p className="text-sm text-gray-700">
+            <strong>Vous obtenez ici une première estimation fiable.</strong> Certaines configurations particulières — terrasses, dalles, vérandas ou autres aménagements proches des murs — peuvent nécessiter un ajustement lors du questionnaire complet que nous réaliserons ensemble pour établir le devis définitif.
+          </p>
+        </div>
       </motion.div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -250,20 +315,45 @@ const QuoteDisplay = () => {
                 </div>
 
                 <div className="border-t border-gray-200 pt-6">
-                  <div className="text-xs text-gray-500 space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span>Installation incluse</span>
+                  <TooltipProvider>
+                    <div className="text-xs text-gray-700 space-y-2">
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="flex items-center space-x-2 cursor-help">
+                            <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
+                            <span>Étude personnalisée incluse</span>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p className="text-sm">Chaque maison est unique : nos recommandations tiennent compte de la configuration réelle de votre terrain et de vos murs extérieurs.</p>
+                        </TooltipContent>
+                      </Tooltip>
+
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="flex items-center space-x-2 cursor-help">
+                            <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
+                            <span>Technologie validée par des experts</span>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p className="text-sm">Notre solution s'appuie sur des principes reconnus par des ingénieurs géotechniciens et validés lors d'expérimentations terrain.</p>
+                        </TooltipContent>
+                      </Tooltip>
+
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="flex items-center space-x-2 cursor-help">
+                            <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
+                            <span>Accompagnement jusqu'à l'installation</span>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-xs">
+                          <p className="text-sm">Un conseiller vous guide à chaque étape, du diagnostic à la mise en œuvre de la solution la plus adaptée à votre maison.</p>
+                        </TooltipContent>
+                      </Tooltip>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span>Garantie constructeur</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
-                      <span>Support technique 24/7</span>
-                    </div>
-                  </div>
+                  </TooltipProvider>
                 </div>
               </div>
             </CardContent>
@@ -346,17 +436,19 @@ const QuoteDisplay = () => {
                 <div className="text-center py-4">
                   <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
                   <p className="text-lg font-semibold text-gray-900 mb-2">
-                    ✅ Votre devis a été envoyé
+                    {showPhoneForm ? '✅ Votre demande a été enregistrée' : '✅ Votre devis a été envoyé'}
                   </p>
                   <p className="text-gray-600">
-                    Consultez votre boîte email.
+                    {showPhoneForm ? 'Nous vous contacterons sous 24h.' : 'Consultez votre boîte email.'}
                   </p>
                   <Button
                     onClick={() => {
                       setShowSaveModal(false)
                       setSuccess(false)
                       setShowEmailForm(false)
+                      setShowPhoneForm(false)
                       setEmail('')
+                      setPhone('')
                       setError(null)
                       // Réinitialiser complètement le journey pour retourner à l'accueil
                       actions.resetJourney()
@@ -366,7 +458,7 @@ const QuoteDisplay = () => {
                     OK
                   </Button>
                 </div>
-              ) : !showEmailForm ? (
+              ) : !showEmailForm && !showPhoneForm ? (
                 <div className="space-y-4">
                   <Button
                     onClick={handleGoogleSignIn}
@@ -412,6 +504,15 @@ const QuoteDisplay = () => {
                     Recevoir par email
                   </Button>
 
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowPhoneForm(true)}
+                    className="w-full h-12"
+                  >
+                    <Phone className="w-5 h-5 mr-2" />
+                    Contactez-moi par téléphone
+                  </Button>
+
                   {error && (
                     <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                       <p className="text-red-800 text-sm">{error}</p>
@@ -426,7 +527,7 @@ const QuoteDisplay = () => {
                     Annuler
                   </Button>
                 </div>
-              ) : (
+              ) : showEmailForm ? (
                 <form onSubmit={handleEmailSubmit} className="space-y-4">
                   <div>
                     <Label htmlFor="email" className="text-base font-semibold mb-2 block">
@@ -469,6 +570,55 @@ const QuoteDisplay = () => {
                       className="flex-1 bg-blue-600 hover:bg-blue-700"
                     >
                       {isSubmitting ? 'Envoi...' : 'Envoyer mon devis'}
+                    </Button>
+                  </div>
+                </form>
+              ) : (
+                <form onSubmit={handlePhoneSubmit} className="space-y-4">
+                  <div>
+                    <Label htmlFor="phone" className="text-base font-semibold mb-2 block">
+                      Votre numéro de téléphone
+                    </Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      placeholder="06 12 34 56 78"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="text-base"
+                      required
+                      autoFocus
+                    />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Nous vous contacterons sous 24h pour finaliser votre devis
+                    </p>
+                  </div>
+
+                  {error && (
+                    <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                      <p className="text-red-800 text-sm">{error}</p>
+                    </div>
+                  )}
+
+                  <div className="flex gap-3">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        setShowPhoneForm(false)
+                        setPhone('')
+                        setError(null)
+                      }}
+                      className="flex-1"
+                    >
+                      Retour
+                    </Button>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting || !phone}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700"
+                    >
+                      {isSubmitting ? 'Envoi...' : 'Enregistrer'}
                     </Button>
                   </div>
                 </form>
