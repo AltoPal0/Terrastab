@@ -13,6 +13,7 @@ import FAQSection from '@/components/FAQSection'
 import SecondCTA from '@/components/SecondCTA'
 import Footer from '@/components/Footer'
 import AdminApp from '@/components/admin/AdminApp'
+import CGVPage from '@/components/CGVPage'
 import { CustomerJourneyProvider } from '@/contexts/CustomerJourneyContext'
 import { supabase } from '@/lib/supabase'
 import { quoteApi } from '@/lib/quote-api'
@@ -150,6 +151,7 @@ function App() {
       <Router>
         <Route path="/" component={HomePage} />
         <Route path="/admin" component={AdminApp} />
+        <Route path="/cgv" component={CGVPage} />
       </Router>
       <Analytics />
     </>

@@ -38,8 +38,8 @@ const Footer = () => {
                 <div className="flex items-start">
                   <MapPin className="w-4 h-4 mr-3 mt-1 flex-shrink-0 text-blue-400" />
                   <div className="text-gray-300">
-                    <div>123 Avenue de la Innovation</div>
-                    <div>75001 Paris</div>
+                    <div>11 Rue Gilberte Monne</div>
+                    <div>54270 Essey-lès-Nancy</div>
                   </div>
                 </div>
               </div>
@@ -55,8 +55,8 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-300 hover:text-white">
-                    CGU
+                  <a href="/cgv" className="text-gray-300 hover:text-white">
+                    CGV
                   </a>
                 </li>
                 <li>
