@@ -31,9 +31,9 @@ const Footer = () => {
                 </div>
                 <div className="flex items-center">
                   <Phone className="w-4 h-4 mr-3 flex-shrink-0 text-blue-400" />
-                  <a href="tel:+33123456789" className="text-gray-300 hover:text-white">
+                  {/* <a href="tel:+33123456789" className="text-gray-300 hover:text-white">
                     01 23 45 67 89
-                  </a>
+                  </a> */}
                 </div>
                 <div className="flex items-start">
                   <MapPin className="w-4 h-4 mr-3 mt-1 flex-shrink-0 text-blue-400" />

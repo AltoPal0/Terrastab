@@ -185,9 +185,9 @@ const PaymentConfirmation = () => {
             <p className="text-sm text-gray-600 mb-3">
               Une question ? Contactez-nous
             </p>
-            <p className="text-sm font-medium text-green-600">
+            {/* <p className="text-sm font-medium text-green-600">
               01 23 45 67 89
-            </p>
+            </p> */}
           </CardContent>
         </Card>
 
