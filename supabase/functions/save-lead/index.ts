@@ -202,7 +202,7 @@ async function sendAdminNotification(lead: any) {
     },
     body: JSON.stringify({
       from: 'TerraStab Notifications <noreply@terrastab.fr>',
-      to: ['contact@terrastab.fr'],
+      to: ['contact@terrastab.fr', 'giloppe@gmail.com'],
       subject: `🎯 Nouveau lead: ${lead.name}`,
       html: emailHtml,
     }),
