@@ -7,6 +7,7 @@ import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isRiskMobileOpen, setIsRiskMobileOpen] = useState(false)
   const [isTestingAuth, setIsTestingAuth] = useState(false)
   const { actions } = useCustomerJourney()
 
@@ -134,12 +135,12 @@ const Header = () => {
             >
               Accueil
             </button>
-            <button
-              onClick={() => scrollToSection('offres')}
+            <a
+              href="/offres"
               className="text-gray-700 hover:text-blue-600 px-1 py-2 text-base font-medium transition-colors"
             >
               Nos Offres
-            </button>
+            </a>
             <div className="relative group">
               <button
                 className="text-gray-700 hover:text-blue-600 px-1 py-2 text-base font-medium transition-colors"
@@ -192,18 +193,27 @@ const Header = () => {
               >
                 Accueil
               </button>
-              <button
-                onClick={() => scrollToSection('offres')}
-                className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50"
-              >
+              <a href="/offres" className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">
                 Nos Offres
+              </a>
+              <button
+                onClick={() => setIsRiskMobileOpen(prev => !prev)}
+                className="flex w-full items-center justify-between px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50"
+                aria-expanded={isRiskMobileOpen}
+                aria-controls="mobile-risk-submenu"
+              >
+                <span>Comprendre le risque</span>
+                <svg className={`w-4 h-4 transition-transform ${isRiskMobileOpen ? 'rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
               </button>
-              <div className="px-3 py-2 text-sm font-semibold text-gray-500">Comprendre le risque</div>
-              <a href="/maison-fissuree" className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Maison fissurée: causes et solutions</a>
-              <a href="/diagnostic-rga" className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Diagnostic RGA</a>
-              <a href="/solution-stabilisation-sol-argileux" className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Stabilisation des sols argileux</a>
-              <a href="/fissures-maison" className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Fissures maison</a>
-              <a href="/zones-rga-france" className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Zones RGA en France</a>
+              {isRiskMobileOpen && (
+                <div id="mobile-risk-submenu" className="ml-4 border-l pl-3 space-y-1">
+                  <a href="/maison-fissuree" onClick={() => setIsMenuOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Maison fissurée: causes et solutions</a>
+                  <a href="/diagnostic-rga" onClick={() => setIsMenuOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Diagnostic RGA</a>
+                  <a href="/solution-stabilisation-sol-argileux" onClick={() => setIsMenuOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Stabilisation des sols argileux</a>
+                  <a href="/fissures-maison" onClick={() => setIsMenuOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Fissures maison</a>
+                  <a href="/zones-rga-france" onClick={() => setIsMenuOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Zones RGA en France</a>
+                </div>
+              )}
               <button
                 onClick={() => scrollToSection('contact')}
                 className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50"

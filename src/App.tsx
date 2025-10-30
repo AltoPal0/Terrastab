@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Router, Route } from 'wouter'
 import { Analytics } from '@vercel/analytics/react'
+import { Helmet } from '@dr.pogodin/react-helmet'
 import Header from '@/components/Header'
 import HeroSection from '@/components/HeroSection'
 import MiniPromise from '@/components/MiniPromise'
@@ -144,9 +145,15 @@ function HomePageContent() {
 
 function HomePage() {
   return (
-    <CustomerJourneyProvider>
-      <HomePageContent />
-    </CustomerJourneyProvider>
+    <>
+      <Helmet>
+        <title>Accueil – TerraStab</title>
+        <meta name="description" content="TerraStab – Stabilisation des sols argileux et prévention des fissures." />
+      </Helmet>
+      <CustomerJourneyProvider>
+        <HomePageContent />
+      </CustomerJourneyProvider>
+    </>
   )
 }
 
