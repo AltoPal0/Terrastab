@@ -23,26 +23,26 @@ const MiniPromise = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 sm:mb-8 px-2">
             TerraStab change la donne.
           </h2>
 
-          <div className="max-w-4xl mx-auto">
-            <p className="text-lg md:text-xl text-gray-700 mb-6 leading-relaxed">
+          <div className="max-w-4xl mx-auto px-2">
+            <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-4 sm:mb-6 leading-relaxed">
               Grâce à une approche technologique inédite,
             </p>
-            <p className="text-xl md:text-2xl font-semibold text-gray-900 mb-6">
+            <p className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 mb-4 sm:mb-6">
               <strong>stabiliser les sols n'est plus réservé aux chantiers lourds.</strong>
             </p>
-            <p className="text-lg md:text-xl text-gray-700 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
               Notre solution ouvre une nouvelle voie, <strong>accessible, précise et durable.</strong>
             </p>
           </div>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 max-w-3xl mx-auto">
           {features.map((feature, index) => (
             <motion.div
               key={feature.text}
@@ -59,16 +59,16 @@ const MiniPromise = () => {
               className="flex flex-col items-center text-center group"
             >
               <motion.div
-                className="mb-4 p-4 rounded-full bg-blue-100 group-hover:bg-blue-600 transition-colors duration-300 shadow-md group-hover:shadow-xl"
+                className="mb-3 sm:mb-4 p-3 sm:p-4 rounded-full bg-blue-100 group-hover:bg-blue-600 transition-colors duration-300 shadow-md group-hover:shadow-xl"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{
                   scale: { duration: 0.2 },
                   rotate: { duration: 0.2 }
                 }}
               >
-                <feature.icon className="w-6 h-6 text-blue-600 group-hover:text-white transition-colors duration-300" />
+                <feature.icon className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 group-hover:text-white transition-colors duration-300" />
               </motion.div>
-              <p className="text-sm font-medium text-gray-800 group-hover:text-blue-600 transition-colors duration-300">{feature.text}</p>
+              <p className="text-xs sm:text-sm font-medium text-gray-800 group-hover:text-blue-600 transition-colors duration-300">{feature.text}</p>
             </motion.div>
           ))}
         </div>
