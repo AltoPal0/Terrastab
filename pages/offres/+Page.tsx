@@ -2,6 +2,9 @@ import React from 'react'
 import { Button } from '../../src/components/ui/button'
 import RiskAssessmentSection from '../../src/components/RiskAssessmentSection'
 import { Check } from 'lucide-react'
+import { Helmet } from "@dr.pogodin/react-helmet";
+
+export const prerender = true;
 
 type Offer = {
   id: 'survey-light' | 'survey-plus' | 'shield'
@@ -89,7 +92,16 @@ function openRiskModal() {
 
 export default function Page() {
   return (
-    <main className="min-h-screen bg-white">
+    <>
+      <Helmet>
+        <title>Nos offres TerraStab – Surveillance et stabilisation des sols argileux</title>
+        <meta
+          name="description"
+          content="Découvrez nos offres SURVEY Light, SURVEY+ et SHIELD pour surveiller, analyser et stabiliser les sols argileux afin de protéger votre maison."
+        />
+        <link rel="canonical" href="https://terrastab.fr/offres" />
+      </Helmet>
+      <main className="min-h-screen bg-white">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <header className="text-center mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Nos Offres</h1>
@@ -123,9 +135,10 @@ export default function Page() {
           ))}
         </div>
       </section>
-      {/* Hidden listener & modal provider for risk assessment */}
-      <RiskAssessmentSection />
-    </main>
+        {/* Hidden listener & modal provider for risk assessment */}
+        <RiskAssessmentSection />
+      </main>
+    </>
   )
 }
 
