@@ -44,7 +44,13 @@
   scroll-snap-type: x proximity;
 }
 
-.touch-scroll:active .animate-scroll {
+.touch-scroll:active .animate-scroll,
+.touch-scroll:active .animate-scroll-reverse {
+  animation-play-state: paused;
+}
+
+.touch-scroll:hover .animate-scroll,
+.touch-scroll:hover .animate-scroll-reverse {
   animation-play-state: paused;
 }
 

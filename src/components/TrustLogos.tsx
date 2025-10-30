@@ -47,18 +47,20 @@ const TrustLogos = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="hidden md:block relative overflow-hidden w-full"
+          className="hidden md:block relative overflow-x-auto overflow-y-hidden w-full touch-scroll scrollbar-hide cursor-grab active:cursor-grabbing"
+          style={{ scrollSnapType: 'x proximity' }}
         >
           <div className="flex animate-scroll space-x-8">
             {[...allPartners, ...allPartners].map((partner, index) => (
               <div
                 key={`${partner.name}-${index}`}
                 className="flex-shrink-0 bg-white p-8 rounded-lg shadow-md border hover:shadow-lg transition-shadow duration-300 w-48 h-32 flex items-center justify-center"
+                style={{ scrollSnapAlign: 'start' }}
               >
                 <img
                   src={partner.logo}
                   alt={partner.name}
-                  className="max-h-20 max-w-full object-contain"
+                  className="max-h-20 max-w-full object-contain pointer-events-none"
                 />
               </div>
             ))}
@@ -73,18 +75,20 @@ const TrustLogos = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="relative overflow-hidden w-full"
+            className="relative overflow-x-auto overflow-y-hidden w-full touch-scroll scrollbar-hide cursor-grab active:cursor-grabbing"
+            style={{ scrollSnapType: 'x proximity' }}
           >
             <div className="flex animate-scroll space-x-6">
               {row1.map((partner, index) => (
                 <div
                   key={`row1-${partner.name}-${index}`}
                   className="flex-shrink-0 bg-white p-6 rounded-lg shadow-md border w-40 h-28 flex items-center justify-center"
+                  style={{ scrollSnapAlign: 'start' }}
                 >
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="max-h-16 max-w-full object-contain"
+                    className="max-h-16 max-w-full object-contain pointer-events-none"
                   />
                 </div>
               ))}
@@ -97,18 +101,20 @@ const TrustLogos = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="relative overflow-hidden w-full"
+            className="relative overflow-x-auto overflow-y-hidden w-full touch-scroll scrollbar-hide cursor-grab active:cursor-grabbing"
+            style={{ scrollSnapType: 'x proximity' }}
           >
             <div className="flex animate-scroll-reverse space-x-6">
               {row2.map((partner, index) => (
                 <div
                   key={`row2-${partner.name}-${index}`}
                   className="flex-shrink-0 bg-white p-6 rounded-lg shadow-md border w-40 h-28 flex items-center justify-center"
+                  style={{ scrollSnapAlign: 'start' }}
                 >
                   <img
                     src={partner.logo}
                     alt={partner.name}
-                    className="max-h-16 max-w-full object-contain"
+                    className="max-h-16 max-w-full object-contain pointer-events-none"
                   />
                 </div>
               ))}
