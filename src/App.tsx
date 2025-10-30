@@ -14,6 +14,11 @@ import SecondCTA from '@/components/SecondCTA'
 import Footer from '@/components/Footer'
 import AdminApp from '@/components/admin/AdminApp'
 import CGVPage from '@/components/CGVPage'
+import MaisonFissuree from '@/components/seo/MaisonFissuree'
+import DiagnosticRga from '@/components/seo/DiagnosticRga'
+import SolutionStabilisationSolArgileux from '@/components/seo/SolutionStabilisationSolArgileux'
+import FissuresMaison from '@/components/seo/FissuresMaison'
+import ZonesRgaFrance from '@/components/seo/ZonesRgaFrance'
 import { CustomerJourneyProvider } from '@/contexts/CustomerJourneyContext'
 import { supabase } from '@/lib/supabase'
 import { quoteApi } from '@/lib/quote-api'
@@ -145,13 +150,20 @@ function HomePage() {
   )
 }
 
-function App() {
+type RouterHook = Parameters<typeof Router>[0]['hook']
+
+function App({ routerHook }: { routerHook?: RouterHook }) {
   return (
     <>
-      <Router>
+      <Router hook={routerHook}>
         <Route path="/" component={HomePage} />
         <Route path="/admin" component={AdminApp} />
         <Route path="/cgv" component={CGVPage} />
+        <Route path="/maison-fissuree" component={MaisonFissuree} />
+        <Route path="/diagnostic-rga" component={DiagnosticRga} />
+        <Route path="/solution-stabilisation-sol-argileux" component={SolutionStabilisationSolArgileux} />
+        <Route path="/fissures-maison" component={FissuresMaison} />
+        <Route path="/zones-rga-france" component={ZonesRgaFrance} />
       </Router>
       <Analytics />
     </>

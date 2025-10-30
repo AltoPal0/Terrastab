@@ -140,18 +140,20 @@ const Header = () => {
             >
               Nos Offres
             </button>
-            <button
-              onClick={() => scrollToSection('risque')}
-              className="text-gray-700 hover:text-blue-600 px-1 py-2 text-base font-medium transition-colors"
-            >
-              Comprendre le Risque
-            </button>
-            <button
-              onClick={() => scrollToSection('devis')}
-              className="text-gray-700 hover:text-blue-600 px-1 py-2 text-base font-medium transition-colors"
-            >
-              Devis en ligne
-            </button>
+            <div className="relative group">
+              <button
+                className="text-gray-700 hover:text-blue-600 px-1 py-2 text-base font-medium transition-colors"
+              >
+                Comprendre le risque
+              </button>
+              <div className="absolute left-0 mt-2 hidden group-hover:block bg-white shadow-lg border rounded-md py-2 w-72">
+                <a href="/maison-fissuree" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Maison fissurée: causes et solutions</a>
+                <a href="/diagnostic-rga" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Diagnostic RGA</a>
+                <a href="/solution-stabilisation-sol-argileux" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Stabilisation des sols argileux</a>
+                <a href="/fissures-maison" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Fissures maison</a>
+                <a href="/zones-rga-france" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Zones RGA en France</a>
+              </div>
+            </div>
             <button
               onClick={() => scrollToSection('contact')}
               className="text-gray-700 hover:text-blue-600 px-1 py-2 text-base font-medium transition-colors"
@@ -196,18 +198,12 @@ const Header = () => {
               >
                 Nos Offres
               </button>
-              <button
-                onClick={() => scrollToSection('risque')}
-                className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50"
-              >
-                Comprendre le Risque
-              </button>
-              <button
-                onClick={() => scrollToSection('devis')}
-                className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50"
-              >
-                Devis en ligne
-              </button>
+              <div className="px-3 py-2 text-sm font-semibold text-gray-500">Comprendre le risque</div>
+              <a href="/maison-fissuree" className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Maison fissurée: causes et solutions</a>
+              <a href="/diagnostic-rga" className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Diagnostic RGA</a>
+              <a href="/solution-stabilisation-sol-argileux" className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Stabilisation des sols argileux</a>
+              <a href="/fissures-maison" className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Fissures maison</a>
+              <a href="/zones-rga-france" className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Zones RGA en France</a>
               <button
                 onClick={() => scrollToSection('contact')}
                 className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50"
