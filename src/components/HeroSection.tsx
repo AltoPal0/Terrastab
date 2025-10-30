@@ -1,8 +1,11 @@
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 import { MapPin } from 'lucide-react'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 
 const HeroSection = () => {
+  const { duration, delay, initial, animate } = useReducedMotion()
+
   const openRiskModal = () => {
     window.dispatchEvent(new Event('openRiskModal'))
   }
@@ -23,18 +26,18 @@ const HeroSection = () => {
         <div className="max-w-5xl mx-auto">
           <div className="text-center">
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              initial={initial}
+              animate={animate}
+              transition={{ duration, ease: "easeOut" }}
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6 sm:mb-8 leading-tight px-2"
             >
               N'attendez pas que les fissures apparaissent ou s'agrandissent.
             </motion.h1>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              initial={initial}
+              animate={animate}
+              transition={{ duration, delay: delay * 0.5, ease: "easeOut" }}
               className="mb-8 sm:mb-10 md:mb-12"
             >
               <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/95 mb-4 sm:mb-6 max-w-4xl mx-auto leading-relaxed font-medium px-2">
@@ -46,9 +49,9 @@ const HeroSection = () => {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              initial={initial}
+              animate={animate}
+              transition={{ duration, delay: delay, ease: "easeOut" }}
               className="mb-6 sm:mb-8 md:mb-10"
             >
               <Button
@@ -62,9 +65,9 @@ const HeroSection = () => {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              initial={initial}
+              animate={animate}
+              transition={{ duration, delay: delay * 1.5 }}
               className="text-xs sm:text-sm text-white/80 max-w-2xl mx-auto px-4"
             >
               <p className="font-medium leading-relaxed">
