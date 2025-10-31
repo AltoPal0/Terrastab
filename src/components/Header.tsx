@@ -1,15 +1,10 @@
-// @ts-nocheck - Contains test code for Customer Journey (disabled)
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
-import { supabase } from '@/lib/supabase'
-import { useCustomerJourney } from '@/contexts/CustomerJourneyContext'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isRiskMobileOpen, setIsRiskMobileOpen] = useState(false)
-  const [isTestingAuth, setIsTestingAuth] = useState(false)
-  const { actions } = useCustomerJourney()
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -21,92 +16,6 @@ const Header = () => {
       element.scrollIntoView({ behavior: 'smooth' })
     }
     setIsMenuOpen(false)
-  }
-
-  const handleTestAuth = async () => {
-    setIsTestingAuth(true)
-
-    try {
-      // Créer un devis fake dans la base de données
-      const fakeQuoteData = {
-        risk_level: 'moyen',
-        rule_set_version: 'v1.0',
-        answers_json: {
-          bloc00_housing_type: 'maison',
-          bloc10_foundation_depth: '80cm',
-        },
-        nbr_sonde: 4,
-        nbr_sonde_double: 2,
-        nbr_controller: 1,
-        nbr_piquet_irrigation: 8,
-        devis_total: 2499.99,
-        quote_id: `TEST-${Date.now()}`,
-        address: '1 Rue de Test, 75001 Paris'
-      }
-
-      // Insérer le devis de test
-      const { data: insertedQuote, error: insertError } = await supabase
-        .from('results')
-        .insert(fakeQuoteData)
-        .select('id, quote_id, devis_total, nbr_sonde, nbr_sonde_double, nbr_controller, nbr_piquet_irrigation')
-        .single()
-
-      if (insertError) {
-        console.error('Erreur lors de la création du devis test:', insertError)
-        alert('Erreur lors de la création du devis test')
-        setIsTestingAuth(false)
-        return
-      }
-
-      console.log('Devis test créé:', insertedQuote.quote_id)
-
-      // Mettre à jour le contexte avec le devis fake
-      actions.setRiskResult({
-        risk_level: 'Moyen',
-        address: '1 Rue de Test, 75001 Paris',
-        formatted_address: '1 Rue de Test, 75001 Paris'
-      })
-
-      actions.setQuote({
-        quote_id: insertedQuote.quote_id,
-        resultId: insertedQuote.id,
-        riskLevel: 'Moyen',
-        rule_set_version: 'v1.0',
-        totalCost: insertedQuote.devis_total,
-        numberOfSensors: insertedQuote.nbr_sonde + insertedQuote.nbr_sonde_double,
-        numberOfControllers: insertedQuote.nbr_controller,
-        numberOfIrrigationStakes: insertedQuote.nbr_piquet_irrigation,
-        quantities: {
-          nbr_sonde: insertedQuote.nbr_sonde,
-          nbr_sonde_double: insertedQuote.nbr_sonde_double,
-          nbr_controller: insertedQuote.nbr_controller,
-          nbr_piquet_irrigation: insertedQuote.nbr_piquet_irrigation
-        },
-        pricing: {
-          sonde: 250,
-          sonde_double: 350,
-          piquet_irrigation: 50,
-          controller: 499
-        }
-      })
-
-      // Aller directement à l'étape quote (affichage du devis)
-      actions.setStep('quote')
-
-      // Déclencher l'ouverture du modal après un court délai
-      setTimeout(() => {
-        const saveButton = document.querySelector('[data-save-quote-button]') as HTMLButtonElement
-        if (saveButton) {
-          saveButton.click()
-        }
-      }, 500)
-
-    } catch (error) {
-      console.error('Erreur inattendue:', error)
-      alert('Erreur inattendue')
-    } finally {
-      setIsTestingAuth(false)
-    }
   }
 
   return (

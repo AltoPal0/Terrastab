@@ -2,8 +2,6 @@ import React from 'react'
 import ZonesRgaFrance from '../../src/components/seo/ZonesRgaFrance'
 import { Helmet } from "@dr.pogodin/react-helmet";
 
-export const prerender = true;
-
 export default function Page() {
   return (
     <>

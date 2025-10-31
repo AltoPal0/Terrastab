@@ -3,9 +3,7 @@ import DiagnosticRga from '../../src/components/seo/DiagnosticRga'
 
 import { Helmet } from "@dr.pogodin/react-helmet";
 
-export const prerender = true;
-
-export function Page() {
+export default function Page() {
   return (
     <>
       <Helmet>

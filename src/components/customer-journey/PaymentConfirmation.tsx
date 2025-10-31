@@ -27,13 +27,13 @@ const PaymentConfirmation = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={false}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="text-center mb-12"
       >
         <motion.div
-          initial={{ scale: 0 }}
+          initial={false}
           animate={{ scale: 1 }}
           transition={{ duration: 0.6, delay: 0.3, type: "spring", stiffness: 200 }}
           className="mb-8"
@@ -57,7 +57,7 @@ const PaymentConfirmation = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         {/* Order Summary */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={false}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
@@ -103,7 +103,7 @@ const PaymentConfirmation = () => {
 
         {/* Next Steps */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
+          initial={false}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.7 }}
         >
@@ -159,7 +159,7 @@ const PaymentConfirmation = () => {
 
       {/* Action Cards */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.9 }}
         className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
@@ -206,7 +206,7 @@ const PaymentConfirmation = () => {
 
       {/* Call to Action */}
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 1.1 }}
         className="text-center space-y-6"

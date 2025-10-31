@@ -45,7 +45,7 @@ const ExpertQuotes = () => {
     <section className="py-24 bg-gradient-to-b from-white via-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
@@ -65,7 +65,7 @@ const ExpertQuotes = () => {
           {experts.map((expert, index) => (
             <motion.div
               key={expert.name}
-              initial={{ opacity: 0, y: 30 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 * index, ease: "easeOut" }}
               viewport={{ once: true }}
@@ -105,7 +105,7 @@ const ExpertQuotes = () => {
             return (
               <motion.div
                 key={expert.name}
-                initial={{ opacity: 0, y: 30 }}
+                initial={false}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 * index, ease: "easeOut" }}
                 viewport={{ once: true }}
@@ -140,7 +140,7 @@ const ExpertQuotes = () => {
                     <AnimatePresence>
                       {isExpanded && (
                         <motion.div
-                          initial={{ height: 0, opacity: 0 }}
+                          initial={false}
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                           transition={{ duration: 0.3, ease: "easeInOut" }}

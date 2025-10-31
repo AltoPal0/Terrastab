@@ -160,7 +160,7 @@ const ContactCapture = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
       >
@@ -181,7 +181,7 @@ const ContactCapture = () => {
             {/* Message de succès après sauvegarde */}
             {successMessage && (
               <motion.div
-                initial={{ opacity: 0, y: -10 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 className="p-4 bg-green-50 border border-green-200 rounded-lg"
               >

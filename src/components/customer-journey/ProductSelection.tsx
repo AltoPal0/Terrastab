@@ -119,7 +119,7 @@ const ProductSelection = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="text-center mb-12"
@@ -141,7 +141,7 @@ const ProductSelection = () => {
           return (
             <motion.div
               key={product.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
@@ -198,7 +198,7 @@ const ProductSelection = () => {
 
       {/* Informations complémentaires */}
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.4 }}
         className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8"

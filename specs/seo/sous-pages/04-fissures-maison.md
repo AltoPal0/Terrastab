@@ -1,53 +1,127 @@
-### H1 : Stabilisation de sol argileux : la solution durable TerraStab
+# 🧠 Prompt Claude
 
-Plutôt que de masquer les fissures, la stabilisation traite la cause du problème : les mouvements du sol. TerraStab propose une approche géotechnique complète.
+Crée une nouvelle page dans la structure actuelle du site TerraStab :
 
-#### Pourquoi stabiliser le sol avant de réparer
+**Fichier cible :**
+`pages/fissures-murs/+Page.tsx`
 
-* Stoppe les mouvements des fondations
-* Préserve la structure
-* Évite la réapparition de fissures
+**Composant React attendu :**
+`<FissuresMurs />` dans `src/components/seo/FissuresMurs.tsx`
 
-#### Les principales méthodes
-
-* **Injection de résine expansive**
-* **Micropieux**
-* **Ancrages ou longrines**
-
-#### L’approche TerraStab
-
-* Diagnostic précis
-* Matériaux certifiés
-* Suivi après-travaux
-
-👉 **[Demandez une estimation →](/#devis)**
+**Objectif :**
+Créer une page SEO copywritée complète et persuasive autour du mot-clé principal **"fissures dans les murs"**.  
+La page doit :
+- Être structurée en sections avec titres H1, H2, H3 pertinents pour le SEO.  
+- Adopter le ton TerraStab : scientifique vulgarisé, rassurant, et crédible.  
+- Inclure des CTA clairs vers le diagnostic (“Vérifier mon risque”).  
+- Mentionner les partenariats et l’origine scientifique du projet (BRGM, recherche publique).  
+- Optimiser les balises `<title>` et `<meta description>`.  
+- Terminer par une section de réassurance (partenaires, labels, sérieux).
 
 ---
 
-## 4️⃣ `/fissures-maison`
+# 🌍 Page SEO : Fissures dans les murs — Causes et solutions
 
-### H1 : Fissures sur votre maison : causes, risques et solutions
+**Meta Title :**
+Fissures dans les murs : comprendre, diagnostiquer et stabiliser votre maison
 
-Les fissures sont souvent le premier signe d’un désordre structurel. Comprendre leur origine est la première étape pour agir efficacement.
+**Meta Description :**
+Vos murs présentent des fissures ? Découvrez comment le phénomène d’argiles gonflantes fragilise votre maison et comment TerraStab propose une stabilisation durable, simple et certifiée.
 
-#### Les types de fissures
+---
 
-* Capillaires : superficielles
-* Fines (<1 mm) : dilatation des matériaux
-* Structurelles (>1 mm) : mouvements du sol
+## H1 — Fissures dans les murs : quand faut-il s’inquiéter ?
 
-#### Quand une fissure devient dangereuse
+Vous avez remarqué une fissure sur la façade, au coin d’une fenêtre ou le long d’un mur intérieur ?  
+Ces marques ne sont pas anodines : elles peuvent révéler un **désordre structurel lié aux mouvements du sol**, amplifiés par le phénomène de **retrait-gonflement des argiles (RGA)**.
 
-* Forme en escalier ou diagonale
-* Largeur croissante
-* Désalignement des ouvertures
+Chaque année, des milliers de maisons en France sont touchées par ce phénomène naturel, désormais reconnu comme **catastrophe naturelle** par l’État.
 
-#### Pourquoi le sol est souvent responsable
+---
 
-Les cycles secs/humides provoquent le retrait-gonflement de l’argile, entraînant des tensions sur les fondations.
+## H2 — Pourquoi les fissures apparaissent-elles ?
 
-#### Que faire dès les premiers signes
+Les fissures apparaissent lorsque le sol argileux sous vos fondations **se contracte en période de sécheresse** puis **gonfle lors des pluies**, exerçant des pressions inégales sur la structure du bâtiment.
 
-Un diagnostic géotechnique est la seule solution efficace.
+Ces déformations sont invisibles au quotidien… jusqu’au jour où vos murs se fissurent.  
+Les indices les plus fréquents :
+- Ouvertures en diagonale au-dessus des portes et fenêtres  
+- Lézardes traversant les murs porteurs  
+- Fissures s’élargissant après chaque été sec
 
-👉 **[Demandez un diagnostic RGA →](/diagnostic-rga)**
+---
+
+## H2 — Comprendre son risque avant d’agir
+
+Avant d’engager des travaux lourds ou coûteux, il est essentiel de **mesurer le risque réel**.  
+TerraStab vous propose un **diagnostic en ligne gratuit**, basé sur :
+- les **cartes officielles du BRGM**,  
+- les **données climatiques locales**,  
+- et les **caractéristiques de votre maison**.
+
+👉 [Vérifier mon risque maintenant](#formulaire-lead)
+
+Ce diagnostic constitue **la première étape vers la stabilisation de votre maison**, sans déplacement ni engagement.
+
+---
+
+## H2 — Une solution simple, issue de la recherche publique
+
+Née d’un programme de recherche soutenu par l’État et le **BRGM**, la technologie TerraStab permet de **stabiliser durablement les fondations** sans travaux lourds.
+
+Cette approche innovante agit **à la source du problème**, en réduisant les variations hydriques autour du bâti.  
+Résultat :  
+- moins de mouvements du sol,  
+- une maison plus stable,  
+- et un coût maîtrisé, quelle que soit la valeur du bien.
+
+---
+
+## H2 — Un réseau de partenaires de confiance
+
+TerraStab s’appuie sur un **écosystème reconnu** :
+- Experts agréés du **Comité Sécheresse et RGA**,  
+- Laboratoires indépendants,  
+- Entreprises locales formées à nos protocoles.
+
+Cette collaboration garantit des interventions conformes aux normes et un suivi transparent, de l’évaluation au traitement.
+
+---
+
+## H2 — Pourquoi choisir TerraStab ?
+
+- ✅ Technologie issue d’une recherche certifiée  
+- ✅ Diagnostic gratuit et immédiat  
+- ✅ Solution accessible et non invasive  
+- ✅ Réseau de partenaires agréés  
+- ✅ Support technique disponible
+
+👉 [Commencer mon diagnostic gratuit](#formulaire-lead)
+
+---
+
+## H3 — Protégez votre maison dès aujourd’hui
+
+Ne laissez pas une fissure mineure devenir un problème majeur.  
+Avec TerraStab, vous accédez à une **solution scientifique, reconnue et économique**, issue de la recherche publique française.
+
+**Vérifiez dès maintenant votre risque et recevez une première estimation fiable.**
+
+👉 [Remplir le formulaire](#formulaire-lead)
+
+---
+
+## H2 — En savoir plus
+
+- [Comprendre le phénomène de retrait-gonflement des argiles](../diagnostic-rga)  
+- [Nos garanties et partenaires](../partenaires)  
+- [Contactez un expert TerraStab](../contact)
+
+---
+
+📘 **Balises techniques recommandées :**
+
+```html
+<title>Fissures dans les murs : comprendre, diagnostiquer et stabiliser votre maison</title>
+<meta name="description" content="Vos murs présentent des fissures ? Découvrez comment le phénomène d’argiles gonflantes fragilise votre maison et comment TerraStab propose une stabilisation durable, simple et certifiée.">
+<meta name="keywords" content="fissures murs, fissures maison, RGA, sol argileux, stabilisation fondations, diagnostic fissures, retrait gonflement argiles">

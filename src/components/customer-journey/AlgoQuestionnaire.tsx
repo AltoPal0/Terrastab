@@ -357,7 +357,7 @@ const AlgoQuestionnaire = () => {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
@@ -427,7 +427,7 @@ const AlgoQuestionnaire = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
         className="mb-8"
@@ -470,7 +470,7 @@ const AlgoQuestionnaire = () => {
           <AnimatePresence>
             {showInfo && (
               <motion.div
-                initial={{ opacity: 0, height: 0 }}
+                initial={false}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}

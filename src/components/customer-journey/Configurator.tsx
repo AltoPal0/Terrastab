@@ -89,7 +89,7 @@ const Configurator = () => {
       case 0:
         return (
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={false}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             className="space-y-6"
@@ -132,7 +132,7 @@ const Configurator = () => {
       case 1:
         return (
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={false}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             className="space-y-4"
@@ -176,7 +176,7 @@ const Configurator = () => {
       case 2:
         return (
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={false}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             className="space-y-6"
@@ -194,7 +194,7 @@ const Configurator = () => {
 
             {formData.needsAdvice && (
               <motion.div
-                initial={{ opacity: 0, height: 0 }}
+                initial={false}
                 animate={{ opacity: 1, height: 'auto' }}
                 transition={{ duration: 0.3 }}
                 className="space-y-4 p-4 bg-gray-50 rounded-lg"
@@ -258,7 +258,7 @@ const Configurator = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="mb-8"

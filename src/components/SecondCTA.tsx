@@ -22,7 +22,7 @@ const SecondCTA = () => {
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
@@ -47,7 +47,7 @@ const SecondCTA = () => {
 
         {/* Benefits Icons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           viewport={{ once: true }}
@@ -56,7 +56,7 @@ const SecondCTA = () => {
           {benefits.map((benefit, index) => (
             <motion.div
               key={benefit.text}
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 * index, ease: "easeOut" }}
               viewport={{ once: true }}
@@ -75,7 +75,7 @@ const SecondCTA = () => {
 
         {/* Main CTA Button */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           viewport={{ once: true }}
@@ -93,7 +93,7 @@ const SecondCTA = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={false}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           viewport={{ once: true }}

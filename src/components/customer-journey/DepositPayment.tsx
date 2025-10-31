@@ -95,7 +95,7 @@ const DepositPayment = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="text-center mb-8"
@@ -113,7 +113,7 @@ const DepositPayment = () => {
         <div className="lg:col-span-2 space-y-6">
           {/* Contact Information */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={false}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
@@ -159,7 +159,7 @@ const DepositPayment = () => {
 
           {/* Payment Method */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={false}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
@@ -202,7 +202,7 @@ const DepositPayment = () => {
 
                 {paymentMethod === 'virement' && (
                   <motion.div
-                    initial={{ opacity: 0, height: 0 }}
+                    initial={false}
                     animate={{ opacity: 1, height: 'auto' }}
                     transition={{ duration: 0.3 }}
                     className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg"
@@ -222,7 +222,7 @@ const DepositPayment = () => {
 
           {/* Terms and Conditions */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={false}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
@@ -258,7 +258,7 @@ const DepositPayment = () => {
 
         {/* Payment Summary */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
+          initial={false}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
           className="lg:col-span-1"
@@ -348,7 +348,7 @@ const DepositPayment = () => {
       </div>
 
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 1 }}
         className="mt-8 flex justify-between items-center"

@@ -2,8 +2,6 @@ import React from 'react'
 import SolutionStabilisationSolArgileux from '../../src/components/seo/SolutionStabilisationSolArgileux'
 import { Helmet } from "@dr.pogodin/react-helmet";
 
-export const prerender = true;
-
 export default function Page() {
   return (
     <>

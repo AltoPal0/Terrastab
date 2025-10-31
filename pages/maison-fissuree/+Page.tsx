@@ -2,8 +2,6 @@ import React from 'react'
 import MaisonFissuree from '../../src/components/seo/MaisonFissuree'
 import { Helmet } from "@dr.pogodin/react-helmet";
 
-export const prerender = true;
-
 export default function Page() {
   return (
     <>

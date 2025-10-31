@@ -22,7 +22,7 @@ const MiniPromise = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.2 }}
           className="text-center mb-12 sm:mb-16"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 sm:mb-8 px-2">
@@ -46,8 +46,8 @@ const MiniPromise = () => {
           {features.map((feature, index) => (
             <motion.div
               key={feature.text}
-              initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
-              whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+              initial={{ opacity: 0, scale: 0 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               transition={{
                 duration: 0.6,
                 delay: 0.15 * index,
@@ -55,7 +55,7 @@ const MiniPromise = () => {
                 type: "spring",
                 stiffness: 100
               }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.2 }}
               className="flex flex-col items-center text-center group"
             >
               <motion.div

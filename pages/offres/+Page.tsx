@@ -4,8 +4,6 @@ import RiskAssessmentSection from '../../src/components/RiskAssessmentSection'
 import { Check } from 'lucide-react'
 import { Helmet } from "@dr.pogodin/react-helmet";
 
-export const prerender = true;
-
 type Offer = {
   id: 'survey-light' | 'survey-plus' | 'shield'
   name: string

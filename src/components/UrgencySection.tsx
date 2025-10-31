@@ -29,7 +29,7 @@ const UrgencySection = () => {
     <section className="py-16 sm:py-20 md:py-24 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
@@ -59,7 +59,7 @@ const UrgencySection = () => {
           {facts.map((fact, index) => (
             <motion.div
               key={fact.stat}
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               transition={{
                 duration: 0.7,
@@ -72,7 +72,7 @@ const UrgencySection = () => {
             >
               <motion.div
                 className="flex justify-center mb-4 sm:mb-6"
-                initial={{ scale: 0, rotate: -180 }}
+                initial={false}
                 whileInView={{ scale: 1, rotate: 0 }}
                 transition={{
                   duration: 0.6,
@@ -88,7 +88,7 @@ const UrgencySection = () => {
               </motion.div>
               <motion.h3
                 className="text-xl sm:text-2xl md:text-3xl font-bold text-orange-400 mb-2 sm:mb-3"
-                initial={{ opacity: 0, x: -20 }}
+                initial={false}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{
                   duration: 0.5,
@@ -100,7 +100,7 @@ const UrgencySection = () => {
               </motion.h3>
               <motion.p
                 className="text-sm sm:text-base text-gray-300"
-                initial={{ opacity: 0 }}
+                initial={false}
                 whileInView={{ opacity: 1 }}
                 transition={{
                   duration: 0.5,
@@ -116,7 +116,7 @@ const UrgencySection = () => {
 
         {/* Expert Quote - Fourth Dynamic Box */}
         <motion.div
-          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           transition={{
             duration: 0.8,
@@ -128,7 +128,7 @@ const UrgencySection = () => {
           className="bg-red-900/30 border border-red-800/50 rounded-lg p-4 sm:p-6 md:p-8 mb-8 sm:mb-12 text-center hover:border-red-700/70 hover:shadow-xl hover:shadow-red-500/10 transition-all duration-300"
         >
           <motion.div
-            initial={{ scale: 0, rotate: 180 }}
+            initial={false}
             whileInView={{ scale: 1, rotate: 0 }}
             transition={{
               duration: 0.6,
@@ -142,7 +142,7 @@ const UrgencySection = () => {
           </motion.div>
           <motion.blockquote
             className="text-sm sm:text-base md:text-lg lg:text-xl italic text-red-200 mb-3 sm:mb-4 px-2"
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
             viewport={{ once: true }}
@@ -151,7 +151,7 @@ const UrgencySection = () => {
           </motion.blockquote>
           <motion.cite
             className="text-xs sm:text-sm text-red-300"
-            initial={{ opacity: 0 }}
+            initial={false}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.0 }}
             viewport={{ once: true }}
@@ -162,7 +162,7 @@ const UrgencySection = () => {
 
         {/* CTA - Final Dynamic Element */}
         <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.9 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           transition={{
             duration: 0.8,
@@ -188,7 +188,7 @@ const UrgencySection = () => {
           </motion.div>
           <motion.p
             className="text-xs sm:text-sm text-gray-400 mt-3 sm:mt-4 px-4"
-            initial={{ opacity: 0 }}
+            initial={false}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.0 }}
             viewport={{ once: true }}

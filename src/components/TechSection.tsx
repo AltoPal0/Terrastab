@@ -40,7 +40,7 @@ const TechSection = () => {
     <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
@@ -59,7 +59,7 @@ const TechSection = () => {
 
         {/* BRGM Origin Block */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           viewport={{ once: true }}
@@ -90,7 +90,7 @@ const TechSection = () => {
 
         {/* 3 Steps Process */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           viewport={{ once: true }}
@@ -105,7 +105,7 @@ const TechSection = () => {
             {steps.map((step, index) => (
               <motion.div
                 key={step.number}
-                initial={{ opacity: 0, y: 30 }}
+                initial={false}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 * index, ease: "easeOut" }}
                 viewport={{ once: true }}
@@ -145,7 +145,7 @@ const TechSection = () => {
               return (
                 <motion.div
                   key={step.number}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={false}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1 * index, ease: "easeOut" }}
                   viewport={{ once: true }}
@@ -181,7 +181,7 @@ const TechSection = () => {
                       <AnimatePresence>
                         {isExpanded && (
                           <motion.div
-                            initial={{ height: 0, opacity: 0 }}
+                            initial={false}
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -203,7 +203,7 @@ const TechSection = () => {
 
         {/* Benefits */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
           viewport={{ once: true }}
@@ -212,7 +212,7 @@ const TechSection = () => {
           {benefits.map((benefit, index) => (
             <motion.div
               key={benefit.text}
-              initial={{ opacity: 0, x: index === 0 ? -20 : 20 }}
+              initial={false}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.1 * index, ease: "easeOut" }}
               viewport={{ once: true }}

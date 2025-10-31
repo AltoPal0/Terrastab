@@ -125,7 +125,7 @@ const QuoteDisplay = () => {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
         className="text-center mb-8"
@@ -142,7 +142,7 @@ const QuoteDisplay = () => {
         {/* Détail des quantités */}
         <div className="lg:col-span-2 space-y-6">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={false}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
@@ -194,7 +194,7 @@ const QuoteDisplay = () => {
           {/* Détail des contributions */}
           {quote.contributions && quote.contributions.length > 0 && (
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
+              initial={false}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
@@ -226,7 +226,7 @@ const QuoteDisplay = () => {
 
         {/* Carte de tarification */}
         <motion.div
-          initial={{ opacity: 0, x: 20 }}
+          initial={false}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
           className="lg:col-span-1"
@@ -273,7 +273,7 @@ const QuoteDisplay = () => {
       </div>
 
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.8 }}
         className="mt-8"
@@ -304,13 +304,13 @@ const QuoteDisplay = () => {
         {/* Modal de sauvegarde */}
         {showSaveModal && (
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
             onClick={() => setShowSaveModal(false)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={false}
               animate={{ scale: 1, opacity: 1 }}
               className="bg-white rounded-lg p-8 max-w-md w-full"
               onClick={(e) => e.stopPropagation()}

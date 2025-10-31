@@ -23,7 +23,7 @@ const TrustLogos = () => {
     <section className="py-20 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true }}
@@ -43,7 +43,7 @@ const TrustLogos = () => {
 
         {/* Desktop: Single row carousel */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           viewport={{ once: true }}
@@ -71,7 +71,7 @@ const TrustLogos = () => {
         <div className="md:hidden space-y-6">
           {/* Row 1 - Scrolling Right to Left */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             viewport={{ once: true }}
@@ -97,7 +97,7 @@ const TrustLogos = () => {
 
           {/* Row 2 - Scrolling Left to Right */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
             viewport={{ once: true }}
@@ -123,7 +123,7 @@ const TrustLogos = () => {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           viewport={{ once: true }}

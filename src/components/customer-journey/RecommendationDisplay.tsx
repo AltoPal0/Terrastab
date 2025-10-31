@@ -184,7 +184,7 @@ const RecommendationDisplay = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* En-tête avec résultat du risque */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="mb-12"
@@ -193,7 +193,7 @@ const RecommendationDisplay = () => {
           <CardContent className="p-8">
             <div className="flex flex-col items-center text-center">
               <motion.div
-                initial={{ scale: 0 }}
+                initial={false}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 200 }}
                 className="mb-6"
@@ -219,7 +219,7 @@ const RecommendationDisplay = () => {
 
       {/* Section des 3 solutions */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4 }}
         className="mb-12"
@@ -239,7 +239,7 @@ const RecommendationDisplay = () => {
             return (
               <motion.div
                 key={product.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
               >
@@ -297,7 +297,7 @@ const RecommendationDisplay = () => {
 
       {/* Informations complémentaires */}
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.8 }}
         className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8"
@@ -325,7 +325,7 @@ const RecommendationDisplay = () => {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 1 }}
         className="text-center text-sm text-gray-500"
