@@ -13,10 +13,10 @@ const FAQSection = () => {
       question: "En combien de temps voit-on les effets ?",
       answer: "Les premiers effets stabilisateurs apparaissent généralement sous 3 à 6 mois. Pour les cas correctifs, la stabilisation complète peut prendre 12 à 18 mois selon l'ampleur des désordres initiaux."
     },
-    {
-      question: "Quelle est la garantie ?",
-      answer: "TerraStab propose une garantie décennale sur l'installation et un engagement contractuel de performance. En cas de non-fonctionnement avéré, nous intervenons gratuitement ou procédons au remboursement."
-    },
+    // {
+    //   question: "Quelle est la garantie ?",
+    //   answer: "TerraStab propose une garantie décennale sur l'installation et un engagement contractuel de performance. En cas de non-fonctionnement avéré, nous intervenons gratuitement ou procédons au remboursement."
+    // },
     {
       question: "Y a-t-il un entretien ou un abonnement ?",
       answer: "Le système fonctionne de manière autonome avec un abonnement de maintenance préventive inclus la première année. Les années suivantes, un contrat de suivi optionnel assure le bon fonctionnement."

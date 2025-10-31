@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isRiskMobileOpen, setIsRiskMobileOpen] = useState(false)
+  const [isRiskDesktopOpen, setIsRiskDesktopOpen] = useState(false)
+  const closeTimerRef = useRef<number | null>(null)
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
@@ -17,6 +19,28 @@ const Header = () => {
     }
     setIsMenuOpen(false)
   }
+
+  const handleRiskMouseEnter = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current)
+      closeTimerRef.current = null
+    }
+    setIsRiskDesktopOpen(true)
+  }
+
+  const handleRiskMouseLeave = () => {
+    closeTimerRef.current = window.setTimeout(() => {
+      setIsRiskDesktopOpen(false)
+    }, 150)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current)
+      }
+    }
+  }, [])
 
   return (
     <header className="bg-white border-b border-gray-100 fixed w-full top-0 z-50">
@@ -50,19 +74,25 @@ const Header = () => {
             >
               Nos Offres
             </a>
-            <div className="relative group">
+            <div
+              className="relative"
+              onMouseEnter={handleRiskMouseEnter}
+              onMouseLeave={handleRiskMouseLeave}
+            >
               <button
                 className="text-gray-700 hover:text-blue-600 px-1 py-2 text-base font-medium transition-colors"
               >
                 Comprendre le risque
               </button>
-              <div className="absolute left-0 mt-2 hidden group-hover:block bg-white shadow-lg border rounded-md py-2 w-72">
-                <a href="/maison-fissuree" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Maison fissurée: causes et solutions</a>
-                <a href="/diagnostic-rga" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Diagnostic RGA</a>
-                <a href="/solution-stabilisation-sol-argileux" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Stabilisation des sols argileux</a>
-                <a href="/fissures-maison" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Fissures maison</a>
-                <a href="/zones-rga-france" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Zones RGA en France</a>
-              </div>
+              {isRiskDesktopOpen && (
+                <div className="absolute left-0 mt-2 bg-white shadow-lg border rounded-md py-2 w-72">
+                  <a href="/maison-fissuree" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Maison fissurée: causes et solutions</a>
+                  <a href="/diagnostic-rga" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Diagnostic RGA</a>
+                  <a href="/solution-stabilisation-sol-argileux" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Stabilisation des sols argileux</a>
+                  <a href="/fissures-maison" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Fissures maison</a>
+                  <a href="/zones-rga-france" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Zones RGA en France</a>
+                </div>
+              )}
             </div>
             <button
               onClick={() => scrollToSection('contact')}
