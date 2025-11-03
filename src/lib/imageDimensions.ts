@@ -31,6 +31,46 @@ export const imageDimensions = {
   "partner_logo_needhelp.webp": {
     "width": 228,
     "height": 65
+  },
+  "responsive/maison_fissuree-400w.jpg": {
+    "width": 400,
+    "height": 182
+  },
+  "responsive/maison_fissuree-400w.webp": {
+    "width": 400,
+    "height": 182
+  },
+  "responsive/maison_fissuree-768w.jpg": {
+    "width": 768,
+    "height": 350
+  },
+  "responsive/maison_fissuree-768w.webp": {
+    "width": 768,
+    "height": 350
+  },
+  "responsive/partner_logo_grand_nancy-1200w.png": {
+    "width": 1200,
+    "height": 379
+  },
+  "responsive/partner_logo_grand_nancy-1200w.webp": {
+    "width": 1200,
+    "height": 379
+  },
+  "responsive/partner_logo_grand_nancy-400w.png": {
+    "width": 400,
+    "height": 126
+  },
+  "responsive/partner_logo_grand_nancy-400w.webp": {
+    "width": 400,
+    "height": 126
+  },
+  "responsive/partner_logo_grand_nancy-768w.png": {
+    "width": 768,
+    "height": 243
+  },
+  "responsive/partner_logo_grand_nancy-768w.webp": {
+    "width": 768,
+    "height": 243
   }
 } as const
 

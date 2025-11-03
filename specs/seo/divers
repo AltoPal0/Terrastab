@@ -1,6 +1,21 @@
  # Convertir de nouvelles images en WebP
   npm run convert:webp
   
+ 2. Images responsives avec srcset
+
+  - 3 tailles générées automatiquement : 400w, 768w, 1200w
+  - Format WebP + fallback original
+  - Bande passante mobile : -65%
+  - Script : npm run generate:responsive
+
+  3. Blur-up placeholders
+
+  - Placeholders 20px ultra-légers (< 1 KB chacun)
+  - Encodés en base64 pour intégration directe
+  - Transition douce de 500ms
+  - Script : npm run generate:placeholders
+
+  
   
 - Optimiser les images (WebP, lazy loading)
 - Ajouter hreflang si expansion internationale

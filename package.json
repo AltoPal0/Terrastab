@@ -9,7 +9,12 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "generate:sitemap": "tsx scripts/generate-sitemap.ts",
-    "convert:webp": "tsx scripts/convert-images-to-webp.ts"
+    "convert:webp": "tsx scripts/convert-images-to-webp.ts",
+    "generate:responsive": "tsx scripts/generate-responsive-images.ts",
+    "generate:placeholders": "tsx scripts/generate-blur-placeholders.ts",
+    "generate:dimensions": "tsx scripts/get-image-dimensions.ts",
+    "optimize:images": "npm run convert:webp && npm run generate:responsive && npm run generate:placeholders && npm run generate:dimensions",
+    "check:seo": "tsx scripts/check-seo-articles.ts"
   },
   "dependencies": {
     "@dr.pogodin/react-helmet": "^3.0.4",
