@@ -1,4 +1,5 @@
 import type { ImgHTMLAttributes } from 'react'
+import { getImageDimensions } from '@/lib/imageDimensions'
 
 interface OptimizedImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   src: string
@@ -20,8 +21,15 @@ export default function OptimizedImage({
   fallback,
   eager = false,
   className,
+  width,
+  height,
   ...props
 }: OptimizedImageProps) {
+  // Obtenir les dimensions automatiquement si non fournies
+  const dimensions = getImageDimensions(src)
+  const finalWidth = width || dimensions?.width
+  const finalHeight = height || dimensions?.height
+
   // Ne pas convertir les SVG en WebP
   if (src.endsWith('.svg')) {
     return (
@@ -30,6 +38,8 @@ export default function OptimizedImage({
         alt={alt}
         loading={eager ? undefined : 'lazy'}
         className={className}
+        width={finalWidth}
+        height={finalHeight}
         {...props}
       />
     )
@@ -49,6 +59,8 @@ export default function OptimizedImage({
         loading={eager ? undefined : 'lazy'}
         decoding="async"
         className={className}
+        width={finalWidth}
+        height={finalHeight}
         {...props}
       />
     </picture>

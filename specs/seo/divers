@@ -1,3 +1,7 @@
+ # Convertir de nouvelles images en WebP
+  npm run convert:webp
+  
+  
 - Optimiser les images (WebP, lazy loading)
 - Ajouter hreflang si expansion internationale
 - Mesurer Core Web Vitals avec Lighthouse
