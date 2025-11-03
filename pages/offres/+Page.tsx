@@ -88,16 +88,37 @@ function openRiskModal() {
   }
 }
 
+export const prerender = true
+
 export default function Page() {
+  const title = "Nos offres TerraStab – Surveillance et stabilisation des sols argileux"
+  const description = "Découvrez nos offres SURVEY Light, SURVEY+ et SHIELD pour surveiller, analyser et stabiliser les sols argileux afin de protéger votre maison."
+  const url = "https://terrastab.fr/offres"
+  const image = "https://terrastab.fr/maison_fissuree.jpg"
+
   return (
     <>
       <Helmet>
-        <title>Nos offres TerraStab – Surveillance et stabilisation des sols argileux</title>
-        <meta
-          name="description"
-          content="Découvrez nos offres SURVEY Light, SURVEY+ et SHIELD pour surveiller, analyser et stabiliser les sols argileux afin de protéger votre maison."
-        />
-        <link rel="canonical" href="https://terrastab.fr/offres" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={url} />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={url} />
+        <meta property="og:image" content={image} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:site_name" content="TerraStab" />
+
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={image} />
       </Helmet>
       <main className="min-h-screen bg-white">
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

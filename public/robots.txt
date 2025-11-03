@@ -1,0 +1,15 @@
+# Robots.txt pour TerraStab
+# https://terrastab.fr/robots.txt
+
+User-agent: *
+Allow: /
+
+# Bloquer les pages admin
+Disallow: /admin
+Disallow: /admin/*
+
+# Bloquer les API endpoints si nécessaire
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://terrastab.fr/sitemap.xml

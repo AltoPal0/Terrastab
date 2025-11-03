@@ -1,0 +1,27 @@
+- Optimiser les images (WebP, lazy loading)
+- Ajouter hreflang si expansion internationale
+- Mesurer Core Web Vitals avec Lighthouse
+- Soumettre le sitemap à Google Search Console
+
+----
+
+Adapting to zero-click searches
+Zero-click searches now account for 60% of Google queries, where users find answers directly in search results without visiting websites. 
+
+This fundamental shift requires adapting content strategies to maintain visibility in featured snippets and knowledge panels while still driving valuable traffic.
+
+The challenge is to provide enough information to be featured in these prominent positions while still giving users a reason to click through to your website for more detailed information.
+
+Creating content for AI Overviews
+
+AI Overviews display direct answers at the top of Google search results, capturing users’ attention before they see traditional organic listings. 
+
+When targeting AI Overviews:
+
+Structure content in a Q&A format using clear headings with questions as titles to optimize for these valuable positions.
+Write concise 40- to 60-word answers summarizing key information while hinting at additional value on your website. 
+Use bullet points, numbered lists, and tables to organize data in a way that’s easy for users and search engines to understand.
+Include relevant statistics and facts supported by authoritative sources, which adds credibility to your content and increases the likelihood of being featured. 
+Format content with proper HTML heading tags to help search engines identify the hierarchical structure of your information.
+Research the specific questions your audience is asking about your topic. 
+Look at People also ask boxes and related searches to identify opportunities to address common questions in your content.

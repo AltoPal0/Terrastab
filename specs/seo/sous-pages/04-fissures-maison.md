@@ -59,7 +59,7 @@ TerraStab vous propose un **diagnostic en ligne gratuit**, basé sur :
 - les **données climatiques locales**,  
 - et les **caractéristiques de votre maison**.
 
-👉 [Vérifier mon risque maintenant](#formulaire-lead)
+👉 [Vérifier mon risque maintenant](implementer le bouton deja present sur la landing page)
 
 Ce diagnostic constitue **la première étape vers la stabilisation de votre maison**, sans déplacement ni engagement.
 
@@ -81,8 +81,8 @@ Résultat :
 
 TerraStab s’appuie sur un **écosystème reconnu** :
 - Experts agréés du **Comité Sécheresse et RGA**,  
-- Laboratoires indépendants,  
-- Entreprises locales formées à nos protocoles.
+- La recherche nationale du BRGM (https://www.brgm.fr/fr),  
+- Entreprises locales formées à nos protocoles. 
 
 Cette collaboration garantit des interventions conformes aux normes et un suivi transparent, de l’évaluation au traitement.
 
@@ -96,8 +96,6 @@ Cette collaboration garantit des interventions conformes aux normes et un suivi 
 - ✅ Réseau de partenaires agréés  
 - ✅ Support technique disponible
 
-👉 [Commencer mon diagnostic gratuit](#formulaire-lead)
-
 ---
 
 ## H3 — Protégez votre maison dès aujourd’hui
@@ -107,7 +105,7 @@ Avec TerraStab, vous accédez à une **solution scientifique, reconnue et écono
 
 **Vérifiez dès maintenant votre risque et recevez une première estimation fiable.**
 
-👉 [Remplir le formulaire](#formulaire-lead)
+(implementer le bouton deja present sur la landing page)
 
 ---
 

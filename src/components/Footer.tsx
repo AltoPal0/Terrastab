@@ -1,4 +1,6 @@
 import { Mail, Phone, MapPin } from 'lucide-react'
+import OptimizedImage from '@/components/OptimizedImage'
+import { imageAlts } from '@/lib/imageAltTexts'
 
 const Footer = () => {
   return (
@@ -9,9 +11,9 @@ const Footer = () => {
           <div className="grid md:grid-cols-4 gap-8">
             {/* Company Info */}
             <div>
-              <img
+              <OptimizedImage
                 src="/logo_terrastab.svg"
-                alt="Terrastab Logo"
+                alt={imageAlts.logoTerrastab}
                 className="h-12 w-auto mb-4"
               />
               <p className="text-gray-300 text-sm">

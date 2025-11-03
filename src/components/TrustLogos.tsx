@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import OptimizedImage from '@/components/OptimizedImage'
 
 const TrustLogos = () => {
   const allPartners = [
@@ -57,9 +58,9 @@ const TrustLogos = () => {
                 className="flex-shrink-0 bg-white p-8 rounded-lg shadow-md border hover:shadow-lg transition-shadow duration-300 w-48 h-32 flex items-center justify-center"
                 style={{ scrollSnapAlign: 'start' }}
               >
-                <img
+                <OptimizedImage
                   src={partner.logo}
-                  alt={partner.name}
+                  alt={`${partner.name} - Partenaire certifié de TerraStab`}
                   className="max-h-20 max-w-full object-contain pointer-events-none"
                 />
               </div>
@@ -85,9 +86,9 @@ const TrustLogos = () => {
                   className="flex-shrink-0 bg-white p-6 rounded-lg shadow-md border w-40 h-28 flex items-center justify-center"
                   style={{ scrollSnapAlign: 'start' }}
                 >
-                  <img
+                  <OptimizedImage
                     src={partner.logo}
-                    alt={partner.name}
+                    alt={`${partner.name} - Partenaire certifié de TerraStab`}
                     className="max-h-16 max-w-full object-contain pointer-events-none"
                   />
                 </div>
@@ -111,9 +112,9 @@ const TrustLogos = () => {
                   className="flex-shrink-0 bg-white p-6 rounded-lg shadow-md border w-40 h-28 flex items-center justify-center"
                   style={{ scrollSnapAlign: 'start' }}
                 >
-                  <img
+                  <OptimizedImage
                     src={partner.logo}
-                    alt={partner.name}
+                    alt={`${partner.name} - Partenaire certifié de TerraStab`}
                     className="max-h-16 max-w-full object-contain pointer-events-none"
                   />
                 </div>

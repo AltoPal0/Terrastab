@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
+import OptimizedImage from '@/components/OptimizedImage'
+import { imageAlts } from '@/lib/imageAltTexts'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -48,26 +50,27 @@ const Header = () => {
         <div className="flex justify-between items-center h-20">
           {/* Logo Section */}
           <div className="flex-shrink-0">
-            <button
-              onClick={() => scrollToSection('top')}
+            <a
+              href="/"
               className="flex items-center"
             >
-              <img
+              <OptimizedImage
                 src="/logo_terrastab.svg"
-                alt="Terrastab Logo"
+                alt={imageAlts.logoTerrastab}
                 className="h-12 w-auto"
+                eager
               />
-            </button>
+            </a>
           </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-10">
-            <button
-              onClick={() => scrollToSection('top')}
+            <a
+              href="/"
               className="text-gray-700 hover:text-blue-600 px-1 py-2 text-base font-medium transition-colors"
             >
               Accueil
-            </button>
+            </a>
             <a
               href="/offres"
               className="text-gray-700 hover:text-blue-600 px-1 py-2 text-base font-medium transition-colors"
@@ -90,6 +93,7 @@ const Header = () => {
                   <a href="/diagnostic-rga" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Diagnostic RGA</a>
                   <a href="/solution-stabilisation-sol-argileux" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Stabilisation des sols argileux</a>
                   <a href="/fissures-maison" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Fissures maison</a>
+                  <a href="/fissures-murs" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Fissures dans les murs</a>
                   <a href="/zones-rga-france" className="block px-4 py-2 text-gray-700 hover:bg-gray-50">Zones RGA en France</a>
                 </div>
               )}
@@ -126,12 +130,12 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
-              <button
-                onClick={() => scrollToSection('top')}
+              <a
+                href="/"
                 className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50"
               >
                 Accueil
-              </button>
+              </a>
               <a href="/offres" className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">
                 Nos Offres
               </a>
@@ -150,6 +154,7 @@ const Header = () => {
                   <a href="/diagnostic-rga" onClick={() => setIsMenuOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Diagnostic RGA</a>
                   <a href="/solution-stabilisation-sol-argileux" onClick={() => setIsMenuOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Stabilisation des sols argileux</a>
                   <a href="/fissures-maison" onClick={() => setIsMenuOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Fissures maison</a>
+                  <a href="/fissures-murs" onClick={() => setIsMenuOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Fissures dans les murs</a>
                   <a href="/zones-rga-france" onClick={() => setIsMenuOpen(false)} className="block w-full text-left px-3 py-2 text-base font-medium text-gray-900 hover:text-blue-600 hover:bg-gray-50">Zones RGA en France</a>
                 </div>
               )}

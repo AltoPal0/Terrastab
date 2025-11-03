@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run generate:sitemap && tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate:sitemap": "tsx scripts/generate-sitemap.ts",
+    "convert:webp": "tsx scripts/convert-images-to-webp.ts"
   },
   "dependencies": {
     "@dr.pogodin/react-helmet": "^3.0.4",
@@ -42,7 +44,9 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.4.0",
+    "sharp": "^0.34.4",
     "tailwindcss": "^4.1.13",
+    "tsx": "^4.20.6",
     "tw-animate-css": "^1.3.8",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.44.0",

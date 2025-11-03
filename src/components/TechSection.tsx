@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
 import { Satellite, Settings, Droplets, Shield, ChevronDown, CheckCircle } from 'lucide-react'
+import OptimizedImage from '@/components/OptimizedImage'
+import { imageAlts } from '@/lib/imageAltTexts'
 
 const TechSection = () => {
   const [expandedStep, setExpandedStep] = useState<number | null>(null)
@@ -69,9 +71,9 @@ const TechSection = () => {
             <CardContent className="p-8">
               <div className="text-center">
                 <div className="flex justify-center mb-6">
-                  <img
+                  <OptimizedImage
                     src="/logo_france_brgm.svg"
-                    alt="BRGM - Bureau de Recherches Géologiques et Minières"
+                    alt={imageAlts.logoFranceBrgm}
                     className="h-16 md:h-20 object-contain"
                   />
                 </div>
