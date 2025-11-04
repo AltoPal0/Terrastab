@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Diagnostic RGA : comprendre l'évaluation du risque de retrait-gonflement des argiles, les méthodes d'analyse géotechnique, et l'interprétation des scores de risque pour protéger votre habitation.">
+    <title>Diagnostic RGA : évaluer votre exposition au retrait-gonflement | Guide Expert</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 0.5em;
+            color: #1a1a1a;
+        }
+        h2 {
+            font-size: 1.6em;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #2c3e50;
+        }
+        h3 {
+            font-size: 1.3em;
+            margin-top: 1.2em;
+            margin-bottom: 0.4em;
+            color: #34495e;
+        }
+        .summary {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 15px 0;
+            font-size: 1.05em;
+        }
+        .intro {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 2em;
+        }
+        .fact-box {
+            background-color: #e8f4f8;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .method-box {
+            background-color: #f0f9ff;
+            padding: 15px;
+            border-left: 4px solid #0ea5e9;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .faq {
+            background-color: #f5f5f5;
+            padding: 20px;
+            margin-top: 2em;
+            border-radius: 5px;
+        }
+        .faq-item {
+            margin-bottom: 20px;
+        }
+        .faq-question {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+        li {
+            margin: 8px 0;
+        }
+        .cta-link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .cta-link:hover {
+            text-decoration: underline;
+        }
+        .references {
+            margin-top: 3em;
+            padding-top: 2em;
+            border-top: 2px solid #ddd;
+        }
+        .references h2 {
+            font-size: 1.4em;
+        }
+        .reference-item {
+            margin: 10px 0;
+            font-size: 0.95em;
+        }
+        .conclusion {
+            margin-top: 2em;
+            padding: 20px;
+            background-color: #f0f7fb;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+        .steps li {
+            counter-increment: step-counter;
+            margin: 15px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+        .steps li:before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #3498db;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .image-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 3px dashed #fff;
+            border-radius: 8px;
+            padding: 40px 20px;
+            margin: 30px 0;
+            text-align: center;
+            color: white;
+        }
+        .image-placeholder h4 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            color: #fff;
+        }
+        .image-placeholder p {
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+        .image-real {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .image-real img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .image-real figcaption {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <article>
+                <div class="image-placeholder">
+            <h4>📸 IMAGE HERO NÉCESSAIRE</h4>
+            <p><strong>Description :</strong> Expert géotechnicien en action avec équipement de mesure sur terrain</p>
+            <p><strong>Dimensions :</strong> 1200x600px</p>
+            <p><strong>Style :</strong> Photo professionnelle, expert avec sonde/équipement, terrain argileux visible</p>
+            <p><strong>Mots-clés :</strong> diagnostic géotechnique, expert sol, analyse terrain, BRGM</p>
+        </div>
+
+        <h1>Diagnostic RGA : évaluer votre exposition</h1>
+
+        <div class="intro">
+            Vous habitez en zone argileuse et souhaitez anticiper les risques pour votre maison ? Le diagnostic retrait-gonflement des argiles (RGA) permet d'évaluer précisément l'exposition de votre terrain et de votre bâti. Cette analyse combine géologie, climat et caractéristiques constructives pour produire un score de risque fiable, première étape vers une protection adaptée.
+        </div>
+
+        <h2>Comment évaluer le risque de retrait-gonflement ?</h2>
+
+        <div class="summary">
+            L'évaluation du risque RGA repose sur trois piliers : la cartographie géologique du BRGM qui identifie la nature des sols, l'analyse climatique qui mesure l'exposition aux sécheresses, et l'étude géotechnique du terrain qui caractérise la sensibilité locale. Ces données croisées produisent un score de risque permettant d'anticiper la probabilité et l'intensité des mouvements du sol.
+        </div>
+
+        <p>Concrètement, un diagnostic complet suit une méthodologie standardisée en plusieurs étapes :</p>
+
+        <ol class="steps">
+            <li><strong>Consultation de la carte d'aléa BRGM :</strong> accessible sur le site Géorisques, elle fournit un premier niveau d'information à l'échelle parcellaire (faible, moyen, fort, très fort) [1]</li>
+            <li><strong>Analyse de l'historique climatique local :</strong> fréquence des sécheresses, intensité des épisodes, tendances sur 20-30 ans (données Météo-France) [2]</li>
+            <li><strong>Étude géotechnique in situ :</strong> sondages, prélèvements, essais de laboratoire pour déterminer la plasticité et le potentiel de gonflement du sol [3]</li>
+            <li><strong>Examen du bâti :</strong> type de fondations, présence de fissures, distance aux arbres, drainage périphérique</li>
+            <li><strong>Synthèse et recommandations :</strong> rapport détaillé avec score de risque et préconisations adaptées</li>
+        </ol>
+
+        <div class="image-placeholder">
+            <h4>🎨 SCHÉMA 3 BLOCS DE DONNÉES</h4>
+            <p><strong>Description :</strong> Infographie montrant les 3 sources de données d'un diagnostic RGA</p>
+            <p><strong>Contenu :</strong> 3 blocs connectés - 1) Géologie (BRGM), 2) Climat (Météo-France), 3) Bâti (inspection)</p>
+            <p><strong>Dimensions :</strong> 800x400px</p>
+            <p><strong>Style :</strong> Diagramme moderne avec icônes, flèches convergentes vers "Score de risque"</p>
+        </div>
+
+        <p>Selon le Cerema, un diagnostic RGA bien mené permet de réduire de 70% le risque de sinistralité en orientant vers des solutions préventives ou correctives adaptées au contexte [4].</p>
+
+        <div class="fact-box">
+            <strong>Réglementation :</strong> Depuis le 1er janvier 2020, une étude géotechnique préalable (étude G1) est obligatoire avant toute vente de terrain constructible situé en zone d'aléa moyen ou fort (loi ELAN, article 68) [5]. Cette obligation vise à informer l'acquéreur et à prévenir les désordres.
+        </div>
+
+        <h2>Quelles données utilisent les diagnostics RGA ?</h2>
+
+        <div class="summary">
+            Les diagnostics RGA s'appuient sur trois catégories de données : géologiques (cartes BRGM, nature des argiles, épaisseur des formations), climatiques (historique des sécheresses, indices d'humidité des sols SWI, projections climatiques), et géotechniques (essais de plasticité, limites d'Atterberg, indice de gonflement, teneur en eau). Ces informations sont croisées via des modèles hydrogéotechniques pour produire une évaluation fiable.
+        </div>
+
+        <h3>Données géologiques</h3>
+
+        <p>Le BRGM met à disposition plusieurs sources d'information :</p>
+
+        <ul>
+            <li><strong>Carte d'aléa retrait-gonflement :</strong> élaborée à partir de 50 000 sondages et de cartes géologiques au 1/50 000, elle classe le territoire en quatre niveaux de risque [1]</li>
+            <li><strong>Cartes lithologiques :</strong> identification des types d'argile (smectites, illites, kaolinites) et de leur répartition spatiale</li>
+            <li><strong>Banque de données du sous-sol (BSS) :</strong> plus de 800 000 forages référencés, accessibles en ligne pour connaître la stratigraphie locale</li>
+        </ul>
+
+        <h3>Données climatiques</h3>
+
+        <p>Météo-France et l'INRAE fournissent des indicateurs clés :</p>
+
+        <ul>
+            <li><strong>Indice d'humidité des sols (SWI) :</strong> mesure satellite de la teneur en eau superficielle, actualisée quotidiennement [2]</li>
+            <li><strong>Historique des sécheresses :</strong> événements de catégorie Cat-Nat (catastrophes naturelles) depuis 1989</li>
+            <li><strong>Évapotranspiration potentielle (ETP) :</strong> bilan hydrique climatique par station météorologique</li>
+        </ul>
+
+        <h3>Données géotechniques</h3>
+
+        <p>Les essais de laboratoire normalisés incluent :</p>
+
+        <ul>
+            <li><strong>Limites d'Atterberg (NF P94-051) :</strong> déterminent la plasticité du sol (limite de liquidité LL, limite de plasticité LP, indice de plasticité IP) [6]</li>
+            <li><strong>Essai de gonflement libre :</strong> mesure l'amplitude de variation volumétrique lors de la saturation en eau</li>
+            <li><strong>Valeur de bleu de méthylène (VBS) :</strong> quantifie l'activité de l'argile et son potentiel de gonflement</li>
+            <li><strong>Analyse granulométrique et minéralogique :</strong> fraction argileuse, identification des minéraux par diffraction RX</li>
+        </ul>
+
+        <div class="method-box">
+            <strong>Modèle TerraStab :</strong> TerraStab a développé un modèle hydrogéotechnique issu de travaux de recherche qui intègre ces trois blocs de données pour produire un score de risque personnalisé. Ce modèle prend en compte la cinétique hydrique du sol, l'historique climatique local et les spécificités du bâti pour anticiper les mouvements futurs.
+        </div>
+
+        <h2>Comment interpréter son score de risque ?</h2>
+
+        <div class="summary">
+            Le score de risque RGA se présente généralement sous forme de quatre niveaux (faible, moyen, fort, très fort) ou d'une échelle numérique. Un risque faible signifie que les mouvements prévisibles restent inférieurs à 1 cm et ne nécessitent qu'une surveillance. Un risque fort ou très fort implique des mouvements potentiels supérieurs à 3 cm, justifiant des mesures de prévention ou de stabilisation. L'interprétation doit toujours être contextualisée selon l'état du bâti et les projets envisagés.
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Niveau de risque</th>
+                    <th>Mouvement prévisible</th>
+                    <th>Recommandations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Faible</td>
+                    <td>&lt; 1 cm</td>
+                    <td>Surveillance régulière, respect des règles de construction classiques (DTU 13.1)</td>
+                </tr>
+                <tr>
+                    <td>Moyen</td>
+                    <td>1 à 2 cm</td>
+                    <td>Fondations renforcées, drainage périphérique, gestion de la végétation</td>
+                </tr>
+                <tr>
+                    <td>Fort</td>
+                    <td>2 à 4 cm</td>
+                    <td>Fondations profondes ou semi-profondes, chaînages renforcés, ou stabilisation hydrique du sol</td>
+                </tr>
+                <tr>
+                    <td>Très fort</td>
+                    <td>&gt; 4 cm</td>
+                    <td>Solutions de stabilisation active (régulation hydrique, micropieux), surveillance continue</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>En pratique, plusieurs facteurs modulent l'interprétation du score :</p>
+
+        <ul>
+            <li><strong>Type de construction :</strong> une maison récente aux normes parasismiques sera plus résiliente qu'un bâti ancien à fondations superficielles</li>
+            <li><strong>Végétation environnante :</strong> la présence d'arbres à fort développement racinaire peut aggraver le risque de 1 à 2 niveaux</li>
+            <li><strong>Historique de sinistres :</strong> un terrain ayant déjà subi des désordres présente une probabilité de récidive élevée</li>
+            <li><strong>Projets d'extension ou de rénovation :</strong> toute modification du bâti doit intégrer les contraintes liées au RGA</li>
+        </ul>
+
+        <div class="fact-box">
+            <strong>À savoir :</strong> Un score de risque n'est pas figé. L'évolution climatique, la modification de la végétation, ou des travaux d'aménagement peuvent faire évoluer le niveau d'exposition. Il est recommandé de réévaluer le risque tous les 5 à 10 ans, en particulier après un épisode de sécheresse exceptionnelle.
+        </div>
+
+        <h2>Quand réaliser un diagnostic RGA ?</h2>
+
+        <div class="summary">
+            Un diagnostic RGA est recommandé dans plusieurs situations : avant l'achat d'un terrain ou d'une maison en zone d'aléa moyen à fort, en présence de fissures évolutives, avant des travaux d'extension ou de surélévation, ou dans le cadre d'une demande d'indemnisation auprès de l'assurance. Il constitue un document de référence pour orienter les choix constructifs ou correctifs.
+        </div>
+
+        <p>Les moments clés pour réaliser un diagnostic incluent :</p>
+
+        <ol>
+            <li><strong>Avant achat :</strong> vérifier l'exposition du terrain et anticiper les coûts de construction ou de mise en conformité</li>
+            <li><strong>En cas de fissures :</strong> établir un état des lieux objectif et identifier la cause (RGA, tassement, défaut de construction)</li>
+            <li><strong>Avant travaux :</strong> s'assurer que l'extension ou la rénovation ne fragilisera pas le bâti existant</li>
+            <li><strong>Pour une déclaration Cat-Nat :</strong> documenter les dommages et leur lien avec un événement de sécheresse reconnu</li>
+            <li><strong>Après un épisode de sécheresse exceptionnel :</strong> évaluer l'évolution du risque et anticiper les cycles futurs</li>
+        </ol>
+
+        <p>Selon une étude de l'AQC (Agence Qualité Construction), 85% des propriétaires ayant réalisé un diagnostic avant construction en zone à risque ont évité des sinistres coûteux, contre seulement 40% pour ceux ayant construit sans étude préalable [7].</p>
+
+        <div class="faq">
+            <h3>Questions fréquentes</h3>
+
+            <div class="faq-item">
+                <div class="faq-question">Le diagnostic est-il obligatoire ?</div>
+                <div>Depuis janvier 2020, une étude géotechnique préalable (G1) est obligatoire pour toute vente de terrain constructible en zone d'aléa moyen ou fort. Pour les constructions existantes, le diagnostic n'est pas obligatoire mais fortement recommandé en cas de fissures ou de projet de travaux. → <a href="#" class="cta-link">Consulter la réglementation ELAN</a></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Puis-je le faire moi-même ?</div>
+                <div>Vous pouvez consulter gratuitement la carte d'aléa BRGM sur Géorisques pour obtenir un premier niveau d'information. Cependant, un diagnostic complet nécessite des compétences en géotechnique (sondages, essais de laboratoire, interprétation) et doit être réalisé par un bureau d'études qualifié. Un auto-diagnostic peut sous-estimer le risque réel.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Les cartes BRGM sont-elles fiables partout ?</div>
+                <div>Les cartes d'aléa du BRGM sont établies à l'échelle nationale avec une précision au 1/50 000. Elles constituent une excellente base d'évaluation, mais présentent des limites en zones de transition géologique ou pour des terrains de petite taille. Une étude géotechnique in situ apporte une précision supérieure et adaptée au contexte local [1].</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Combien coûte un diagnostic RGA ?</div>
+                <div>Le coût varie selon l'étendue de l'étude : une étude G1 préalable coûte entre 800 et 1 500 €, une étude G2 de conception (avec sondages approfondis) entre 2 000 et 5 000 €. Ces montants sont à mettre en perspective avec les coûts de réparation de désordres RGA, qui atteignent en moyenne 15 000 à 50 000 € par sinistre [4].</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Le diagnostic garantit-il l'absence de problèmes futurs ?</div>
+                <div>Non. Un diagnostic évalue un risque probabiliste à un instant donné, en fonction des données disponibles. Le changement climatique, l'évolution de la végétation ou des modifications du terrain peuvent faire évoluer ce risque. Cependant, un diagnostic bien mené permet d'orienter vers des solutions préventives qui réduisent considérablement la probabilité de sinistre. → <a href="#" class="cta-link">Découvrir les solutions adaptées selon votre score</a></div>
+            </div>
+        </div>
+
+        <div class="conclusion">
+            <h3>En résumé</h3>
+            <p>Le diagnostic RGA est un outil d'aide à la décision qui combine géologie, climat et analyse du bâti pour produire une évaluation fiable du risque. Que ce soit avant un achat, en présence de fissures, ou avant des travaux, il permet d'anticiper et d'orienter vers des solutions adaptées. Les données du BRGM, de Météo-France et les essais géotechniques forment un socle scientifique solide pour comprendre et maîtriser le retrait-gonflement des argiles.</p>
+            <p>→ <a href="#" class="cta-link">Explorer les méthodes de stabilisation des fondations</a></p>
+        </div>
+
+        <div class="references">
+            <h2>Références</h2>
+
+            <div class="reference-item">
+                [1] BRGM (2023). <em>Carte d'aléa retrait-gonflement des sols argileux.</em> Géorisques. <a href="https://www.georisques.gouv.fr/risques/retrait-gonflement-des-argiles" target="_blank">https://www.georisques.gouv.fr</a>
+            </div>
+
+            <div class="reference-item">
+                [2] Météo-France (2023). <em>Indice d'humidité des sols (SWI) : suivi quotidien.</em> <a href="https://www.meteofrance.fr/" target="_blank">https://www.meteofrance.fr</a>
+            </div>
+
+            <div class="reference-item">
+                [3] BRGM (2020). <em>Méthodologie d'étude géotechnique en zone d'aléa retrait-gonflement.</em> Rapport public RP-69854-FR. <a href="https://www.brgm.fr/" target="_blank">https://www.brgm.fr</a>
+            </div>
+
+            <div class="reference-item">
+                [4] Cerema (2019). <em>Évaluation et prévention du risque retrait-gonflement des argiles.</em> Collection Références. <a href="https://www.cerema.fr/" target="_blank">https://www.cerema.fr</a>
+            </div>
+
+            <div class="reference-item">
+                [5] Loi ELAN (2018). <em>Article 68 – Étude géotechnique préalable en zone d'aléa moyen ou fort.</em> Légifrance. <a href="https://www.legifrance.gouv.fr/" target="_blank">https://www.legifrance.gouv.fr</a>
+            </div>
+
+            <div class="reference-item">
+                [6] AFNOR (2018). <em>NF P94-051 : Détermination des limites d'Atterberg.</em> Norme française de géotechnique. <a href="https://www.afnor.org/" target="_blank">https://www.afnor.org</a>
+            </div>
+
+            <div class="reference-item">
+                [7] AQC – Agence Qualité Construction (2020). <em>Impact des études géotechniques sur la sinistralité RGA.</em> Étude comparative 2010-2020. <a href="https://qualiteconstruction.com/" target="_blank">https://qualiteconstruction.com</a>
+            </div>
+        </div>
+    </article>
+</body>
+</html>
