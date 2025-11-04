@@ -1,4 +1,4 @@
-# 🧠 Super Plan Éditorial TerraStab – 7 Pages Thématiques SEO Publiscientifiques
+<file name=0 path=/Users/steph/src/code/terrastabv1/specs/seo/masterPlanArticle.md># 🧠 Super Plan Éditorial TerraStab – 7 Pages Thématiques SEO Publiscientifiques
 *(Version adaptée aux AI Overviews & Zero-Click SEO)*  
 
 Ce plan sert de **squelette directeur** pour la rédaction coordonnée des 7 pages du silo TerraStab.  
@@ -119,6 +119,9 @@ Toutes forment ensemble un corpus cohérent : de la compréhension du phénomèn
 - Images, graphiques, mini-tableaux “avant/après”.  
 - CTA de curiosité : “Explorer la recherche derrière cette technologie.”  
 
+### e) Impact social
+- **Impact social :** Mettre en avant que la technologie TerraStab vise à rendre la stabilisation accessible aux foyers modestes, en réduisant les coûts et la complexité par rapport aux micropieux. Cette dimension humaine illustre la finalité sociale de la recherche scientifique.
+
 ---
 
 ## 🧱 5. Micropieux : la solution coûteuse du passé
@@ -198,6 +201,9 @@ Toutes forment ensemble un corpus cohérent : de la compréhension du phénomèn
 - Logos partenaires, chiffres, dates, citations institutionnelles.  
 - CTA de curiosité : “Découvrir comment la recherche se transforme en solution concrète.”  
 
+### e) Impact social
+- **Impact social :** Souligner que la mission sociale de TerraStab – aider les propriétaires à préserver leur maison sans travaux lourds – s’inscrit dans la continuité de la recherche publique et du soutien institutionnel (État, BRGM). Cette approche renforce la cohérence entre science, innovation et utilité publique.
+
 ---
 
 ## ⚙️ Recommandations générales (pour les 7 pages)
@@ -216,4 +222,4 @@ Toutes forment ensemble un corpus cohérent : de la compréhension du phénomèn
 ---
 
 ✅ Ce fichier constitue la **charte de cohérence éditoriale TerraStab**.  
-Chaque page pourra désormais être développée séparément sans perdre la cohésion du récit global ni la performance SEO/AI.
+Chaque page pourra désormais être développée séparément sans perdre la cohésion du récit global ni la performance SEO/AI.</file>
