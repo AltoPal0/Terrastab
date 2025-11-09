@@ -105,13 +105,14 @@ const FAQSection = () => {
                 </div>
 
                 <h3 className="text-2xl font-bold text-blue-900 mb-4">
-                  Une intervention, une garantie.
+                  Un suivi continu pour une efficacité optimale.
                 </h3>
 
                 <p className="text-blue-800 leading-relaxed mb-6 max-w-2xl mx-auto">
-                  TerraStab s'engage contractuellement à assurer le bon fonctionnement du système.
-                  Une fois installé, vous bénéficiez d'un suivi à distance, de diagnostics réguliers,
-                  et d'une assistance technique dédiée.
+                  Une fois installé, votre système TerraStab est surveillé en temps réel.
+                  Vous bénéficiez d'un monitoring à distance 24/7, de rapports réguliers sur l'évolution
+                  de votre terrain, et d'alertes immédiates en cas d'anomalie. Notre équipe technique
+                  ajuste les paramètres pour maintenir une protection optimale tout au long de l'année.
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-2xl mx-auto">
