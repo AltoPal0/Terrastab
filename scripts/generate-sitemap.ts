@@ -6,6 +6,7 @@ const DOMAIN = 'https://terrastab.fr'
 // Liste des pages du site avec leur priorité et fréquence de mise à jour
 const pages = [
   { url: '/', priority: '1.0', changefreq: 'weekly', lastmod: new Date().toISOString().split('T')[0] },
+  { url: '/comprendre-rga', priority: '0.9', changefreq: 'monthly', lastmod: new Date().toISOString().split('T')[0] },
   { url: '/maison-fissuree', priority: '0.8', changefreq: 'monthly', lastmod: new Date().toISOString().split('T')[0] },
   { url: '/diagnostic-rga', priority: '0.9', changefreq: 'monthly', lastmod: new Date().toISOString().split('T')[0] },
   { url: '/solution-stabilisation-sol-argileux', priority: '0.8', changefreq: 'monthly', lastmod: new Date().toISOString().split('T')[0] },

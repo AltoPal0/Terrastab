@@ -16,6 +16,11 @@ export interface SeoLink {
 
 export const seoLinks: SeoLink[] = [
   {
+    title: "Le risque RGA",
+    href: "/comprendre-rga",
+    enabled: true // ✅ Article complet sur le RGA
+  },
+  {
     title: "Maison fissurée: causes et solutions",
     href: "/maison-fissuree",
     enabled: false // ❌ Article incomplet

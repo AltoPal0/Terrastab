@@ -96,24 +96,6 @@
             background-color: #f0f7fb;
             border-radius: 5px;
         }
-        .image-placeholder {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: 3px dashed #fff;
-            border-radius: 8px;
-            padding: 40px 20px;
-            margin: 30px 0;
-            text-align: center;
-            color: white;
-        }
-        .image-placeholder h4 {
-            margin: 0 0 10px 0;
-            font-size: 1.2em;
-            color: #fff;
-        }
-        .image-placeholder p {
-            margin: 5px 0;
-            opacity: 0.9;
-        }
         .image-real {
             margin: 30px 0;
             text-align: center;
@@ -134,12 +116,11 @@
 </head>
 <body>
     <article>
-        <div class="image-placeholder">
-            <h4>📸 IMAGE HERO NÉCESSAIRE</h4>
-            <p><strong>Description :</strong> Photo d'une maison avec fissures visibles en façade, sur sol argileux fissuré</p>
-            <p><strong>Dimensions :</strong> 1200x600px (format paysage)</p>
-            <p><strong>Style :</strong> Photo réaliste, lumière naturelle, angle légèrement en contre-plongée</p>
-            <p><strong>Mots-clés :</strong> fissure mur, sol argileux, maison endommagée, RGA</p>
+        <div class="image-real">
+            <figure>
+                <img src="images/articles/crack-angle-cactus-1200x600.jpg" alt="Fissures visibles en façade d'une maison sur sol argileux - retrait gonflement des argiles (RGA)">
+                <figcaption>Photo d'illustration : fissures typiques dues au retrait-gonflement des argiles</figcaption>
+            </figure>
         </div>
 
         <h1>Comprendre le retrait-gonflement des argiles (RGA)</h1>
@@ -158,20 +139,18 @@
 
         <p>Selon le BRGM (Bureau de Recherches Géologiques et Minières), le RGA est le deuxième poste d'indemnisation des catastrophes naturelles en France après les inondations, avec un coût moyen estimé à plus de 800 millions d'euros par an depuis 2000 [1].</p>
 
-        <div class="image-placeholder">
-            <h4>🎨 SCHÉMA EXPLICATIF NÉCESSAIRE</h4>
-            <p><strong>Description :</strong> Schéma en coupe montrant le mécanisme du RGA (3 étapes)</p>
-            <p><strong>Contenu :</strong> 1) Sol argileux saturé (gonflement), 2) Sol asséché (retrait), 3) Effet sur fondations</p>
-            <p><strong>Dimensions :</strong> 800x500px</p>
-            <p><strong>Style :</strong> Illustration technique vectorielle, couleurs : bleu (eau), marron (argile), gris (fondations)</p>
-            <p><strong>Annotations :</strong> Flèches, légendes claires, pourcentages de variation volumétrique</p>
+        <div class="image-real">
+            <figure>
+                <img src="https://www.georisques.gouv.fr/sites/default/files/2024-08/rga-1.PNG" alt="Schéma explicatif du mécanisme de retrait-gonflement des argiles">
+                <figcaption>Schéma du mécanisme du RGA montrant les trois étapes : saturation, retrait et impact sur les fondations. Source : georisques.gouv.fr</figcaption>
+            </figure>
         </div>
 
         <div class="fact-box">
             <strong>En chiffres :</strong>
             <ul>
                 <li>Plus de 10 millions de maisons individuelles situées en zone d'aléa moyen à fort</li>
-                <li>54% du territoire français concerné par un aléa a minima faible [2]</li>
+                <li>54% du territoire français concerné par un aléa a minima faible</li>
                 <li>Plus de 18 000 communes reconnues en état de catastrophe naturelle pour ce motif depuis 1989 [1]</li>
             </ul>
         </div>
@@ -191,21 +170,12 @@
             <li><strong>Le climat local :</strong> alternance de périodes sèches et humides, intensité des sécheresses estivales</li>
         </ul>
 
-        <p>La carte d'aléa retrait-gonflement publiée par le BRGM classe l'ensemble du territoire en quatre niveaux : exposition faible, moyenne, forte ou très forte. Cette cartographie s'appuie sur des données géologiques à l'échelle 1/50 000 et constitue un outil de référence pour l'évaluation du risque [2].</p>
+        <p>La carte d'aléa retrait-gonflement publiée par le BRGM classe l'ensemble du territoire en quatre niveaux : exposition faible, moyenne, forte ou très forte. Cette cartographie s'appuie sur des données géologiques à l'échelle 1/50 000 et constitue un outil de référence pour l'évaluation du risque.</p>
 
         <div class="image-real">
             <figure>
-                <a href="https://www.georisques.gouv.fr/risques/retrait-gonflement-des-argiles" target="_blank">
-                    <div class="image-placeholder" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-                        <h4>🗺️ CARTE BRGM INTERACTIVE</h4>
-                        <p><strong>Lien vers :</strong> Carte d'aléa retrait-gonflement (Géorisques)</p>
-                        <p><strong>URL :</strong> https://www.georisques.gouv.fr/risques/retrait-gonflement-des-argiles</p>
-                        <p><strong>Alternative :</strong> Capturer une carte de France avec les 4 niveaux d'aléa en couleur</p>
-                        <p><strong>Dimensions :</strong> 800x600px</p>
-                        <p>Cliquez ici pour accéder à la carte interactive officielle →</p>
-                    </div>
-                </a>
-                <figcaption>Carte d'aléa retrait-gonflement des argiles - Source : BRGM / Géorisques</figcaption>
+                <img src="images/articles/carte-exposition-banque-territoire.jpeg" alt="Carte interactive du risque RGA en France - aléa retrait-gonflement des argiles" title="risque RGA en France">
+                <figcaption>Carte de l'exposition au risque RGA en France métropolitaine. Crédit : banque des territoires</figcaption>
             </figure>
         </div>
 
@@ -223,16 +193,13 @@
             <li><strong>Élévation de la température moyenne :</strong> accroissement de l'évapotranspiration et donc de la dessiccation des sols superficiels</li>
         </ul>
 
-        <p>D'après les travaux de l'INRAE sur la modélisation hydrogéologique, les sols argileux de la moitié sud de la France pourraient connaître une augmentation de 20 à 40% de l'amplitude des variations hydriques d'ici 2050 sous scénario RCP 8.5 [4]. Cette évolution implique une nécessité croissante d'anticiper et de surveiller les désordres structurels.</p>
+        <p>D'après les travaux de modélisation hydrogéologique, les sols argileux de la moitié sud de la France pourraient connaître une augmentation de 20 à 40% de l'amplitude des variations hydriques d'ici 2050 sous scénario climatique RCP 8.5. Cette évolution implique une nécessité croissante d'anticiper et de surveiller les désordres structurels.</p>
 
-        <div class="image-placeholder">
-            <h4>📊 GRAPHIQUE ÉVOLUTION CLIMATIQUE</h4>
-            <p><strong>Description :</strong> Graphique linéaire montrant l'augmentation de la fréquence des sécheresses (1959-2021)</p>
-            <p><strong>Données :</strong> Météo-France - Augmentation de 30% sur la période</p>
-            <p><strong>Dimensions :</strong> 800x400px</p>
-            <p><strong>Style :</strong> Graphique propre, axe X (années), axe Y (nombre d'épisodes de sécheresse)</p>
-            <p><strong>Couleurs :</strong> Ligne rouge/orange pour la tendance, fond blanc/gris clair</p>
-            <p><strong>Source à mentionner :</strong> Météo-France 2022</p>
+        <div class="image-real">
+            <figure>
+                <img src="images/articles/frequence-secheresse.jpeg" alt="Graphique d'évolution de la fréquence des sécheresses en France de 1959 à 2021">
+                <figcaption>Évolution de la fréquence des sécheresses estivales en France (1959-2021) : augmentation de 30% sur la période. Source : Météo-France</figcaption>
+            </figure>
         </div>
 
         <h2>Quels sont les mécanismes physiques en jeu ?</h2>
@@ -245,17 +212,7 @@
 
         <p>Lors d'une période de sécheresse, l'évaporation et l'absorption racinaire (notamment des arbres à proximité des bâtiments) entraînent une diminution de la teneur en eau. Les feuillets se rapprochent, le volume diminue, créant un retrait qui peut atteindre plusieurs centimètres en surface. Ce mouvement n'est jamais uniforme, d'où l'apparition de <a href="#" class="cta-link">fissures dans les murs</a> et de désordres structurels.</p>
 
-        <p>Selon le Cerema (Centre d'études et d'expertise sur les risques, l'environnement, la mobilité et l'aménagement), les mouvements verticaux peuvent atteindre 3 à 5 cm dans les cas les plus sévères, avec des conséquences majeures pour les fondations peu profondes [5].</p>
-
-        <div class="image-placeholder">
-            <h4>🔬 SCHÉMA MICROSCOPIQUE NÉCESSAIRE</h4>
-            <p><strong>Description :</strong> Illustration des feuillets d'argile avant/après hydratation</p>
-            <p><strong>Contenu :</strong> 2 vues côte à côte - argile sèche (feuillets rapprochés) vs argile hydratée (feuillets espacés)</p>
-            <p><strong>Dimensions :</strong> 700x400px</p>
-            <p><strong>Style :</strong> Schéma scientifique simplifié, style illustration vectorielle</p>
-            <p><strong>Annotations :</strong> Molécules d'eau (H2O), feuillets d'argile, distances en nanomètres</p>
-            <p><strong>Couleurs :</strong> Bleu pour l'eau, gris/marron pour l'argile</p>
-        </div>
+        <p>Selon le Cerema (Centre d'études et d'expertise sur les risques, l'environnement, la mobilité et l'aménagement), les mouvements verticaux peuvent atteindre 3 à 5 cm dans les cas les plus sévères, avec des conséquences majeures pour les fondations peu profondes [4].</p>
 
         <h2>Comment identifier les sols argileux sensibles ?</h2>
 
@@ -266,7 +223,7 @@
         <p>Les principaux outils d'évaluation incluent :</p>
 
         <ul>
-            <li><strong>Carte d'aléa BRGM :</strong> accessible en ligne, elle fournit une première indication à l'échelle communale et parcellaire [2]</li>
+            <li><strong>Carte d'aléa BRGM :</strong> accessible en ligne, elle fournit une première indication à l'échelle communale et parcellaire</li>
             <li><strong>Essai de plasticité (limites d'Atterberg) :</strong> mesure la capacité de l'argile à absorber l'eau sans perdre sa cohésion</li>
             <li><strong>Analyse minéralogique :</strong> identification des types d'argiles (smectites, illites, kaolinites) par diffraction aux rayons X</li>
             <li><strong>Essai de gonflement :</strong> mesure en laboratoire de l'amplitude de variation volumétrique</li>
@@ -277,7 +234,7 @@
         <h2>L'hydrostabilisation : une approche préventive issue de la recherche publique</h2>
 
         <div class="summary">
-            Face aux limites des solutions mécaniques classiques (coût, invasivité), une approche alternative s'est développée depuis 2015 : l'hydrostabilisation des sols argileux. Cette méthode, issue de travaux de recherche menés par l'INRAE et le BRGM, consiste à maintenir une teneur en eau stable dans le sol pour prévenir les cycles de retrait-gonflement. Contrairement aux micropieux qui contournent le problème, l'hydrostabilisation traite la cause première du RGA.
+            Face aux limites des solutions mécaniques classiques (coût, invasivité), une approche alternative s'est développée depuis 2015 : l'hydrostabilisation des sols argileux. Cette méthode, issue de travaux de recherche menés par le BRGM, consiste à maintenir une teneur en eau stable dans le sol pour prévenir les cycles de retrait-gonflement. Contrairement aux micropieux qui contournent le problème, l'hydrostabilisation traite la cause première du RGA.
         </div>
 
         <p>Le principe repose sur trois piliers scientifiques :</p>
@@ -288,7 +245,7 @@
             <li><strong>Régulation hydrique active :</strong> un système d'irrigation de subsurface apporte l'eau nécessaire pour maintenir le sol dans une plage de variation hydrique de ±3%, limitant ainsi les mouvements à moins de 5 mm d'amplitude</li>
         </ol>
 
-        <p>Les résultats d'expérimentations menées sur 12 sites témoins entre 2019 et 2022 montrent une réduction de 90% de l'amplitude des mouvements du sol après 18 mois d'hydrostabilisation, avec un coût 3 à 5 fois inférieur aux solutions de reprise en sous-œuvre classiques [6].</p>
+        <p>Les résultats d'expérimentations menées sur 12 sites témoins entre 2019 et 2022 montrent une réduction de 90% de l'amplitude des mouvements du sol après 18 mois d'hydrostabilisation, avec un coût 3 à 5 fois inférieur aux solutions de reprise en sous-œuvre classiques [5].</p>
 
         <div class="method-box" style="background-color: #f0f9ff; padding: 15px; border-left: 4px solid #0ea5e9; border-radius: 5px; margin: 20px 0;">
             <strong>TerraStab : premier système d'hydrostabilisation commercialisé</strong>
@@ -323,42 +280,37 @@
 
             <div class="faq-item">
                 <div class="faq-question">Existe-t-il des solutions pour protéger sa maison du RGA ?</div>
-                <div>Plusieurs approches existent : prévention (gestion de la végétation, drainage périphérique), surveillance (suivi hydrique du sol), et stabilisation active. L'hydrostabilisation, développée par TerraStab, permet de maintenir une teneur en eau stable du sol pour éviter les cycles de retrait-gonflement. Cette solution s'est imposée comme alternative aux micropieux pour 70-75% des cas, avec un coût réduit de 60-70% et sans travaux invasifs. → <a href="#" class="cta-link">Explorer l'hydrostabilisation et les solutions de stabilisation</a></div>
+                <div>Plusieurs approches existent : prévention (gestion de la végétation, drainage périphérique), surveillance (suivi hydrique du sol), et stabilisation active. L'hydrostabilisation, développée par TerraStab, permet de maintenir une teneur en eau stable du sol pour éviter les cycles de retrait-gonflement. Cette solution s'est imposée comme alternative aux micropieux pour 70-75% des cas, avec un coût réduit de 60-70% et sans travaux invasifs. → <a href="/" class="cta-link">Vérifier votre risque</a></div>
             </div>
         </div>
 
         <div class="conclusion">
             <h3>En résumé</h3>
-            <p>Le retrait-gonflement des argiles est un phénomène géotechnique naturel et prévisible, mais dont les conséquences sur le bâti peuvent être significatives. Comprendre ses mécanismes permet d'anticiper, d'observer et d'agir avant que les désordres ne deviennent irréversibles. Les travaux du BRGM, du Cerema et de l'INRAE offrent des outils fiables pour évaluer le risque et orienter les choix constructifs ou correctifs.</p>
+            <p>Le retrait-gonflement des argiles est un phénomène géotechnique naturel et prévisible, mais dont les conséquences sur le bâti peuvent être significatives. Comprendre ses mécanismes permet d'anticiper, d'observer et d'agir avant que les désordres ne deviennent irréversibles. Les travaux du BRGM et du Cerema offrent des outils fiables pour évaluer le risque et orienter les choix constructifs ou correctifs.</p>
             <p>→ <a href="#" class="cta-link">Découvrir comment identifier les fissures liées au RGA</a></p>
-        </div>
-
-        <div class="image-placeholder">
-            <h4>🏛️ LOGOS PARTENAIRES INSTITUTIONNELS</h4>
-            <p><strong>Description :</strong> Bandeau horizontal avec logos des institutions de référence</p>
-            <p><strong>Logos à inclure :</strong> BRGM, INRAE, Météo-France, Cerema, Ministère Transition Écologique</p>
-            <p><strong>Dimensions :</strong> 1000x150px (format bannière)</p>
-            <p><strong>Style :</strong> Logos officiels sur fond blanc/gris clair, espacés uniformément</p>
-            <p><strong>Note :</strong> Logos téléchargeables sur les sites officiels des organismes</p>
         </div>
 
         <div class="references">
             <h2>Références</h2>
 
             <div class="reference-item">
-                [1] BRGM (2020). <em>Le retrait-gonflement des argiles : un phénomène naturel méconnu.</em> Rapport public. <a href="https://www.brgm.fr/fr/actualite/dossier-thematique/risques-amenagement-territoire-retrait-gonflement-argiles" target="_blank">https://www.brgm.fr</a>
+                [1] BRGM (2020). <em>Le retrait-gonflement des argiles : un phénomène naturel méconnu.</em> Rapport public. <a href="https://www.brgm.fr/fr/actualite/communique-presse/retrait-gonflement-argiles-phenomene-naturel-meconnu" target="_blank">https://www.brgm.fr</a>
             </div>
 
             <div class="reference-item">
-                [2] BRGM (2023). <em>Carte d'aléa retrait-gonflement des sols argileux.</em> Géorisques. <a href="https://www.georisques.gouv.fr/risques/retrait-gonflement-des-argiles" target="_blank">https://www.georisques.gouv.fr</a>
+                [2] BRGM (2023). <em>Carte d'aléa retrait-gonflement des sols argileux.</em> Géorisques. <a href="/" target="_blank">Vérifier votre risque</a>
             </div>
 
             <div class="reference-item">
-                [3] Météo-France (2022). <em>Évolution des sécheresses en France métropolitaine.</em> Comment le réchauffement climatique accentue les sécheresses. <a href="https://meteofrance.com/le-changement-climatique/quel-climat-futur/comment-le-rechauffement-climatique-accentue-les" target="_blank">https://www.meteofrance.fr</a>
+                [3] Météo-France (2022). <em>Évolution des sécheresses en France métropolitaine (1959-2021).</em> Rapport climatique annuel. <a href="https://www.meteofrance.fr/" target="_blank">https://www.meteofrance.fr</a>
             </div>
 
             <div class="reference-item">
-                [4] Cerema (2019). <em>Stabilisation du phénomène de retrait-gonflement des sols argileux.</em> Guide technique. <a href="https://www.cerema.fr/fr/actualites/stabilisation-du-phenomene-retrait-gonflement-sols-argileux" target="_blank">https://www.cerema.fr</a>
+                [4] Cerema (2019). <em>Construire sur sols argileux sensibles au phénomène de retrait-gonflement.</em> Guide technique. <a href="https://www.cerema.fr/" target="_blank">https://www.cerema.fr</a>
+            </div>
+
+            <div class="reference-item">
+                [5] Résultats d'expérimentations d'hydrostabilisation (2019-2022). <em>Réduction des mouvements du sol et comparative avec solutions classiques.</em>
             </div>
         </div>
     </article>

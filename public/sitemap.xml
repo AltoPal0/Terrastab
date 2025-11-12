@@ -5,55 +5,61 @@
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
     <loc>https://terrastab.fr/</loc>
-    <lastmod>2025-11-03</lastmod>
+    <lastmod>2025-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://terrastab.fr/comprendre-rga</loc>
+    <lastmod>2025-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://terrastab.fr/maison-fissuree</loc>
-    <lastmod>2025-11-03</lastmod>
+    <lastmod>2025-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://terrastab.fr/diagnostic-rga</loc>
-    <lastmod>2025-11-03</lastmod>
+    <lastmod>2025-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://terrastab.fr/solution-stabilisation-sol-argileux</loc>
-    <lastmod>2025-11-03</lastmod>
+    <lastmod>2025-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://terrastab.fr/fissures-maison</loc>
-    <lastmod>2025-11-03</lastmod>
+    <lastmod>2025-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://terrastab.fr/fissures-murs</loc>
-    <lastmod>2025-11-03</lastmod>
+    <lastmod>2025-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://terrastab.fr/zones-rga-france</loc>
-    <lastmod>2025-11-03</lastmod>
+    <lastmod>2025-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://terrastab.fr/offres</loc>
-    <lastmod>2025-11-03</lastmod>
+    <lastmod>2025-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://terrastab.fr/cgv</loc>
-    <lastmod>2025-11-03</lastmod>
+    <lastmod>2025-11-12</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
