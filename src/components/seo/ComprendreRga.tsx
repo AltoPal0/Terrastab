@@ -1,6 +1,7 @@
 import Header from '../Header'
 import Footer from '../Footer'
 import { Button } from '../ui/button'
+import RiskAssessmentSection from '../RiskAssessmentSection'
 
 export default function ComprendreRga() {
   const openRiskModal = () => {
@@ -12,6 +13,7 @@ export default function ComprendreRga() {
   return (
     <>
       <Header />
+      <RiskAssessmentSection />
       <main className="min-h-screen bg-white">
         {/* Image Hero */}
         <section className="py-12 sm:py-16">

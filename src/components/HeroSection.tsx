@@ -1,7 +1,24 @@
 import { Button } from '@/components/ui/button'
 import { MapPin } from 'lucide-react'
+import { useState, useEffect } from 'react'
 
 const HeroSection = () => {
+  const images = [
+    '/images/articles/crack-angle-cactus-1200x600.jpg',
+    '/images/articles/door-cracked-1200x600.jpg',
+    '/images/articles/maison-fissurée-1200x600.jpg'
+  ]
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
+    }, 5000) // Change image every 5 seconds
+
+    return () => clearInterval(interval)
+  }, [images.length])
+
   const openRiskModal = () => {
     window.dispatchEvent(new Event('openRiskModal'))
   }
@@ -9,16 +26,25 @@ const HeroSection = () => {
   return (
     <section
       id="top"
-      className="relative min-h-[85vh] sm:min-h-[90vh] bg-cover bg-center bg-no-repeat flex items-center"
-      style={{
-        backgroundImage: "url('/maison_fissuree.jpg')"
-      }}
+      className="relative min-h-[50vh] sm:min-h-[60vh] flex items-center overflow-hidden"
     >
+      {/* Background images with fade transition */}
+      {images.map((image, index) => (
+        <div
+          key={image}
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000"
+          style={{
+            backgroundImage: `url('${image}')`,
+            opacity: index === currentImageIndex ? 1 : 0
+          }}
+        />
+      ))}
+
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/60"></div>
 
       {/* Content */}
-      <div className="relative z-10 w-full py-20 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="text-center">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-6 sm:mb-8 leading-tight px-2">
