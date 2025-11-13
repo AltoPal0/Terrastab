@@ -64,7 +64,7 @@ export default function ComprendreRga() {
             </p>
 
             <p className="text-lg text-gray-700 leading-relaxed mb-8">
-              Selon le BRGM (Bureau de Recherches Géologiques et Minières), le RGA est le deuxième poste d'indemnisation des catastrophes naturelles en France après les inondations, avec un coût moyen estimé à plus de 800 millions d'euros par an depuis 2000 [1].
+              Selon le BRGM (Bureau de Recherches Géologiques et Minières), le RGA est le deuxième poste d'indemnisation des catastrophes naturelles en France après les inondations, avec un coût moyen estimé à plus de 1,5 milliards d'euros par an depuis 2000 [1][5].
             </p>
 
             {/* Schéma externe */}
@@ -369,9 +369,10 @@ export default function ComprendreRga() {
                   Quels départements sont les plus touchés ?
                 </h3>
                 <p className="text-gray-800">
-                  D'après les données CatNat (catastrophes naturelles), les départements les plus touchés sont la Haute-Garonne, le Tarn-et-Garonne, le Lot-et-Garonne, l'Indre, le Cher, les Deux-Sèvres, et la Seine-et-Marne. Cependant, plus de la moitié du territoire présente un aléa a minima faible, et le phénomène s'étend avec le changement climatique [1][2].
+                  Les données CatNat montrent que certaines régions sont particulièrement exposées aux mouvements d’argiles, notamment la Haute-Garonne, le Tarn-et-Garonne, le Lot-et-Garonne, l’Indre, le Cher, les Deux-Sèvres ou encore la Seine-et-Marne. Mais la réalité dépasse largement cette liste : plus de la moitié du territoire présente aujourd’hui un aléa faible à fort, et de nombreuses communes classées en aléa moyen voient déjà apparaître des fissures. Avec le changement climatique, la zone de risque s’étend chaque année.
                 </p>
               </div>
+
 
               {/* FAQ Item 4 */}
               <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
@@ -451,7 +452,14 @@ export default function ComprendreRga() {
                   [4] Cerema (2019). <em>Stabilisation du phénomène de retrait-gonflement des sols argileux.</em> Guide technique. <a href="https://www.cerema.fr/fr/actualites/stabilisation-du-phenomene-retrait-gonflement-sols-argileux" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">https://www.cerema.fr</a>
                 </p>
               </div>
+              <div>
+                <p className="text-sm">
+                  [4] Challenge (2025). <em>Se loger à l'air du changement climatique</em> Informations. <a href="https://www.challenges.fr/immobilier/inondations-canicules-erosion-cotiere-quand-le-reve-detre-proprietaire-tourne-au-cauchemar_629765" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">https://www.challenges.fr</a>
+                </p>
+              </div>
             </div>
+
+            
           </section>
         </article>
 

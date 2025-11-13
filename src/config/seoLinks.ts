@@ -21,9 +21,9 @@ export const seoLinks: SeoLink[] = [
     enabled: true // ✅ Article complet sur le RGA
   },
   {
-    title: "Maison fissurée: causes et solutions",
+    title: "Maison fissurée",
     href: "/maison-fissuree",
-    enabled: false // ❌ Article incomplet
+    enabled: true // ✅ Article complet
   },
   {
     title: "Diagnostic RGA",
@@ -39,11 +39,6 @@ export const seoLinks: SeoLink[] = [
     title: "Fissures maison",
     href: "/fissures-maison",
     enabled: false // ❌ À vérifier
-  },
-  {
-    title: "Fissures dans les murs",
-    href: "/fissures-murs",
-    enabled: true // ✅ Article complet (14,429 chars)
   },
   {
     title: "Zones RGA en France",
