@@ -31,9 +31,9 @@ export const seoLinks: SeoLink[] = [
     enabled: true // ✅ Article complet et excellent !
   },
   {
-    title: "Stabilisation des sols argileux",
+    title: "Stabilisation des fondations",
     href: "/solution-stabilisation-sol-argileux",
-    enabled: false // ❌ À vérifier
+    enabled: true // ✅ Article complet sur la stabilisation hydrique
   },
   {
     title: "Fissures maison",

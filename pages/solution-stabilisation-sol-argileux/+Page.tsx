@@ -6,8 +6,8 @@ import StructuredData from '../../src/components/StructuredData'
 export const prerender = true
 
 export default function Page() {
-  const title = "Stabilisation de sol argileux : la solution durable TerraStab"
-  const description = "Découvrez la solution TerraStab pour stabiliser les sols argileux et protéger durablement votre maison contre le retrait-gonflement des argiles."
+  const title = "Stabilisation des fondations : principes et innovations | TerraStab"
+  const description = "Stabilisation des fondations : régulation hydrique active, principes physiques et alternatives aux micropieux. Guide complet sur les solutions de stabilisation."
   const url = "https://terrastab.fr/solution-stabilisation-sol-argileux"
   const image = "https://terrastab.fr/maison_fissuree.jpg"
 
