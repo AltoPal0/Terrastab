@@ -153,11 +153,11 @@ export default function MaisonFissuree() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="text-center">
                   <img
-                    src="/images/articles/fissure-faience.jpg"
-                    alt="Faïençage - microfissures superficielles"
+                    src="/images/articles/portail-vert-transversale.jpg"
+                    alt="Fissure traversante"
                     className="w-full h-48 object-cover rounded-lg shadow-md"
                   />
-                  <p className="mt-3 text-sm font-semibold text-gray-800">Faïençage</p>
+                  <p className="mt-3 text-sm font-semibold text-gray-800">Fissure traversante</p>
                 </div>
                 <div className="text-center">
                   <img
