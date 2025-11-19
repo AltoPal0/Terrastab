@@ -31,9 +31,19 @@ export const seoLinks: SeoLink[] = [
     enabled: true // ✅ Article complet et excellent !
   },
   {
+    title: "Prévention et entretien",
+    href: "/prevention-entretien",
+    enabled: true // ✅ Guide complet de prévention et entretien
+  },
+  {
     title: "Stabilisation des fondations",
     href: "/solution-stabilisation-sol-argileux",
     enabled: true // ✅ Article complet sur la stabilisation hydrique
+  },
+  {
+    title: "Micropieux",
+    href: "/micropieux",
+    enabled: true // ✅ Article complet sur la solution mécanique classique
   },
   {
     title: "Fissures maison",

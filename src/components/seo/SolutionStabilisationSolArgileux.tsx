@@ -1,5 +1,6 @@
 import Header from '../Header'
 import Footer from '../Footer'
+import RiskAssessmentSection from '../RiskAssessmentSection'
 import { Button } from '../ui/button'
 
 export default function SolutionStabilisationSolArgileux() {
@@ -12,6 +13,7 @@ export default function SolutionStabilisationSolArgileux() {
   return (
     <>
       <Header />
+      <RiskAssessmentSection />
       <main className="min-h-screen bg-white">
         {/* Image Hero */}
         <section className="py-12 sm:py-16">
