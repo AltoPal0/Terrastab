@@ -54,6 +54,11 @@ export const seoLinks: SeoLink[] = [
     title: "Zones RGA en France",
     href: "/zones-rga-france",
     enabled: false // ❌ À vérifier
+  },
+  {
+    title: "Partenariats et innovation",
+    href: "/partenariats-innovation",
+    enabled: true // ✅ Article complet sur les partenariats scientifiques
   }
 ]
 
