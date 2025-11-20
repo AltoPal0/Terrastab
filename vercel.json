@@ -24,11 +24,24 @@
       ]
     },
     {
+      "source": "/images/articles/crack-angle-cactus-1200x600.(jpg|webp)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Priority",
+          "value": "high"
+        }
+      ]
+    },
+    {
       "source": "/(.*)\\.(jpg|jpeg|png|webp|svg|gif|ico)",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=604800, must-revalidate"
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     },
@@ -37,7 +50,7 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=2592000, must-revalidate"
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     }

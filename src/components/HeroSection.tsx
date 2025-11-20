@@ -30,14 +30,28 @@ const HeroSection = () => {
     >
       {/* Background images with fade transition */}
       {images.map((image, index) => (
-        <div
-          key={image}
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000"
-          style={{
-            backgroundImage: `url('${image}')`,
-            opacity: index === currentImageIndex ? 1 : 0
-          }}
-        />
+        index === 0 ? (
+          // First image uses <img> for LCP optimization
+          <img
+            key={image}
+            src={image}
+            alt="Fissures sur maison causées par le retrait-gonflement des argiles"
+            fetchPriority="high"
+            decoding="sync"
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+            style={{ opacity: index === currentImageIndex ? 1 : 0 }}
+          />
+        ) : (
+          // Other images use background-image for lazy loading
+          <div
+            key={image}
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000"
+            style={{
+              backgroundImage: `url('${image}')`,
+              opacity: index === currentImageIndex ? 1 : 0
+            }}
+          />
+        )
       ))}
 
       {/* Dark overlay */}

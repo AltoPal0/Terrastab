@@ -32,6 +32,15 @@ function onRenderHtml(pageContext: PageContextServer) {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" type="image/svg+xml" href="/logo_terrastab.svg" />
+
+        <!-- Preload LCP image for faster rendering -->
+        <link
+          rel="preload"
+          as="image"
+          href="/images/articles/crack-angle-cactus-1200x600.jpg"
+          fetchpriority="high"
+        />
+
         ${dangerouslySkipEscape(helmetTitle || `<title>${title}</title>`)}
         ${dangerouslySkipEscape(helmetMeta || `<meta name="description" content="${desc}" />`)}
         ${dangerouslySkipEscape(helmetLink || '')}

@@ -19,7 +19,7 @@ const MiniPromise = () => {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           viewport={{ once: true, amount: 0.2 }}
@@ -46,7 +46,7 @@ const MiniPromise = () => {
           {features.map((feature, index) => (
             <motion.div
               key={feature.text}
-              initial={{ opacity: 0, scale: 0 }}
+              initial={false}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{
                 duration: 0.6,

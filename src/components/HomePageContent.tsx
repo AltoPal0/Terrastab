@@ -1,17 +1,16 @@
-import { useEffect } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import Header from '@/components/Header'
 import HeroSection from '@/components/HeroSection'
 import MiniPromise from '@/components/MiniPromise'
 import RiskAssessmentSection from '@/components/RiskAssessmentSection'
-// import ExpertQuotes from '@/components/ExpertQuotes'
-import TechSection from '@/components/TechSection'
-import TrustLogos from '@/components/TrustLogos'
-import UrgencySection from '@/components/UrgencySection'
-import FAQSection from '@/components/FAQSection'
-import SecondCTA from '@/components/SecondCTA'
-import Footer from '@/components/Footer'
-import { supabase } from '@/lib/supabase'
-import { quoteApi } from '@/lib/quote-api'
+
+// Lazy load below-the-fold components for better performance
+const TechSection = lazy(() => import('@/components/TechSection'))
+const TrustLogos = lazy(() => import('@/components/TrustLogos'))
+const UrgencySection = lazy(() => import('@/components/UrgencySection'))
+const FAQSection = lazy(() => import('@/components/FAQSection'))
+const SecondCTA = lazy(() => import('@/components/SecondCTA'))
+const Footer = lazy(() => import('@/components/Footer'))
 
 export default function HomePageContent() {
   // Customer Journey is disabled in this version - using LeadCaptureForm instead
@@ -20,50 +19,58 @@ export default function HomePageContent() {
   useEffect(() => {
     const handleAuthCallback = async () => {
       // Vérifier si l'utilisateur vient de se connecter
+      // Import dynamique de Supabase seulement quand nécessaire
+      const pendingQuoteData = localStorage.getItem('pending_quote_save')
+      if (!pendingQuoteData) return
+
+      const { supabase } = await import('@/lib/supabase')
       const { data: { session } } = await supabase.auth.getSession()
 
       if (session?.user) {
-        // Récupérer les données du devis en attente
-        const pendingQuoteData = localStorage.getItem('pending_quote_save')
+        try {
+          const { result_id } = JSON.parse(pendingQuoteData)
 
-        if (pendingQuoteData) {
-          try {
-            const { result_id } = JSON.parse(pendingQuoteData)
+          // Import dynamique de quoteApi
+          const { quoteApi } = await import('@/lib/quote-api')
 
-            // Appeler l'Edge Function pour sauvegarder le devis
-            const response = await quoteApi.saveQuote({
-              auth_user_id: session.user.id,
-              result_id: result_id,
-              user_email: session.user.email
-            })
+          // Appeler l'Edge Function pour sauvegarder le devis
+          const response = await quoteApi.saveQuote({
+            auth_user_id: session.user.id,
+            result_id: result_id,
+            user_email: session.user.email
+          })
 
-            if (response.success) {
-              console.log('Quote saved successfully:', response.quote_id)
-              // Nettoyer le localStorage
-              localStorage.removeItem('pending_quote_save')
+          if (response.success) {
+            console.log('Quote saved successfully:', response.quote_id)
+            // Nettoyer le localStorage
+            localStorage.removeItem('pending_quote_save')
 
-              // Stocker le message de succès pour l'afficher
-              localStorage.setItem('quote_save_message', response.message || '✅ Votre devis a été enregistré.')
-            }
-          } catch (error) {
-            console.error('Error saving quote after auth:', error)
-            localStorage.setItem('quote_save_error', 'Erreur lors de la sauvegarde du devis.')
+            // Stocker le message de succès pour l'afficher
+            localStorage.setItem('quote_save_message', response.message || '✅ Votre devis a été enregistré.')
           }
+        } catch (error) {
+          console.error('Error saving quote after auth:', error)
+          localStorage.setItem('quote_save_error', 'Erreur lors de la sauvegarde du devis.')
         }
       }
     }
 
     handleAuthCallback()
 
-    // Écouter les changements d'état d'authentification
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        handleAuthCallback()
-      }
+    // Écouter les changements d'état d'authentification (import dynamique)
+    let subscription: { unsubscribe: () => void } | null = null
+
+    import('@/lib/supabase').then(({ supabase }) => {
+      const { data } = supabase.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN' && session) {
+          handleAuthCallback()
+        }
+      })
+      subscription = data.subscription
     })
 
     return () => {
-      subscription.unsubscribe()
+      subscription?.unsubscribe()
     }
   }, [])
 
@@ -85,22 +92,27 @@ export default function HomePageContent() {
           {/* Section 4: Avis d'experts */}
           {/* <ExpertQuotes /> */}
 
-          {/* Section 4: Technologie */}
-          <TechSection />
+          {/* Below-the-fold content with lazy loading */}
+          <Suspense fallback={<div className="py-24" />}>
+            {/* Section 4: Technologie */}
+            <TechSection />
 
-          {/* Section 5: Soutiens institutionnels */}
-          <TrustLogos />
+            {/* Section 5: Soutiens institutionnels */}
+            <TrustLogos />
 
-          {/* Section 6: Pourquoi agir maintenant */}
-          <UrgencySection />
+            {/* Section 6: Pourquoi agir maintenant */}
+            <UrgencySection />
 
-          {/* Section 7: FAQ & Garanties */}
-          <FAQSection />
+            {/* Section 7: FAQ & Garanties */}
+            <FAQSection />
 
-          {/* Section 8: Second CTA */}
-          <SecondCTA />
+            {/* Section 8: Second CTA */}
+            <SecondCTA />
+          </Suspense>
         </main>
-        <Footer />
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
       </div>
 
       {/* Customer Journey Overlay - DISABLED: Replaced by LeadCaptureForm */}
