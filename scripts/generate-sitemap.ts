@@ -14,6 +14,7 @@ const pages = [
   { url: '/micropieux', priority: '0.8', changefreq: 'monthly', lastmod: new Date().toISOString().split('T')[0] },
   { url: '/fissures-maison', priority: '0.7', changefreq: 'monthly', lastmod: new Date().toISOString().split('T')[0] },
   { url: '/zones-rga-france', priority: '0.7', changefreq: 'monthly', lastmod: new Date().toISOString().split('T')[0] },
+  { url: '/dessous-des-cartes', priority: '0.8', changefreq: 'monthly', lastmod: new Date().toISOString().split('T')[0] },
   { url: '/partenariats-innovation', priority: '0.8', changefreq: 'monthly', lastmod: new Date().toISOString().split('T')[0] },
   { url: '/offres', priority: '0.9', changefreq: 'weekly', lastmod: new Date().toISOString().split('T')[0] },
   { url: '/cgv', priority: '0.3', changefreq: 'yearly', lastmod: new Date().toISOString().split('T')[0] },

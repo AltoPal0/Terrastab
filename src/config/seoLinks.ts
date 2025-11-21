@@ -16,6 +16,11 @@ export interface SeoLink {
 
 export const seoLinks: SeoLink[] = [
   {
+    title: "Le dessous des cartes",
+    href: "/dessous-des-cartes",
+    enabled: true // ✅ Article cartographique RGA
+  },
+  {
     title: "Le risque RGA",
     href: "/comprendre-rga",
     enabled: true // ✅ Article complet sur le RGA
