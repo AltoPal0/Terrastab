@@ -1,69 +1,81 @@
-# React + TypeScript + Vite
+# TerraStab – Protection des maisons contre le retrait-gonflement des argiles
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🌐 **Site officiel : [terrastab.fr](https://terrastab.fr)**
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Qui sommes-nous ?
 
-## Expanding the ESLint configuration
+TerraStab est une startup française spécialisée dans la **protection des maisons contre le retrait-gonflement des argiles (RGA)**. Notre mission : rendre la stabilisation des sols argileux accessible à tous les propriétaires, sans travaux lourds ni coûts prohibitifs.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Notre approche repose sur la **recherche scientifique appliquée**, en collaboration avec des organismes de référence comme le BRGM et le Cerema. Nous développons des solutions connectées qui régulent l'humidité du sol pour prévenir les mouvements de terrain et protéger durablement les fondations.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Le problème : le retrait-gonflement des argiles
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Le **retrait-gonflement des argiles** est la deuxième cause de sinistres en France après les inondations. Ce phénomène naturel touche plus de **10 millions de maisons** sur le territoire français.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Comment ça se manifeste ?
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Fissures sur les murs** intérieurs et extérieurs
+- Portes et fenêtres qui coincent
+- Déformations des fondations
+- Désordres structurels récurrents
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Les sols argileux se gonflent avec l'eau et se rétractent en période de sécheresse. Ces variations créent des mouvements différentiels qui fragilisent les constructions, particulièrement les maisons individuelles sur fondations superficielles.
+
+---
+
+## Nos solutions
+
+### 🔍 Diagnostic RGA
+
+Évaluation complète de votre exposition au risque :
+- Analyse géologique de votre parcelle
+- Données climatiques locales
+- État de votre bâti
+
+### 💧 Stabilisation hydrique
+
+Technologie innovante de régulation de l'humidité du sol :
+- Sans micropieux ni travaux de reprise en sous-œuvre
+- Installation non invasive
+- Résultats durables
+
+### 📡 Surveillance connectée
+
+Suivi en temps réel de l'état de votre sol :
+- Capteurs d'humidité
+- Alertes automatiques
+- Historique des données
+
+---
+
+## Ressources
+
+Découvrez nos guides pour comprendre et agir :
+
+- [Comprendre le RGA](https://terrastab.fr/comprendre-rga) – Les mécanismes du retrait-gonflement des argiles
+- [Fissures dans les murs](https://terrastab.fr/fissures-murs) – Identifier les signes d'alerte
+- [Diagnostic RGA](https://terrastab.fr/diagnostic-rga) – Évaluer votre exposition
+- [Stabilisation des fondations](https://terrastab.fr/stabilisation-fondations) – Les solutions disponibles
+- [Zones RGA en France](https://terrastab.fr/zones-rga-france) – Carte des zones à risque
+
+---
+
+## Contact
+
+📍 **Site web** : [terrastab.fr](https://terrastab.fr)
+
+**Demandez votre diagnostic gratuit** directement sur notre site pour évaluer le risque RGA de votre maison.
+
+---
+
+## Mots-clés
+
+`retrait-gonflement des argiles` · `RGA` · `maison fissurée` · `sol argileux` · `fissures murs` · `diagnostic RGA` · `stabilisation fondations` · `protection maison argile` · `sécheresse fondations` · `mouvements de terrain`
+
+---
+
+*TerraStab – L'expertise scientifique au service de votre maison*
